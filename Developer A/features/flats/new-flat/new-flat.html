@@ -1,8 +1,0 @@
-<form (ngSubmit)="onSubmit()" #flatForm="ngForm">
-    <input type="text" name="name" [(ngModel)]="flat.name" placeholder="Flat Name" required>
-    <input type="number" name="price" [(ngModel)]="flat.price" placeholder="Price" required>
-    <input type="number" name="beds" [(ngModel)]="flat.beds" placeholder="Beds" required>
-    <textarea name="description" [(ngModel)]="flat.description" placeholder="Description" required></textarea>
-    <button type="submit" [disabled]="!flatForm.form.valid">Add Flat</button>
-  </form>
-  
