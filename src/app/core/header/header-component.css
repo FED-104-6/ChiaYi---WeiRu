@@ -1,0 +1,12 @@
+.spacer {
+  flex: 1 1 auto;
+}
+.logo {
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 18px;
+}
+a[mat-button] {
+  color: white;
+  text-transform: uppercase;
+}

@@ -1,0 +1,18 @@
+<mat-toolbar color="primary">
+  <span>FlatFinder</span>
+  <span class="spacer"></span>
+
+  <ng-container *ngIf="isLoggedIn; else guest">
+    <button mat-button [matMenuTriggerFor]="menu">
+      <mat-icon>account_circle</mat-icon>
+      {{ user?.name || 'User' }}
+    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="logout()">Logout</button>
+    </mat-menu>
+  </ng-container>
+
+  <ng-template #guest>
+    <button mat-button routerLink="/login">Login</button>
+  </ng-template>
+</mat-toolbar>
