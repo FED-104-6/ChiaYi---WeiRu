@@ -1,18 +1,19 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private userSubject = new BehaviorSubject<any>(null);
-  user$ = this.userSubject.asObservable();
+  isLoggedIn = false;
+  userRole: 'landlord' | 'tenant' | null = null;
 
-  login(user: any) {
-    this.userSubject.next(user);
+  login(role: 'landlord' | 'tenant') {
+    this.isLoggedIn = true;
+    this.userRole = role;
   }
 
   logout() {
-    this.userSubject.next(null);
+    this.isLoggedIn = false;
+    this.userRole = null;
   }
 }

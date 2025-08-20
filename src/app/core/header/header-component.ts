@@ -1,41 +1,29 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
-// ✅ 引入 Angular Material 模組
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatButtonModule } from '@angular/material/button';
-import { MatMenuModule } from '@angular/material/menu';
-import { MatIconModule } from '@angular/material/icon';
-
+import { RouterModule } from '@angular/router';
 import { AuthService } from '../../features/auth/auth.service';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [
-    CommonModule,
-    MatToolbarModule,
-    MatButtonModule,
-    MatMenuModule,
-    MatIconModule
-  ],
+  imports: [CommonModule, RouterModule], 
   templateUrl: './header-component.html',
   styleUrls: ['./header-component.css']
 })
-export class HeaderComponent implements OnInit {
-  isLoggedIn = false;
-  user: any = null;
+export class HeaderComponent {
+  authChecked = true; // ✅ 一開始就顯示 Login / Logout 區塊
 
-  constructor(private authService: AuthService) {}
+  constructor(public authService: AuthService) {}
 
-  ngOnInit(): void {
-    this.authService.user$.subscribe(user => {
-      this.isLoggedIn = !!user;
-      this.user = user;
-    });
+  get isLoggedIn() {
+    return this.authService.isLoggedIn;
   }
 
-  logout(): void {
+  get userRole() {
+    return this.authService.userRole;
+  }
+
+  logout() {
     this.authService.logout();
   }
 }

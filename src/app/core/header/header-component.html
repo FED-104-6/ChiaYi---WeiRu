@@ -1,18 +1,32 @@
-<mat-toolbar color="primary">
-  <span>FlatFinder</span>
-  <span class="spacer"></span>
+<header class="site-header">
+  <div class="logo">FlatFinder</div>
 
-  <ng-container *ngIf="isLoggedIn; else guest">
-    <button mat-button [matMenuTriggerFor]="menu">
-      <mat-icon>account_circle</mat-icon>
-      {{ user?.name || 'User' }}
-    </button>
-    <mat-menu #menu="matMenu">
-      <button mat-menu-item (click)="logout()">Logout</button>
-    </mat-menu>
+  <!-- 房東選單 -->
+  <ng-container *ngIf="isLoggedIn && userRole === 'landlord'">
+    <a routerLink="/edit-flat">Edit flat</a>
+    <a routerLink="/my-flat">My flat</a>
   </ng-container>
 
-  <ng-template #guest>
-    <button mat-button routerLink="/login">Login</button>
-  </ng-template>
-</mat-toolbar>
+  <!-- 房客選單 -->
+  <ng-container *ngIf="isLoggedIn && userRole === 'tenant'">
+    <a routerLink="/view-flat">View flat</a>
+    <a routerLink="/new-flat">New flat</a>
+    <a routerLink="/search">Search</a>
+    <a routerLink="/favourites">Favourites</a>
+  </ng-container>
+
+  <!-- 右上角 Login / Register / Logout -->
+  <div class="auth-links" *ngIf="authChecked">
+    <!-- 未登入 -->
+    <ng-container *ngIf="!isLoggedIn">
+      <a routerLink="/login" class="btn-login">Login</a>
+      <a routerLink="/register" class="btn-register">開創帳戶</a>
+    </ng-container>
+
+    <!-- 已登入 -->
+    <ng-container *ngIf="isLoggedIn">
+      <span class="user-role">Hi, {{ userRole | titlecase }}</span>
+      <a (click)="logout()" style="cursor: pointer;">Logout</a>
+    </ng-container>
+  </div>
+</header>
