@@ -1,15 +1,6 @@
 <div class="home-container">
-  <!-- Header -->
-  <header class="home-header">
-    <div class="logo">BNB</div>
-    <div class="header-right">
-      <div class="lang-switch">
-        <button [class.active]="language === 'en'" (click)="setLanguage('en')">ENGLISH</button>
-        <button [class.active]="language === 'zh'" (click)="setLanguage('zh')">CHINESE</button>
-      </div>
-      <button class="menu-btn">MENU</button>
-    </div>
-  </header>
+  <!-- Header（獨立成 header.component，不再放在 home 裡） -->
+  <app-header></app-header>
 
   <!-- Background -->
   <div class="home-image">
@@ -22,11 +13,50 @@
     <p class="subtext">Live a slower life for your soul to catch up.</p>
   </div>
 
+<!-- Search Bar -->
+<div class="search-bar">
+  <!-- Location Field -->
+  <div class="search-field">
+    <label for="location">Location</label>
+    <input type="text" id="location" name="location" placeholder="Add location">
+  </div>
+  <!-- Check-in Field -->
+  <div class="search-field">
+    <label for="checkin">Check in</label>
+    <input type="date" id="checkin" name="checkin">
+  </div>
+  <!-- Check-out Field -->
+  <div class="search-field">
+    <label for="checkout">Check out</label>
+    <input type="date" id="checkout" name="checkout">
+  </div>
+  <!-- Guests Field -->
+  <div class="search-field">
+    <label for="guests">Guests</label>
+    <select id="guests" name="guests">
+      <option value="1">1 guest</option>
+      <option value="2">2 guests</option>
+      <option value="3">3 guests</option>
+      <option value="4+">4+ guests</option>
+    </select>
+  </div>
+  <button class="search-btn">Search</button>
+</div>
+
   <!-- Footer Navigation -->
   <footer class="home-footer">
     <div class="cta-buttons">
       <a routerLink="/register" class="btn-register">Create an Account</a>
-      <a routerLink="/login" class="btn-login">Login</a>
+  
+      <!-- Footer 登入/登出切換 -->
+      <ng-container *ngIf="!(authService.isLoggedIn$ | async); else logoutBtn">
+        <a routerLink="/login" class="btn-login">Login</a>
+      </ng-container>
+  
+      <ng-template #logoutBtn>
+        <button class="btn-logout" (click)="logout()">Logout</button>
+      </ng-template>      
     </div>
   </footer>
-  </div>
+  
+</div>

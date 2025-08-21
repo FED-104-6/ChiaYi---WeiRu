@@ -1,13 +1,16 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { HeaderComponent } from '../../core/header/header.component';
+import { AuthService } from '../../features/auth/auth.service';
 
 @Component({
   selector: 'app-home',
   standalone: true,
   imports: [
     CommonModule,
-    RouterModule
+    RouterModule,
+    HeaderComponent
   ],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
@@ -18,11 +21,13 @@ export class HomeComponent {
   totalSlides = 5;
   isPaused = false;
 
+  constructor(public authService: AuthService) {}
+
   setLanguage(lang: 'en' | 'zh') {
     this.language = lang;
   }
 
-  togglePause() {
-    this.isPaused = !this.isPaused;
+  logout() {
+    this.authService.logout();
   }
 }
