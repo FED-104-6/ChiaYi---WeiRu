@@ -1,0 +1,13 @@
+<header>
+  <nav>
+    <a routerLink="/home">Home</a>
+    <ng-container *ngIf="authService.isLoggedIn; else guestLinks">
+      <button (click)="logout()">Logout</button>
+      <span *ngIf="authService.userRole === 'landlord'">房東專區</span>
+      <span *ngIf="authService.userRole === 'tenant'">房客專區</span>
+    </ng-container>
+    <ng-template #guestLinks>
+      <a routerLink="/login">Login</a>
+    </ng-template>
+  </nav>
+</header>
