@@ -1,5 +1,5 @@
 /* 浮層背景 */
-.login-overlay {
+.register-overlay {
   position: fixed;
   top: 0;
   left: 0;
@@ -17,7 +17,7 @@
 }
 
 /* 半透明遮罩 */
-.login-overlay::before {
+.register-overlay::before {
   content: "";
   position: absolute;
   top: 0;
@@ -29,9 +29,9 @@
 }
 
 /* Logo 固定在上方 */
-.login-overlay .logo {
+.register-overlay .logo {
   position: absolute;
-  top: 100px;         
+  top: 50px;         
   left: 50%;
   transform: translateX(-50%);
   z-index: 2;        /* 確保在遮罩上方 */
@@ -43,7 +43,7 @@
 }
 
 /* 登入卡片 */
-.login-card {
+.register-card {
   position: relative;
   z-index: 2; /* 保證在遮罩上方 */
   background-color: #fff;
@@ -60,32 +60,33 @@
 }
 
 /* Form 樣式 */
-.login-card form {
+.register-card form {
   display: flex;
   flex-direction: column;
   gap: 15px;
 }
 
-.login-card input {
+.register-card input {
   padding: 15px;
   border-radius: 5px;
   border: 1px solid #ccc;
 }
 
-.login-card button {
+.register-card button {
   margin-top:15px;
   padding: 15px;
   border-radius: 5px;
   border: none;
-  background-color: #00AA90;
+  background-color: #BC9F77;
   color: #fff;
   font-size: 20px;
   font-weight: bold;
   cursor: pointer;
 }
 
-.login-card button:hover {
-  background-color: rgba(0, 166, 144, 0.80);
+.register-card button:hover {
+  background-color: rgba(188, 159, 119, 0.50);
+  color: #BC9F77;
 }
 
 /* 動畫 */

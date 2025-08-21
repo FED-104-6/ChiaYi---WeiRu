@@ -12,10 +12,12 @@ import { AuthService } from '../../../features/auth/auth.service';
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit {
-  showLogin: boolean = false; // ✅ 明確宣告
-
+  showLogin: boolean = false; 
+  fullname: string = '';
   email: string = '';
   password: string = '';
+  country: string = '';
+  phonenumber: string = '';
   errorMessage: string = '';
 
   constructor(private authService: AuthService, private router: Router) {}
