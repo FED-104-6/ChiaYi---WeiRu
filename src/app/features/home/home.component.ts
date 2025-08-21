@@ -12,4 +12,17 @@ import { RouterModule } from '@angular/router';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
-export class HomeComponent {}
+export class HomeComponent {
+  language: 'en' | 'zh' = 'en';
+  currentSlide = 5;
+  totalSlides = 5;
+  isPaused = false;
+
+  setLanguage(lang: 'en' | 'zh') {
+    this.language = lang;
+  }
+
+  togglePause() {
+    this.isPaused = !this.isPaused;
+  }
+}

@@ -1,28 +1,49 @@
-.header {
+.home-header {
+  position: absolute;
+  top: 30px;
+  left: 60px;
+  right: 60px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: #1976d2;
-  padding: 10px 20px;
-  color: white;
+  z-index: 10;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
 }
 
-ul {
-  list-style: none;
-  display: flex;
-  gap: 15px;
-  margin: 0;
-  padding: 0;
-}
-
-a, button {
-  color: white;
+.logo {
+  font-size: 28px;
+  font-weight: bold;
+  letter-spacing: 2px;
+  color: #fff;
   text-decoration: none;
+  letter-spacing: 2px;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+}
+
+.header-right {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.lang-switch button {
+  background: transparent;
+  border: none;
+  color: #fff;
+  font-size: 14px;
+  cursor: pointer;
+  opacity: 0.5;
+}
+
+.lang-switch button.active {
+  opacity: 1;
+  font-weight: bold;
+}
+
+.menu-btn {
   background: none;
   border: none;
+  font-size: 20px;
+  color: #fff;
   cursor: pointer;
-}
-
-button:hover, a:hover {
-  text-decoration: underline;
 }

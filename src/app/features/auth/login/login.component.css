@@ -5,7 +5,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: url('/assets/bn_img01.jpg');
+  background-image: url('/assets/login-bg-img.jpg');
   background-size: cover;
   background-position: center;
   display: flex;
@@ -28,17 +28,54 @@
   z-index: 1;
 }
 
-/* Logo 固定在上方 */
-.login-overlay .logo {
+/* Header */
+.home-header {
   position: absolute;
-  top: 100px;         
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 2;        /* 確保在遮罩上方 */
-  color: #fff;
+  top: 30px;
+  left: 60px;
+  right: 60px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 10;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+}
+
+.logo {
   font-size: 28px;
   font-weight: bold;
+  letter-spacing: 2px;
+  color: #fff;
   text-decoration: none;
+  letter-spacing: 2px;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+}
+
+.header-right {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.lang-switch button {
+  background: transparent;
+  border: none;
+  color: #fff;
+  font-size: 14px;
+  cursor: pointer;
+  opacity: 0.5;
+}
+
+.lang-switch button.active {
+  opacity: 1;
+  font-weight: bold;
+}
+
+.menu-btn {
+  background: none;
+  border: none;
+  font-size: 20px;
+  color: #fff;
   cursor: pointer;
 }
 

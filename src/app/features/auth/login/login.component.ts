@@ -12,28 +12,41 @@ import { AuthService } from '../../../features/auth/auth.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  showLogin: boolean = false; // ✅ 明確宣告
+  showLogin: boolean = false;
 
   email: string = '';
   password: string = '';
   errorMessage: string = '';
 
+  language: 'en' | 'zh' = 'en';
+  currentSlide = 5;
+  totalSlides = 5;
+  isPaused = false;
+
   constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit(): void {
-    // 進入畫面就顯示浮層
+
     setTimeout(() => {
       this.showLogin = true;
     }, 50);
   }
 
-  onLogin(): void {
-    const success = this.authService.login(this.email, this.password);
+  setLanguage(lang: 'en' | 'zh') {
+    this.language = lang;
+  }
 
-    if (success) {
+  async onLogin(): Promise<void> {
+    this.errorMessage = '';
+    try {
+      // 直接呼叫 login，失敗會 throw error
+      await this.authService.login(this.email, this.password);
+      
+      // 登入成功 → 導向首頁
       this.router.navigate(['/home']);
-    } else {
-      this.errorMessage = '帳號或密碼錯誤';
+    } catch (error: any) {
+      console.error('Login error:', error);
+      this.errorMessage = error.message || 'Login failed, please try again later';
     }
   }
 }

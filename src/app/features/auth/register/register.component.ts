@@ -20,22 +20,44 @@ export class RegisterComponent implements OnInit {
   phonenumber: string = '';
   errorMessage: string = '';
 
+  language: 'en' | 'zh' = 'en';
+  currentSlide = 5;
+  totalSlides = 5;
+  isPaused = false;
+  
+  setLanguage(lang: 'en' | 'zh') {
+      this.language = lang;
+  }
+
   constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit(): void {
-    // 進入畫面就顯示浮層
+    
     setTimeout(() => {
       this.showLogin = true;
     }, 50);
   }
 
-  onLogin(): void {
-    const success = this.authService.login(this.email, this.password);
-
-    if (success) {
+  // Registration method
+  async onRegister(): Promise<void> {
+    this.errorMessage = '';
+  
+    try {
+      // 呼叫 Firebase AuthService 註冊
+      await this.authService.register(
+        this.fullname,
+        this.email,
+        this.password,
+        this.country,
+        this.phonenumber
+      );
+  
+      // 註冊成功 → 導向首頁
       this.router.navigate(['/home']);
-    } else {
-      this.errorMessage = '帳號或密碼錯誤';
+    } catch (error: any) {
+      console.error('Registration error:', error);
+      this.errorMessage = error.message || 'Registration failed, please try again';
     }
   }
+  
 }

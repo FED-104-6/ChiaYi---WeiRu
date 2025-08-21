@@ -1,4 +1,3 @@
-<!-- 只有登入後才顯示 Header -->
-<app-header *ngIf="authService.isLoggedIn"></app-header>
-
+<app-header *ngIf="authService.isLoggedIn$ | async"></app-header>
 <router-outlet></router-outlet>
+

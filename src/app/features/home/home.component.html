@@ -1,20 +1,32 @@
 <div class="home-container">
-  <!-- 上半部大圖 -->
-  <div class="hello-image">
-    <img src="/assets/bn_img01.jpg" alt="Hello Image">
+  <!-- Header -->
+  <header class="home-header">
+    <div class="logo">BNB</div>
+    <div class="header-right">
+      <div class="lang-switch">
+        <button [class.active]="language === 'en'" (click)="setLanguage('en')">ENGLISH</button>
+        <button [class.active]="language === 'zh'" (click)="setLanguage('zh')">CHINESE</button>
+      </div>
+      <button class="menu-btn">MENU</button>
+    </div>
+  </header>
+
+  <!-- Background -->
+  <div class="home-image">
+    <img src="/assets/home-bg-img01.jpg" alt="Home Image">
   </div>
 
-  <!-- 下半部 Logo + 按鈕 -->
-  <div class="home-footer">
-    <!-- 左邊 Logo -->
-    <div class="logo-container">
-      <div class="logo">FlatFinder</div>
-    </div>
+  <!-- Centered Content -->
+  <div class="home-content">
+    <h1 class="main-logo">BNB</h1>
+    <p class="subtext">Live a slower life for your soul to catch up.</p>
+  </div>
 
-    <!-- 右邊按鈕 -->
-    <div class="button-container">
-      <a routerLink="/login" class="btn-login">Login</a>
+  <!-- Footer Navigation -->
+  <footer class="home-footer">
+    <div class="cta-buttons">
       <a routerLink="/register" class="btn-register">Create an Account</a>
+      <a routerLink="/login" class="btn-login">Login</a>
     </div>
+  </footer>
   </div>
-</div>

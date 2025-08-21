@@ -1,5 +1,16 @@
 <div class="login-overlay">
-  <a class="logo" routerLink="/home">FlatFinder</a>
+  <!-- Header -->
+  <header class="home-header">
+    <a class="logo" routerLink="/home">BNB</a>
+    <div class="header-right">
+      <div class="lang-switch">
+        <button [class.active]="language === 'en'" (click)="setLanguage('en')">ENGLISH</button>
+        <button [class.active]="language === 'zh'" (click)="setLanguage('zh')">CHINESE</button>
+      </div>
+      <button class="menu-btn">MENU</button>
+    </div>
+  </header>
+  
   <div class="login-card" *ngIf="showLogin">
     <h2 style="color: #00AA90;">Member Login</h2>
     <form (ngSubmit)="onLogin()">

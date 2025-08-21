@@ -1,13 +1,20 @@
 import { Routes } from '@angular/router';
 import { HomeComponent } from './features/home/home.component';
-import { LoginComponent } from './features/auth/login/login.component';
-import { RegisterComponent } from './features/auth/register/register.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
-  { path: 'home', component: HomeComponent },
-  { path: 'login', component: LoginComponent },
-  { path: 'register', component: RegisterComponent }
+  { 
+    path: 'home', 
+    loadComponent: () => import('./features/home/home.component').then(m => m.HomeComponent)
+  },
+  { 
+    path: 'login', 
+    loadComponent: () => import('./features/auth/login/login.component').then(m => m.LoginComponent)
+  },
+  { 
+    path: 'register', 
+    loadComponent: () => import('./features/auth/register/register.component').then(m => m.RegisterComponent)
+  }
 ];
 
 // 後續再加房東 / 房客頁面

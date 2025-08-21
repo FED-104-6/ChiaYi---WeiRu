@@ -12,6 +12,12 @@ import { AuthService } from '../../features/auth/auth.service';
 export class HeaderComponent {
   constructor(public authService: AuthService) {}
 
+  language: 'en' | 'zh' = 'en';
+
+  setLanguage(lang: 'en' | 'zh') {
+    this.language = lang;
+  }
+
   logout() {
     this.authService.logout();
   }

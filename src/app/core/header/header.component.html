@@ -1,13 +1,10 @@
-<header>
-  <nav>
-    <a routerLink="/home">Home</a>
-    <ng-container *ngIf="authService.isLoggedIn; else guestLinks">
-      <button (click)="logout()">Logout</button>
-      <span *ngIf="authService.userRole === 'landlord'">房東專區</span>
-      <span *ngIf="authService.userRole === 'tenant'">房客專區</span>
-    </ng-container>
-    <ng-template #guestLinks>
-      <a routerLink="/login">Login</a>
-    </ng-template>
-  </nav>
+<header class="home-header">
+  <a class="logo" routerLink="/home">BNB</a>
+  <div class="header-right">
+    <div class="lang-switch">
+      <button [class.active]="language === 'en'" (click)="setLanguage('en')">ENGLISH</button>
+      <button [class.active]="language === 'zh'" (click)="setLanguage('zh')">CHINESE</button>
+    </div>
+    <button class="menu-btn">MENU</button>
+  </div>
 </header>
