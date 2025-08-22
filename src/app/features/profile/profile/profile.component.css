@@ -1,93 +1,147 @@
 /* Container */
 .profile-container {
-    width: 100%;
-    padding: 40px;
-    text-align: center;
-    font-family: Arial, sans-serif;
-    color: #333;
-    background-color: #FCFAF2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;         /* 水平置中整個內容 */
+  justify-content: flex-start; /* 垂直從上開始排列 */
+  width: 100%;
+  min-height: 100vh;           /* 滿版高度 */
+  padding: 40px;
+  font-family: Arial, sans-serif;
+  color: #333;
+  background-color: #FCFAF2;
+  box-sizing: border-box;
+}
+
+/* Profile Image */
+.profile-image {
+  position: relative;
+  display: flex;             
+  justify-content: center;     /* 水平置中 */
+  align-items: center;
+  margin-top: 100px;       
+  margin-bottom: 16px;
+}
+
+.avatar {
+  width: 120px;
+  height: 120px;
+  background-color: #000;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.avatar-letter {
+  color: #fff;
+  font-size: 60px;
+  font-weight: bold;
+}
+
+/* Add Button */
+.add-button {
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #fff;
+  border: none;
+  border-radius: 20px;
+  padding: 6px 14px;
+  font-size: 14px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.add-button .camera-icon::before {
+  content: "📷";
+  font-size: 16px;
+}
+
+/* Profile Title & Description */
+.profile-title {
+  font-size: 22px;
+  font-weight: bold;
+  margin-top: 16px;
+  text-align: center;
+}
+
+.profile-desc {
+  font-size: 14px;
+  color: #666;
+  margin: 8px auto 24px auto;
+  max-width: 400px;
+  line-height: 1.5;
+  padding: 12px 16px;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.profile-desc a {
+  color: #222;
+  text-decoration: underline;
+}
+
+/* Profile Sections */
+.profile-section {
+  display: flex;
+  justify-content: center;     /* 將整個區塊置中 */
+  max-width: 400px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 12px 0;
+  border-top: 1px solid #e5e5e5;
+  box-sizing: border-box;
+}
+
+.profile-section:first-child {
+  border-top: none;
+}
+
+.profile-section-inner {
+  display: flex;
+  align-items: center;         /* 圖示與文字垂直置中 */
+  justify-content: flex-start; /* 圖示+文字靠左 */
+  width: 100%;                 /* 填滿外層寬度 */
+}
+
+.profile-section .icon {
+  font-size: 20px;
+  margin-right: 12px;
+  flex-shrink: 0;              /* 圖示固定不縮小 */
+}
+
+.profile-section .text {
+  text-align: left;            /* 文字靠左 */
+  flex: 1;                     /* 占滿剩餘空間 */
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .profile-container {
+    padding: 20px;
   }
-  
-  /* Profile Image */
-  .profile-image {
-    position: relative;
-    display: inline-block;
-  }
-  
+
   .avatar {
-    width: 120px;
-    height: 120px;
-    background-color: #000;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    width: 100px;
+    height: 100px;
   }
-  
+
   .avatar-letter {
-    color: #fff;
-    font-size: 60px;
-    font-weight: bold;
+    font-size: 48px;
   }
-  
-  .add-button {
-    position: absolute;
-    bottom: -10px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: #fff;
-    border: none;
-    border-radius: 20px;
-    padding: 6px 14px;
-    font-size: 14px;
-    font-weight: 500;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    cursor: pointer;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  }
-  
-  .add-button .camera-icon::before {
-    content: "📷";
-    font-size: 16px;
-  }
-  
-  /* Profile Title & Desc */
-  .profile-title {
-    font-size: 22px;
-    font-weight: bold;
-    margin-top: 16px;
-  }
-  
+
   .profile-desc {
-    font-size: 14px;
-    color: #666;
-    margin: 8px auto 20px;
-    max-width: 320px;
-    line-height: 1.5;
+    max-width: 100%;
   }
-  
-  .profile-desc a {
-    color: #222;
-    text-decoration: underline;
-  }
-  
-  /* Profile Sections */
+
   .profile-section {
-    display: flex;
-    align-items: center;
-    padding: 12px 0;
-    border-top: 1px solid #e5e5e5;
-    font-size: 16px;
+    max-width: 100%;
+    padding: 8px 0;
   }
-  
-  .profile-section:first-child {
-    border-top: none;
-  }
-  
-  .profile-section .icon {
-    font-size: 20px;
-    margin-right: 12px;
-  }
-  
+}

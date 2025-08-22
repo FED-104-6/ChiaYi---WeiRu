@@ -10,8 +10,8 @@ import { CommonModule } from '@angular/common';
 })
 export class ProfileComponent {
   profileSections = [
-    { icon: '🌐', text: "Where I've always wanted to go" },
-    { icon: '💼', text: 'My work' },
-    { icon: '🎵', text: 'My favourite song in high school' }
+    { icon: '🌐', text: "Languages I speak" },
+    { icon: '🗺️', text: 'Where I live' },
+    { icon: '📍', text: 'Where I want to go' }
   ];
 }
