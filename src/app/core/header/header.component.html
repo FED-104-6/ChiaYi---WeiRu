@@ -1,4 +1,4 @@
-<header class="home-header">
+<header class="home-header" [class.dark-text]="isDarkText">
   <a class="logo" routerLink="/home">BNB</a>
 
   <div class="header-right">
@@ -7,8 +7,8 @@
       <button [class.active]="language === 'zh'" (click)="setLanguage('zh')">CHINESE</button>
     </div>
   
-   <!-- MENU 按鈕 -->
-   <button class="menu-btn" (click)="toggleSidebar()">MENU</button>
+    <!-- MENU 按鈕 -->
+    <button class="menu-btn" (click)="toggleSidebar()">MENU</button>
   </div>
 </header>
 
@@ -27,4 +27,3 @@
 
 <!-- 背景遮罩 -->
 <div class="overlay" *ngIf="isSidebarOpen" (click)="toggleSidebar()"></div>
-
