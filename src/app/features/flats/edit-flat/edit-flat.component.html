@@ -1,0 +1,27 @@
+<body>
+  <div class="edit-flat-card">
+  <h3>Edit Flat: {{ flat.name }}</h3>
+
+  <label>
+    Name:
+    <input type="text" [(ngModel)]="flat.name" placeholder="Name">
+  </label>
+
+  <label>
+    Price:
+    <input type="number" [(ngModel)]="flat.price" placeholder="Price">
+  </label>
+
+  <label>
+    Beds:
+    <input type="number" [(ngModel)]="flat.beds" placeholder="Beds">
+  </label>
+
+  <label>
+    Description:
+    <textarea [(ngModel)]="flat.description" placeholder="Description"></textarea>
+  </label>
+
+  <button (click)="save()">Save</button>
+</div>
+</body>

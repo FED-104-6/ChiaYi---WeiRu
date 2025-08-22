@@ -1,0 +1,79 @@
+:host {
+  display: block;
+  min-height: 100vh;
+  padding: 2rem;
+  box-sizing: border-box;
+
+  /* 背景圖片 */
+  background-color: wheat;
+  background-size: cover;
+}
+
+/* Form container */
+form {
+  display: grid;
+  gap: 1rem;
+  max-width: 500px;
+  margin: 4rem auto;
+  padding: 2rem;
+  border-radius: 8px;
+  background-color: rgba(255, 255, 255, 0.85); /* 半透明白色背景 */
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2); /* 更深的陰影，浮起效果 */
+}
+
+/* 標題文字 */
+h2 {
+  text-align: center;
+  color: #1B2A38;
+  margin-bottom: 1.5rem;
+}
+
+/* Input 與 textarea */
+input, textarea {
+  width: 100%;
+  padding: 0.75rem;
+  font-size: 1rem;
+  border: 1px solid #A0A6B2;
+  border-radius: 4px;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease;
+  background-color: #F9F9F9;
+}
+
+input:focus, textarea:focus {
+  border-color: #00A3A3;
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(0, 163, 163, 0.2);
+}
+
+input.ng-invalid.ng-touched, textarea.ng-invalid.ng-touched {
+  border-color: #D64545;
+}
+
+/* Button */
+button {
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  color: #FFFFFF;
+  background-color: #00A3A3;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-weight: 600;
+}
+
+button:hover {
+  background-color: #56B9B9;
+}
+
+// button:disabled {
+//   background-color: #A0A6B2;
+//   cursor: not-allowed;
+//   color: #E6E6E6;
+// }
+
+textarea {
+  resize: vertical;
+  min-height: 100px;
+}
