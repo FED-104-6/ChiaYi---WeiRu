@@ -1,0 +1,28 @@
+nav a {
+    text-decoration: none;
+    color: #34495e;
+    font-weight: 600;
+    font-size: 1.05rem;
+    padding: 0.75rem 1.25rem;
+    transition: all 0.3s ease;
+    border-radius: 6px;
+    white-space: nowrap;
+  }
+  
+  nav a:hover {
+    color: #0077cc;
+    background-color: #eef7fc;
+    transform: translateY(-2px);
+  }
+  
+  nav a:not(:last-child) {
+    margin-right: 0.5rem;
+  }
+  
+  nav a:not(:last-child)::after {
+    content: '|';
+    margin-left: 0.5rem;
+    color: #b0b0b0;
+    font-weight: 400;
+  }
+  

@@ -1,21 +1,21 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { RouterModule, RouterOutlet } from '@angular/router';
-import { AuthService } from '../app/features/auth/auth.service';
-import { HeaderComponent } from './core/header/header.component';  
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [
-    CommonModule,
-    RouterModule,
-    RouterOutlet,
-    HeaderComponent
-  ],
-  templateUrl: './app.html',
-  styleUrls: ['./app.css']
+  imports: [RouterModule],
+  template: `
+    <nav>
+      <a routerLink="/edit-flat">Edit flat</a> |
+      <a routerLink="/new-flat">New flat</a> |
+      <a routerLink="/favourites">Favourites</a> |
+      <a routerLink="/my-flats">My flats</a> |
+      <a routerLink="/search">Search</a> |
+      <a routerLink="/view-flat">View flat</a>
+    </nav>
+    <hr>
+    <router-outlet></router-outlet>
+  `
 })
-export class AppComponent {
-  constructor(public authService: AuthService) {}
-}
+export class AppComponent {}
