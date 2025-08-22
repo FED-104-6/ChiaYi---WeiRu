@@ -1,0 +1,9 @@
+<h2>Search Flats</h2>
+<input type="text" [(ngModel)]="query" placeholder="Search by name">
+
+<app-view-flat 
+  *ngFor="let flat of filteredFlats" 
+  [flat]="flat">
+</app-view-flat>
+
+<p *ngIf="filteredFlats.length === 0">No flats found.</p>
