@@ -7,32 +7,42 @@
   justify-content: space-between;
   align-items: center;
   z-index: 10;
+  color: white; /* 預設文字白色 */
+  transition: color 0.3s; /* 文字顏色過渡效果 */
   font-family: 'Helvetica Neue', Arial, sans-serif;
 }
 
+/* route 或滾動變黑文字 */
+.home-header.dark-text {
+  color: black;
+}
+
+/* Logo */
 .logo {
   font-size: 28px;
   font-weight: bold;
-  letter-spacing: 2px;
-  color: #fff;
+  color: inherit; /* 跟隨 header 顏色自動變化 */
   text-decoration: none;
   letter-spacing: 2px;
   font-family: 'Helvetica Neue', Arial, sans-serif;
 }
 
+/* 右側選單 */
 .header-right {
   display: flex;
   gap: 20px;
   align-items: center;
 }
 
+/* 語言切換按鈕 */
 .lang-switch button {
   background: transparent;
   border: none;
-  color: #fff;
+  color: inherit; /* 跟隨 header 顏色 */
   font-size: 14px;
   cursor: pointer;
   opacity: 0.5;
+  transition: opacity 0.3s;
 }
 
 .lang-switch button.active {
@@ -40,11 +50,12 @@
   font-weight: bold;
 }
 
+/* MENU 按鈕 */
 .menu-btn {
   background: none;
   border: none;
   font-size: 20px;
-  color: #fff;
+  color: inherit; /* 跟隨 header 顏色 */
   cursor: pointer;
 }
 

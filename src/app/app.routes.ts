@@ -1,5 +1,4 @@
 import { Routes } from '@angular/router';
-import { HomeComponent } from './features/home/home.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -14,7 +13,10 @@ export const routes: Routes = [
   { 
     path: 'register', 
     loadComponent: () => import('./features/auth/register/register.component').then(m => m.RegisterComponent)
+  },
+  { 
+    path: 'profile', 
+    loadComponent: () => import('./features/profile/profile/profile.component').then(m => m.ProfileComponent) // ✅ 新增
   }
 ];
 
-// 後續再加房東 / 房客頁面
