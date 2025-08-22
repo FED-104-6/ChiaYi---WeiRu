@@ -11,15 +11,21 @@ import { AuthService } from '../../features/auth/auth.service';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent {
-  constructor(public authService: AuthService) {}
-
   language: 'en' | 'zh' = 'en';
+  isSidebarOpen = false;
+
+  constructor(public authService: AuthService) {}
 
   setLanguage(lang: 'en' | 'zh') {
     this.language = lang;
   }
 
+  toggleSidebar() {
+    this.isSidebarOpen = !this.isSidebarOpen;
+  }
+
   logout() {
     this.authService.logout();
+    this.toggleSidebar(); // 關閉選單
   }
 }

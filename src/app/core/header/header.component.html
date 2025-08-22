@@ -7,9 +7,24 @@
       <button [class.active]="language === 'zh'" (click)="setLanguage('zh')">CHINESE</button>
     </div>
   
-    <!-- 固定 Menu 按鈕 -->
-    <button class="menu-btn">MENU</button>
-
+   <!-- MENU 按鈕 -->
+   <button class="menu-btn" (click)="toggleSidebar()">MENU</button>
   </div>
-  
 </header>
+
+<!-- 側邊選單 -->
+<div class="sidebar" [class.open]="isSidebarOpen">
+  <button class="close-btn" (click)="toggleSidebar()">×</button>
+  <nav>
+    <a routerLink="/home">Home</a>
+    <a routerLink="/profile">Profile</a>
+    <a routerLink="/favourites">Favourites</a>
+    <a routerLink="/myflats">My Flats</a>
+    <a routerLink="/messages">Messages</a>
+    <a (click)="logout()" *ngIf="authService.isLoggedIn$ | async">Logout</a>
+  </nav>
+</div>
+
+<!-- 背景遮罩 -->
+<div class="overlay" *ngIf="isSidebarOpen" (click)="toggleSidebar()"></div>
+
