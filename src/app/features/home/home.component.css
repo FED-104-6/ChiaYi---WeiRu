@@ -136,6 +136,11 @@
   font-size: 14px;
   min-width: 100px;
   color: #666;
+  height: 20px;           /* ✅ 統一高度 */
+  line-height: 20px;      /* ✅ 垂直置中 */
+  appearance: none;       /* ✅ 移除 select 預設樣式 (必要時) */
+  -webkit-appearance: none;
+  -moz-appearance: none;
 }
 
 .search-btn {
