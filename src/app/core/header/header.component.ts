@@ -1,9 +1,8 @@
 import { Component, AfterViewInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router, NavigationEnd } from '@angular/router';
+import { Router, NavigationEnd, RouterModule } from '@angular/router';
 import { AuthService } from '../../features/auth/auth.service';
 import { filter, take } from 'rxjs/operators';
-import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -15,12 +14,11 @@ import { RouterModule } from '@angular/router';
 export class HeaderComponent implements AfterViewInit {
   language: 'en' | 'zh' = 'en';
   isSidebarOpen = false;
-  isDarkText = false; // true → 黑字，false → 白字
+  isDarkText = false;
   isLoggedIn = false;
 
-  // 新增控制 My Flats 子選單
   flatsMenuOpen = false;
-  ProfileMenuOpen = false;
+  profileMenuOpen = false;
 
   constructor(public authService: AuthService, private router: Router) {
     // 監聽登入狀態
@@ -29,33 +27,31 @@ export class HeaderComponent implements AfterViewInit {
     });
   }
 
-  // 語言切換
+  /** 語言切換 */
   setLanguage(lang: 'en' | 'zh') {
     this.language = lang;
   }
 
-  // Sidebar 開關
+  /** Sidebar 開關 */
   toggleSidebar() {
     this.isSidebarOpen = !this.isSidebarOpen;
   }
 
-  // 登出
+  /** 登出 */
   async logout() {
     await this.authService.logout();
-    this.isSidebarOpen = false;
-    this.flatsMenuOpen = false; // 登出時收起子選單
-    this.ProfileMenuOpen = false; // 登出時收起子選單
+    this.closeMenus();
+    this.router.navigate(['/login']);
   }
 
-  // 點 Logo 登出
+  /** 點 Logo 回首頁 */
   async navigateToLogin() {
     await this.authService.logout();
-    this.isSidebarOpen = false;
-    this.flatsMenuOpen = false;
-    this.ProfileMenuOpen = false;
+    this.closeMenus();
+    this.router.navigate(['/login']);
   }
 
-  // 檢查登入再導頁
+  /** 導頁（需檢查登入） */
   checkAuth(route: string) {
     this.authService.isLoggedIn$.pipe(take(1)).subscribe(isLoggedIn => {
       if (isLoggedIn) {
@@ -64,53 +60,49 @@ export class HeaderComponent implements AfterViewInit {
         alert('Please register or log in first');
         this.router.navigate(['/login']);
       }
-      this.isSidebarOpen = false;
-      this.flatsMenuOpen = false; // 點其他按鈕也收起子選單
-      this.ProfileMenuOpen = false;
+      this.closeMenus();
     });
   }
 
+  /** Profile 子選單切換 */
+  toggleProfileMenu() {
+    this.profileMenuOpen = !this.profileMenuOpen;
+    if (this.profileMenuOpen) this.flatsMenuOpen = false;
+  }
+
+  /** Flats 子選單切換 */
   toggleFlatsMenu() {
     this.flatsMenuOpen = !this.flatsMenuOpen;
-    if (this.flatsMenuOpen) this.ProfileMenuOpen = false;
-  }
-  
-  toggleProfileMenu() {
-    this.ProfileMenuOpen = !this.ProfileMenuOpen;
-    if (this.ProfileMenuOpen) this.flatsMenuOpen = false;
+    if (this.flatsMenuOpen) this.profileMenuOpen = false;
   }
 
-  // 直接導頁
+  /** 直接導頁 */
   navigateTo(route: string) {
     this.router.navigate([route]);
-    this.isSidebarOpen = false;
-    this.flatsMenuOpen = false;
-    this.ProfileMenuOpen = false;
+    this.closeMenus();
   }
 
+  /** 統一收合選單 */
+  private closeMenus() {
+    this.isSidebarOpen = false;
+    this.flatsMenuOpen = false;
+    this.profileMenuOpen = false;
+  }
+
+  /** 監聽路由變化 */
   ngAfterViewInit() {
-    // 監聽路由變化
     this.router.events
       .pipe(filter(event => event instanceof NavigationEnd))
       .subscribe((event: NavigationEnd) => {
-        const route = event.urlAfterRedirects;
-        this.applyRouteColor(route);
+        this.applyRouteColor(event.urlAfterRedirects);
       });
 
-    // 初始化套用一次
     this.applyRouteColor(this.router.url);
   }
 
+  /** 根據路由切換 Header 文字顏色 */
   private applyRouteColor(route: string) {
-    switch(route) {
-      case '/login':
-        this.isDarkText = false; // 深色背景 → 白字
-        break;
-      case '/profile':
-        this.isDarkText = true; // 淺色背景 → 黑字
-        break;
-      default:
-        this.isDarkText = true;
-    }
+    const darkTextRoutes = ['/profile', '/update-profile', '/all-users', '/new-flat', '/view-flat'];
+    this.isDarkText = darkTextRoutes.includes(route);
   }
 }

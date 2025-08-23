@@ -22,8 +22,8 @@
       Profile
     </a>
     <!-- 下拉子選單 -->
-    <div *ngIf="ProfileMenuOpen" class="submenu">
-      <a href="#" (click)="navigateTo('/update-profile'); $event.preventDefault()">Personal details</a>
+    <div *ngIf="profileMenuOpen" class="submenu">
+      <a href="#" (click)="navigateTo('/update-profile'); $event.preventDefault()">Update Profile</a>
       <a href="#" (click)="navigateTo('/all-users'); $event.preventDefault()">Users</a>
     </div>
 

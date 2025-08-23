@@ -1,0 +1,139 @@
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: #FCFAF2;
+}  
+
+.main-content {
+  margin-left: 20%;                  /* 扣掉左側 sidebar */
+  width: 80%;                        /* 右側剩餘空間 */
+  min-height: 100vh;
+  display: flex;
+  justify-content: flex-start;         /* 水平置中 Profile Container */
+  align-items: center;               /* 垂直置中 Profile Container */
+  flex-direction: column;
+  background-color: #FCFAF2;
+  padding: 20px;
+  box-sizing: border-box;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+}
+
+.profile-header {
+  display: flex;
+  align-items: center;
+  flex-direction: column; 
+  gap: 12px;
+  margin-bottom: 30px;
+}
+
+.avatar-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-shrink: 0;        
+}
+
+.avatar-img {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.edit-avatar-btn {
+  margin-top: 10px;          /* 上方空間不要太大 */
+  padding: 6px 12px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.profile-subtitle {
+  font-size: 16px;
+  color: #666;
+  text-align: center; 
+  margin-top: 10px;    
+}
+
+.profile-info {
+  width: 100%;
+  max-width: 500px; 
+}
+
+.info-item {
+  display: flex;                   /* 左右兩端對齊 */
+  flex-direction: column;          /* 先上下排列 */
+  border-bottom: 1px solid #ddd;
+  padding: 12px 0;
+}
+
+.info-row {
+  display: flex;
+  justify-content: space-between;  /* 左右對齊 */
+  align-items: center;
+}
+
+.info-left h3 {
+  margin: 0;
+  font-weight: bold;
+}
+
+.info-left p {
+  margin: 2px 0 0 0;
+  color: #333;
+}
+
+.toggle-password-btn {
+  margin-left: 10px;
+  padding: 4px 8px;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.edit-btn {
+  align-self: flex-end;            /* 編輯按鈕靠右 */
+  padding: 4px 10px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  background: none;
+  cursor: pointer;
+  border-radius: 4px;
+  margin-top: 6px;
+}
+
+.edit-section {
+  display: flex;
+  flex-direction: column;   /* 垂直排列 */
+  gap: 8px;
+  width: 100%;
+  max-width: 300px;
+  margin-top: 12px;         /* 大頭貼下方 */
+}
+
+.edit-section input {
+  width: 100%;
+  
+  padding: 6px;
+}
+
+.edit-actions {
+  display: flex;
+  justify-content: flex-end;      /* 送出/取消按鈕靠右 */
+  gap: 6px;
+}
+
+.save-btn, .cancel-btn {
+  padding: 6px 12px;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+}
+
+.save-btn {
+  background: #007bff;
+  color: #fff;
+}
+
+.cancel-btn {
+  background: #ccc;
+}

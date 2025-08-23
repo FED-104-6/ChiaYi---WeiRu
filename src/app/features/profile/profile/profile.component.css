@@ -1,166 +1,96 @@
   /* Main Content (右側 Profile) */
-     .main-content {
-      margin-left: 20%;                  /* 扣掉左側 sidebar */
-      width: 80%;                        /* 右側剩餘空間 */
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;           /* 水平置中 Profile Container */
-      align-items: center;               /* 垂直置中 Profile Container */
-      background-color: #FCFAF2;
-      padding: 20px;
-      box-sizing: border-box;
-      font-family: 'Helvetica Neue', Arial, sans-serif;
-    }
-    
-    /* Profile Container */
-    .profile-container {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;           /* 垂直置中內容 */
-      align-items: center;               /* 水平置中內容 */
-      width: 100%;
-      max-width: 800px;
-      padding: 20px;
-      box-sizing: border-box;
-    }
-    
-    /* Profile Image */
-    .profile-image {
-      position: relative;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      margin-bottom: 16px;
-    }
-    
-    .avatar {
-      width: 120px;
-      height: 120px;
-      background-color: #000;
-      border-radius: 50%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-    
-    .avatar-letter {
-      color: #fff;
-      font-size: 60px;
-      font-weight: bold;
-    }
-    
-    .add-button {
-      position: absolute;
-      bottom: -10px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: #fff;
-      border: none;
-      border-radius: 20px;
-      padding: 6px 14px;
-      font-size: 14px;
-      font-weight: 500;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      cursor: pointer;
-    }
-    
-    .add-button .camera-icon::before {
-      content: "📷";
-      font-size: 16px;
-    }
-    
-    /* Profile Title & Description */
-    .profile-title {
-      font-size: 22px;
-      font-weight: bold;
-      margin-top: 16px;
-      text-align: center;
-    }
-    
-    .profile-desc {
-      font-size: 14px;
-      color: #666;
-      margin: 8px auto 24px auto;
-      max-width: 400px;
-      line-height: 1.5;
-      text-align: center;
-    }
-    
-    /* Profile Card */
-    .profile-card {
-      background: #fff;
-      border-radius: 8px;
-      width: 100%;
-      max-width: 500px;
-      padding: 16px;
-      margin-bottom: 20px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.08);
-    }
-    
-    .profile-card h3 {
-      font-size: 16px;
-      font-weight: bold;
-      margin-bottom: 12px;
-    }
-    
-    .profile-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 12px 0;
-      border-bottom: 1px solid #eee;
-    }
-    
-    .profile-item:last-child {
-      border-bottom: none;
-    }
-    
-    .profile-item .left {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      flex: 1;
-    }
-    
-    .profile-item .icon {
-      font-size: 20px;
-      width: 24px;
-    }
-    
-    .profile-item .text {
-      font-size: 14px;
-      text-align: left;
-    }
-    
-    .profile-item .arrow {
-      font-size: 18px;
-      color: #999;
-    }
+  .main-content {
+    margin-left: 20%;                  /* 扣掉左側 sidebar */
+    width: 80%;                        /* 右側剩餘空間 */
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;           /* 水平置中 Profile Container */
+    align-items: center;               /* 垂直置中 Profile Container */
+    background-color: #FCFAF2;
+    padding: 20px;
+    box-sizing: border-box;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+  }
+  
+  /* Profile Container */
+  .profile-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;           /* 垂直置中內容 */
+    align-items: center;               /* 水平置中內容 */
+    width: 100%;
+    max-width: 800px;
+    padding: 20px;
+    box-sizing: border-box;
+  }
 
-    @media (max-width: 768px) {
-      .sidebar {
-        width: 0;                 /* 隱藏左側 sidebar */
-      }
-      .main-content {
-        margin-left: 0;           /* 全寬顯示 */
-        width: 100%;
-        padding: 10px;
-      }
-    }
-    
-    @media (max-width: 480px) {
-      .avatar {
-        width: 100px;
-        height: 100px;
-      }
-    
-      .avatar-letter {
-        font-size: 48px;
-      }
-    
-      .profile-card {
-        max-width: 100%;
-      }
-    }
+.welcome {
+  display: grid;
+  place-items: center;
+  gap: 12px;
+  padding: 24px 16px;
+}
+
+/* 圓形大頭貼 */
+.avatar {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  overflow: hidden;
+  position: relative;
+  display: grid;
+  place-items: center;
+  background: #f3f4f6;            /* 無頭貼時的底色 */
+  border: 2px solid #e5e7eb;       /* 微邊框 */
+  box-shadow: 0 4px 18px rgba(0,0,0,0.08);
+}
+
+.avatar.has-photo {
+  background: transparent;
+  border-color: transparent;
+}
+
+.avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* 無照片時顯示的姓名縮寫 */
+.initials {
+  font-weight: 700;
+  font-size: 36px;
+  line-height: 1;
+  color: #666;
+}
+
+/* 文字樣式 */
+.hello {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 700;
+  color: #BC9F77; 
+}
+
+.subtitle {
+  margin: 0;
+  font-size: 14px;
+  color: #666;
+}
+
+/* 簡單的響應式微調 */
+@media (min-width: 640px) {
+  .hello { font-size: 24px; }
+  .subtitle { font-size: 15px; }
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    width: 0;                 /* 隱藏左側 sidebar */
+  }
+  .main-content {
+    margin-left: 0;           /* 全寬顯示 */
+    width: 100%;
+    padding: 10px;
+  }
+}

@@ -1,0 +1,44 @@
+<div class="main-content">
+
+  <!-- Profile Header -->
+  <div class="profile-header">
+    <div class="avatar-section">
+      <img [src]="profileImage || 'assets/default-avatar.png'" alt="Profile Image" class="avatar-img">
+      <input type="file" (change)="onImageChange($event)" hidden #fileInput>
+      <button class="edit-avatar-btn" (click)="fileInput.click()">Change Photo</button>
+    </div>
+
+    <p class="profile-subtitle">Update personal information and view</p>
+  </div>
+
+  <!-- Profile Fields -->
+  <div class="profile-info">
+    <div class="info-item" *ngFor="let field of profileFields">
+      <div class="info-row">
+        <div class="info-left">
+          <h3>{{ field.label }}</h3>
+          <p>{{ field.value }}</p>
+        </div>
+        <button class="edit-btn" (click)="editField(field.key)">Edit</button>
+      </div>
+
+      <!-- 編輯欄位直接出現在該 info-item 下方 -->
+      <div class="edit-section" *ngIf="editingField === field.key">
+        <input 
+          [type]="editingField === 'password' && !showPassword ? 'password' : 'text'" 
+          [(ngModel)]="editValue" 
+          placeholder="Enter new {{ getFieldLabel(field.key) }}">
+        
+        <button *ngIf="editingField === 'password'" type="button" class="toggle-password-btn" (click)="togglePassword()">
+          {{ showPassword ? 'Hide' : 'Show' }}
+        </button>
+        
+        <div class="edit-actions">
+          <button class="save-btn" (click)="saveEdit()">Save</button>
+          <button class="cancel-btn" (click)="cancelEdit()">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

@@ -13,6 +13,10 @@ export const routes: Routes = [
   { 
     path: 'profile', 
     loadComponent: () => import('./features/profile/profile/profile.component').then(m => m.ProfileComponent)
+  },
+  {
+    path: 'update-profile',
+    loadComponent: () => import('./features/profile/update-profile/update-profile.component').then(m => m.UpdateProfileComponent)
   }
 ];
 
