@@ -1,9 +1,10 @@
-<h2>Search Flats</h2>
-<input type="text" [(ngModel)]="query" placeholder="Search by name">
-
-<app-view-flat 
-  *ngFor="let flat of filteredFlats" 
-  [flat]="flat">
-</app-view-flat>
-
-<p *ngIf="filteredFlats.length === 0">No flats found.</p>
+<h2>Search flat</h2>
+<div class="flats-container">
+  <div *ngFor="let flat of flats" class="flat-card">
+    <h3>{{ flat.name }}</h3>
+    <p>Price: ${{ flat.price }}</p>
+    <p>Beds: {{ flat.beds }}</p>
+    <p>{{ flat.description }}</p>
+    <a [routerLink]="['/view-flat', flat.id]">View Details</a>
+  </div>
+</div>
