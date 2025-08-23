@@ -18,6 +18,10 @@ export class HeaderComponent implements AfterViewInit {
   isDarkText = false; // true → 黑字，false → 白字
   isLoggedIn = false;
 
+  // 新增控制 My Flats 子選單
+  flatsMenuOpen = false;
+  ProfileMenuOpen = false;
+
   constructor(public authService: AuthService, private router: Router) {
     // 監聽登入狀態
     this.authService.isLoggedIn$.subscribe(status => {
@@ -25,24 +29,33 @@ export class HeaderComponent implements AfterViewInit {
     });
   }
 
+  // 語言切換
   setLanguage(lang: 'en' | 'zh') {
     this.language = lang;
   }
 
+  // Sidebar 開關
   toggleSidebar() {
     this.isSidebarOpen = !this.isSidebarOpen;
   }
 
+  // 登出
   async logout() {
-    await this.authService.logout(); // ✅ 等待完成
-    this.isSidebarOpen = false;       // 收起 sidebar
-  }
-
-  async navigateToLogin() {
-    await this.authService.logout();  // 點 logo 也登出
+    await this.authService.logout();
     this.isSidebarOpen = false;
+    this.flatsMenuOpen = false; // 登出時收起子選單
+    this.ProfileMenuOpen = false; // 登出時收起子選單
   }
 
+  // 點 Logo 登出
+  async navigateToLogin() {
+    await this.authService.logout();
+    this.isSidebarOpen = false;
+    this.flatsMenuOpen = false;
+    this.ProfileMenuOpen = false;
+  }
+
+  // 檢查登入再導頁
   checkAuth(route: string) {
     this.authService.isLoggedIn$.pipe(take(1)).subscribe(isLoggedIn => {
       if (isLoggedIn) {
@@ -52,7 +65,27 @@ export class HeaderComponent implements AfterViewInit {
         this.router.navigate(['/login']);
       }
       this.isSidebarOpen = false;
+      this.flatsMenuOpen = false; // 點其他按鈕也收起子選單
+      this.ProfileMenuOpen = false;
     });
+  }
+
+  toggleFlatsMenu() {
+    this.flatsMenuOpen = !this.flatsMenuOpen;
+    if (this.flatsMenuOpen) this.ProfileMenuOpen = false;
+  }
+  
+  toggleProfileMenu() {
+    this.ProfileMenuOpen = !this.ProfileMenuOpen;
+    if (this.ProfileMenuOpen) this.flatsMenuOpen = false;
+  }
+
+  // 直接導頁
+  navigateTo(route: string) {
+    this.router.navigate([route]);
+    this.isSidebarOpen = false;
+    this.flatsMenuOpen = false;
+    this.ProfileMenuOpen = false;
   }
 
   ngAfterViewInit() {

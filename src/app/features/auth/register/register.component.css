@@ -29,13 +29,13 @@
 }
 
 /* Header */
-.home-header {
+.register-header {
   position: absolute;
-  top: 30px;
-  left: 60px;
-  right: 60px;
+  top: 50px;
+  left: 0;
+  right: 0;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   z-index: 10;
   font-family: 'Helvetica Neue', Arial, sans-serif;
@@ -49,34 +49,6 @@
   text-decoration: none;
   letter-spacing: 2px;
   font-family: 'Helvetica Neue', Arial, sans-serif;
-}
-
-.header-right {
-  display: flex;
-  gap: 20px;
-  align-items: center;
-}
-
-.lang-switch button {
-  background: transparent;
-  border: none;
-  color: #fff;
-  font-size: 14px;
-  cursor: pointer;
-  opacity: 0.5;
-}
-
-.lang-switch button.active {
-  opacity: 1;
-  font-weight: bold;
-}
-
-.menu-btn {
-  background: none;
-  border: none;
-  font-size: 20px;
-  color: #fff;
-  cursor: pointer;
 }
 
 /* 登入卡片 */

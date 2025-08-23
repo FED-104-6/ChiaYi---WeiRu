@@ -17,8 +17,28 @@
   </div>
 
   <nav>
-    <a href="#" (click)="checkAuth('/profile'); $event.preventDefault()">Profile</a>
-    <a href="#" (click)="checkAuth('/myflats'); $event.preventDefault()">My Flats</a>
+   <!-- My Profile 主選單 -->
+    <a href="#" (click)="toggleProfileMenu(); $event.preventDefault()">
+      Profile
+    </a>
+    <!-- 下拉子選單 -->
+    <div *ngIf="ProfileMenuOpen" class="submenu">
+      <a href="#" (click)="navigateTo('/update-profile'); $event.preventDefault()">Personal details</a>
+      <a href="#" (click)="navigateTo('/all-users'); $event.preventDefault()">Users</a>
+    </div>
+
+    <!-- My Flats 主選單 -->
+    <a href="#" (click)="toggleFlatsMenu(); $event.preventDefault()">
+      Flats
+    </a>
+    <!-- 下拉子選單 -->
+    <div *ngIf="flatsMenuOpen" class="submenu">
+      <a href="#" (click)="navigateTo('/new-flat'); $event.preventDefault()">New Flat</a>
+      <a href="#" (click)="navigateTo('/view-flat'); $event.preventDefault()">View Flat</a>
+      <a href="#" (click)="navigateTo('/edit-flat'); $event.preventDefault()">Edit Flat</a>
+      <a href="#" (click)="navigateTo('/my-flat'); $event.preventDefault()">My Flat</a>
+    </div>
+
     <a href="#" (click)="checkAuth('/favourites'); $event.preventDefault()">Favourites</a>
     <a href="#" (click)="checkAuth('/messages'); $event.preventDefault()">Messages</a>
     <a href="#" (click)="logout(); $event.preventDefault()">Logout</a>
