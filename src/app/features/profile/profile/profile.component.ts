@@ -10,8 +10,25 @@ import { CommonModule } from '@angular/common';
 })
 export class ProfileComponent {
   profileSections = [
-    { icon: '🌐', text: "Languages I speak" },
-    { icon: '🗺️', text: 'Where I live' },
-    { icon: '📍', text: 'Where I want to go' }
+    {
+      title: 'Manage account',
+      items: [
+        { icon: '👤', text: 'Personal details' },
+        { icon: '🌐', text: 'Languages' }
+      ]
+    },
+    {
+      title: 'Payment info',
+      items: [
+        { icon: '💰', text: 'Rewards & Wallet' },
+        { icon: '💳', text: 'Payment methods' }
+      ]
+    },
+    {
+      title: 'Travel activity',
+      items: [
+        { icon: '✈️', text: 'Trips' }
+      ]
+    }  
   ];
 }

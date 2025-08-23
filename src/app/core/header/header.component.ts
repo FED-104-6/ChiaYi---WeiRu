@@ -2,7 +2,7 @@ import { Component, AfterViewInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, NavigationEnd } from '@angular/router';
 import { AuthService } from '../../features/auth/auth.service';
-import { filter } from 'rxjs/operators';
+import { filter, take } from 'rxjs/operators';
 import { RouterModule } from '@angular/router';
 
 @Component({
@@ -16,8 +16,14 @@ export class HeaderComponent implements AfterViewInit {
   language: 'en' | 'zh' = 'en';
   isSidebarOpen = false;
   isDarkText = false; // true → 黑字，false → 白字
+  isLoggedIn = false;
 
-  constructor(public authService: AuthService, private router: Router) {}
+  constructor(public authService: AuthService, private router: Router) {
+    // 監聽登入狀態
+    this.authService.isLoggedIn$.subscribe(status => {
+      this.isLoggedIn = status;
+    });
+  }
 
   setLanguage(lang: 'en' | 'zh') {
     this.language = lang;
@@ -27,9 +33,26 @@ export class HeaderComponent implements AfterViewInit {
     this.isSidebarOpen = !this.isSidebarOpen;
   }
 
-  logout() {
-    this.authService.logout();
-    this.toggleSidebar(); // 關閉選單
+  async logout() {
+    await this.authService.logout(); // ✅ 等待完成
+    this.isSidebarOpen = false;       // 收起 sidebar
+  }
+
+  async navigateToLogin() {
+    await this.authService.logout();  // 點 logo 也登出
+    this.isSidebarOpen = false;
+  }
+
+  checkAuth(route: string) {
+    this.authService.isLoggedIn$.pipe(take(1)).subscribe(isLoggedIn => {
+      if (isLoggedIn) {
+        this.router.navigate([route]);
+      } else {
+        alert('Please register or log in first');
+        this.router.navigate(['/login']);
+      }
+      this.isSidebarOpen = false;
+    });
   }
 
   ngAfterViewInit() {
@@ -41,21 +64,20 @@ export class HeaderComponent implements AfterViewInit {
         this.applyRouteColor(route);
       });
 
-    // 初始化時套用一次顏色
+    // 初始化套用一次
     this.applyRouteColor(this.router.url);
   }
 
-  // 根據 route 設定 header 顏色
   private applyRouteColor(route: string) {
     switch(route) {
-      case '/home':
+      case '/login':
         this.isDarkText = false; // 深色背景 → 白字
         break;
       case '/profile':
         this.isDarkText = true; // 淺色背景 → 黑字
         break;
       default:
-        this.isDarkText = true; // 其他頁面淺色背景 → 黑字
+        this.isDarkText = true;
     }
   }
 }

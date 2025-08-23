@@ -1,60 +1,57 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { RouterModule, Router } from '@angular/router';
+import { HeaderComponent } from '../../../core/header/header.component';
 import { AuthService } from '../../../features/auth/auth.service';
-import { Subscription } from 'rxjs';
 
 @Component({
-  selector: 'app-login',
+  selector: 'app-login',              
   standalone: true,
-  imports: [CommonModule, RouterModule, FormsModule],
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  imports: [
+    CommonModule,
+    FormsModule,
+    RouterModule,
+    HeaderComponent
+  ],
+  templateUrl: './login.component.html', 
+  styleUrls: ['./login.component.css']  
 })
-export class LoginComponent implements OnInit, OnDestroy {
-  showLogin: boolean = false;
-  email: string = '';
-  password: string = '';
-  errorMessage: string = '';
+export class LoginComponent {         
   language: 'en' | 'zh' = 'en';
+  currentSlide = 5;
+  totalSlides = 5;
+  isPaused = false;
 
-  isLoggedIn: boolean = false; // ← 新增
-  private sub!: Subscription;   // ← 用來訂閱 AuthService 狀態
+  showLogin = true;
+  email = '';
+  password = '';
+  errorMessage = '';
 
-  constructor(private authService: AuthService, private router: Router) {}
-
-  ngOnInit(): void {
-    setTimeout(() => {
-      this.showLogin = true;
-    }, 50);
-
-    // 訂閱登入狀態
-    this.sub = this.authService.isLoggedIn$.subscribe(status => {
-      this.isLoggedIn = status;
-    });
-  }
-
-  ngOnDestroy(): void {
-    this.sub.unsubscribe();
-  }
+  constructor(
+    public authService: AuthService,
+    private router: Router
+  ) {}
 
   setLanguage(lang: 'en' | 'zh') {
     this.language = lang;
   }
 
-  async onLogin(): Promise<void> {
-    this.errorMessage = '';
-    try {
-      await this.authService.login(this.email, this.password);
-      // 導向首頁已在 AuthService 內處理
-    } catch (error: any) {
-      console.error('Login error:', error);
-      this.errorMessage = error.message || 'Login failed, please try again later';
-    }
+  logout() {
+    this.authService.logout();
+    this.showLogin = true; // 登出後顯示登入卡
   }
 
-  async onLogout(): Promise<void> {
-    await this.authService.logout();
+  // 登入表單事件，用 async/await 呼叫 Promise
+  async onLogin() {
+    try {
+      await this.authService.login(this.email, this.password);
+      this.errorMessage = '';
+      this.showLogin = false;
+      this.router.navigate(['/profile']); // 登入成功跳轉 Profile
+    } catch (err: any) {
+      this.errorMessage = 'Login failed. Please check your credentials.';
+      console.error(err);
+    }
   }
 }
