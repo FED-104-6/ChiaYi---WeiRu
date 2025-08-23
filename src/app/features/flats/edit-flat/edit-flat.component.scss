@@ -1,71 +1,132 @@
+// 🎨 Variables
+$font-family: 'Inter', sans-serif;
+$bg-color: #f7f7f7;
+$text-dark: #222222;
+$text-light: #717171;
+$label-color: #484848;
+$placeholder-color: #a0a0a0;
+$border-color: #b0b0b0;
+$card-border: #e0e0e0;
+$primary: #00AA90;
+$primary-dark: #008772;
+$disabled: #cccccc;
+$shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+
+// 🖥 Global Styles
 html, body {
   height: 100%;
   margin: 0;
+  font-family: $font-family;
+  background-color: $bg-color;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-body {
-  background-color: #FCFAF2;
-}
-
-.edit-flat-card {
-  max-width: 400px;
-  margin: 20px auto;
-  padding: 16px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  background: #fafafa;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.edit-flat-card h3 {
-  margin-bottom: 16px;
-  color: #333;
-  font-size: 1.5rem;
-  text-align: center;
-}
-
-.edit-flat-card label {
-  display: block;
-  margin-bottom: 12px;
-  font-weight: 500;
-  color: #555;
-}
-
-.edit-flat-card input, .edit-flat-card textarea {
-  display: block;
+// 📦 Container
+.edit-flat-container {
   width: 100%;
-  margin-top: 4px;
-  padding: 10px;
-  border: 1px solid #bbb;
-  border-radius: 4px;
+  max-width: 480px;
+  padding: 1rem;
+  margin: auto;
   box-sizing: border-box;
-  transition: border-color 0.3s ease;
 }
 
-.edit-flat-card input:focus, .edit-flat-card textarea:focus {
-  border-color: #00AA90;
-  outline: none;
-  box-shadow: 0 0 0 2px rgba(0, 170, 144, 0.2);
+// 📝 Card
+.edit-flat-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 32px;
+  box-shadow: $shadow;
+  border: 1px solid $card-border;
+  transition: transform 0.2s ease-in-out;
+
+  &:hover {
+    transform: translateY(-3px);
+  }
+
+  .card-title {
+    font-size: 1.8rem;
+    color: $text-dark;
+    margin-bottom: 0.5rem;
+    text-align: center;
+    font-weight: 700;
+  }
+
+  .card-subtitle {
+    font-size: 0.95rem;
+    color: $text-light;
+    margin-bottom: 2rem;
+    text-align: center;
+  }
 }
 
-.edit-flat-card button {
-  margin-top: 16px;
-  padding: 12px 24px;
-  background: #00AA90;
-  color: white;
-  font-weight: 600;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
+// 🏷️ Form
+.form-group {
+  margin-bottom: 1.5rem;
+
+  label {
+    display: block;
+    margin-bottom: 0.6rem;
+    font-weight: 600;
+    color: $label-color;
+    font-size: 0.9rem;
+  }
+
+  input,
+  textarea {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid $border-color;
+    border-radius: 8px;
+    box-sizing: border-box;
+    font-size: 1rem;
+    color: $text-dark;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+
+    &::placeholder {
+      color: $placeholder-color;
+    }
+
+    &:focus {
+      border-color: $primary;
+      box-shadow: 0 0 0 3px rgba($primary, 0.2);
+      outline: none;
+    }
+  }
+
+  textarea {
+    min-height: 100px;
+    resize: vertical;
+  }
+}
+
+// 💾 Save Button
+.save-button {
+  display: block;
   width: 100%;
-  transition: background-color 0.3s ease;
-}
+  padding: 14px 24px;
+  background: $primary;
+  color: white;
+  font-weight: 700;
+  font-size: 1.1rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
 
-.edit-flat-card button:hover {
-  background: #008772;
-}
+  &:hover {
+    background: $primary-dark;
+    transform: translateY(-1px);
+  }
 
-.edit-flat-card button:disabled {
-  background: #ccc;
-  cursor: not-allowed;
+  &:active {
+    transform: translateY(0);
+  }
+
+  &:disabled {
+    background: $disabled;
+    cursor: not-allowed;
+    box-shadow: none;
+  }
 }

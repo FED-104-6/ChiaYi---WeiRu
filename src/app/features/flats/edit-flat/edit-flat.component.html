@@ -1,27 +1,28 @@
-<body>
+<div class="edit-flat-container">
   <div class="edit-flat-card">
-  <h3>Edit Flat: {{ flat.name }}</h3>
+    <h3 class="card-title">Edit Your Flat Information</h3>
+    <p class="card-subtitle">Please update the fields below to reflect the latest details.</p>
 
-  <label>
-    Name:
-    <input type="text" [(ngModel)]="flat.name" placeholder="Name">
-  </label>
+    <div class="form-group">
+      <label for="flatName">Name</label>
+      <input id="flatName" type="text" [(ngModel)]="flat.name" placeholder="Flat Name">
+    </div>
 
-  <label>
-    Price:
-    <input type="number" [(ngModel)]="flat.price" placeholder="Price">
-  </label>
+    <div class="form-group">
+      <label for="flatPrice">Price</label>
+      <input id="flatPrice" type="number" [(ngModel)]="flat.price" placeholder="Price (e.g., 1500)">
+    </div>
 
-  <label>
-    Beds:
-    <input type="number" [(ngModel)]="flat.beds" placeholder="Beds">
-  </label>
+    <div class="form-group">
+      <label for="flatBeds">Number of Beds</label>
+      <input id="flatBeds" type="number" [(ngModel)]="flat.beds" placeholder="Number of beds (e.g., 2)">
+    </div>
 
-  <label>
-    Description:
-    <textarea [(ngModel)]="flat.description" placeholder="Description"></textarea>
-  </label>
+    <div class="form-group">
+      <label for="flatDescription">Description</label>
+      <textarea id="flatDescription" [(ngModel)]="flat.description" placeholder="Describe your flat in detail..."></textarea>
+    </div>
 
-  <button (click)="save()">Save</button>
+    <button class="save-button" (click)="save()">Save Changes</button>
+  </div>
 </div>
-</body>

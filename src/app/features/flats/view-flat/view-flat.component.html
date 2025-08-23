@@ -1,6 +1,13 @@
-<div class="flat-card" *ngIf="flat">
-  <h3>{{ flat.name }}</h3>
-  <p>Price: ${{ flat.price }}</p>
-  <p>Beds: {{ flat.beds }}</p>
-  <p>{{ flat.description }}</p>
+<div class="flat-list">
+  <div *ngFor="let flat of flats" class="flat-card">
+    <div class="flat-image">
+      <img [src]="flat.image" [alt]="flat.name" />
+    </div>
+    <div class="flat-info">
+      <h3>{{ flat.name }}</h3>
+      <p class="flat-price">${{ flat.price }} / month</p>
+      <p class="flat-beds">{{ flat.beds }} beds</p>
+      <p class="flat-description">{{ flat.description }}</p>
+    </div>
+  </div>
 </div>

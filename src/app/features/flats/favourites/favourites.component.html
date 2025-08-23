@@ -1,9 +1,30 @@
+<!-- Main title for the favorites section -->
+<h2 class="section-title">My Favorites</h2>
+
+<!-- Container for the favorite flats, using Grid for layout -->
 <div class="flats-container">
-    <div *ngFor="let flat of favourites" class="flat-card">
-      <h3>{{ flat.name }}</h3>
-      <p>Price: ${{ flat.price }}</p>
-      <p>Beds: {{ flat.beds }}</p>
-      <p>{{ flat.description }}</p>
-      <a [routerLink]="['/view-flat', flat.id]">View Details</a>
+  <!-- Loop through each flat item in the 'favourites' array -->
+  <div *ngFor="let flat of favourites" class="flat-card">
+    <!-- Flat image -->
+    <div class="flat-image-wrapper">
+      <img [src]="flat.image" [alt]="flat.name" class="flat-image">
+    </div>
+    <!-- Flat information block -->
+    <div class="flat-info">
+      <h3 class="flat-name">{{ flat.name }}</h3>
+      <p class="flat-description">{{ flat.description }}</p>
+      <div class="flat-details">
+        <span class="detail-item">
+          <!-- Price information -->
+          <span class="icon">💰</span> ${{ flat.price }}
+        </span>
+        <span class="detail-item">
+          <!-- Bed information -->
+          <span class="icon">🛏️</span> {{ flat.beds }} Beds
+        </span>
+      </div>
+      <!-- Optional: Add a "View Details" button here if needed -->
+      <!-- <a [routerLink]="['/view-flat', flat.id]" class="view-details-button">View Details</a> -->
     </div>
   </div>
+</div>
