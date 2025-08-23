@@ -1,46 +1,56 @@
-@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@700&display=swap');
+
 h2 {
   color: green;
   margin-bottom: 1rem;
   text-align: center;
- }
- .abc{
-  font-family: 'Dancing Script', cursive;
+}
+
+.abc {
+  font-family: 'Caveat', cursive;
   font-size: 2.8rem;
-  
- }
- 
- 
- .flats-container {
-  display: flex; /* 啟用 Flexbox */
-  flex-wrap: wrap; /* 讓卡片在空間不夠時換行 */
-  gap: 20px; /* 設定卡片之間的間距 */
- }
- 
- 
- .flat-card {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.6rem; // icon 與文字間距
+}
+
+.title-icon {
+  font-size: 2.5rem;
+  line-height: 1;
+}
+
+.title-text {
+  display: inline-block;
+}
+
+/* Flats container */
+.flats-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.flat-card {
   flex: 1 1 300px;
   border: 1px solid #ccc;
   border-radius: 8px;
   padding: 1rem;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
- }
- 
- 
- .flat-card h3 {
+}
+
+.flat-card h3 {
   margin-top: 0;
- }
- 
- 
- .flat-image {
-  width: 100%; /* 讓圖片寬度與容器相同 */
-  height: auto; /* 保持圖片的原始比例 */
+}
+
+.flat-image {
+  width: 100%;
+  height: auto;
   margin-bottom: 0.5rem;
-  border-radius: 4px; /* 可選：增加圓角 */
- }
- 
- 
- .flat-card a {
+  border-radius: 4px;
+}
+
+.flat-card a {
   display: inline-block;
   margin-top: 1rem;
   padding: 0.5rem 1rem;
@@ -48,15 +58,13 @@ h2 {
   color: white;
   text-decoration: none;
   border-radius: 4px;
- }
+}
 
- :host {
+:host {
   display: block;
   min-height: 100vh;
   padding: 2rem;
   box-sizing: border-box;
-
-  /* 背景圖片 */
   background-color: #FCFAF2;
   background-size: cover;
 }

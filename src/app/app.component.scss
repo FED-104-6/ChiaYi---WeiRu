@@ -1,58 +1,95 @@
-:host {
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&display=swap');
+
+/* 全局字體 */
+* {
+  font-family: 'Caveat', cursive;
+}
+
+/* 整個 app 容器 */
+.app-container {
+  display: flex;
+  min-height: 100vh;
+  background-color: #f7f7f7;
+  position: relative;
+}
+
+/* 側邊欄 */
+nav {
+  background-color: #e07979;
+  width: 220px;
+  transition: width 0.3s ease, height 0.3s ease;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  padding: 1rem 0;
+  height: 100vh; /* 展開時占滿左側高度 */
+
+  &.collapsed {
+    width: 50px;
+    height: 50px; /* 收起時高度改為固定小方塊 */
+    position: fixed;
+    top: 1rem;
+    left: 1rem;
+    border-radius: 6px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    padding: 0.5rem;
+    z-index: 1000;
+  }
+
+  .toggle-btn {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.2rem;
+    cursor: pointer;
+    margin-bottom: 1rem;
+    padding: 0 0.5rem;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    li {
+      width: 100%;
+
+      a {
+        display: block;
+        text-decoration: none;
+        color: white;
+        font-weight: 600;
+        padding: 0.75rem 1rem;
+        white-space: nowrap;
+        transition: background 0.3s, color 0.3s;
+
+        &:hover {
+          background-color: wheat;
+          color: #eef7fc;
+        }
+      }
+    }
+  }
 }
 
-nav {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 1rem;
-  background-color: #f8f9fa;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  flex-wrap: wrap;
-}
-
-nav a {
-  text-decoration: none;
-  color: #34495e;
-  font-weight: 600;
-  font-size: 1.05rem;
-  padding: 0.75rem 1.25rem;
-  transition: all 0.3s ease;
-  border-radius: 6px;
-  white-space: nowrap;
-}
-
-nav a:hover {
-  color: #0077cc;
-  background-color: #eef7fc;
-  transform: translateY(-2px);
-}
-
-nav a:not(:last-child) {
-  margin-right: 0.5rem;
-}
-
-nav a:not(:last-child)::after {
-  content: '|';
-  margin-left: 0.5rem;
-  color: #b0b0b0;
-  font-weight: 400;
-}
-
-main {
-  flex-grow: 1;
-  padding: 2rem;
-  background-color: #ffffff;
-}
-
-footer {
+/* 收起時隱藏文字，只顯示按鈕 */
+nav.collapsed ul li a {
   text-align: center;
-  padding: 1rem;
-  background-color: #f8f9fa;
-  color: #777;
-  font-size: 0.9rem;
-  border-top: 1px solid #e0e0e0;
+  padding-left: 0;
+  padding-right: 0;
+  font-size: 0;
+}
+
+/* 主內容區 */
+main {
+  flex: 1;
+  display: flex;
+  justify-content: center; /* 水平置中 */
+  align-items: center;     /* 垂直置中 */
+  padding: 2rem;
+  box-sizing: border-box;
+  background-color: #f7f7f7;
 }
