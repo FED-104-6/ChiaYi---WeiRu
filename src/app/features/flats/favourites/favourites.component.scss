@@ -1,137 +1,164 @@
-/* 匯入一個具有「愛」主題感的字體，這裡使用 'Dancing Script' */
-@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap');
+/* ❤️ 收藏清單主題字體 */
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@700&display=swap');
 
-/* 主要標題樣式 */
+/* 標題 */
 .section-title {
-  color: salmon; // 深灰色文字
-  font-size: 2.8rem; // 更大的字體以搭配新字體風格
-  font-weight: 700; // 粗體
-  margin-bottom: 2.5rem; // 底部間距
-  text-align: center; // 標題置中
-  padding-top: 2rem; // 頂部內邊距
-  font-family: 'Caveat', cursive; // 套用新的「愛」主題字體
-  display: flex; // 啟用 Flexbox 以便圖標與文字對齊
-  align-items: center; // 垂直置中圖標與文字
-  justify-content: center; // 水平置中標題內容
-  gap: 0.8rem; // 圖標與文字之間的間距
+  color: #00CCAA;
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
+  text-align: center;
+  font-family: 'Caveat', cursive;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.6rem;
+
+  .title-icon {
+    font-size: 2rem;
+  }
 }
 
-/* 收藏平面的容器樣式 */
+/* 容器：桌機 3 欄，手機自動 1 欄 */
 .flats-container {
-  display: grid; // 啟用 CSS Grid 佈局
-  // 預設為一欄，用於小螢幕 (手機)
-  grid-template-columns: repeat(1, 1fr);
-  gap: 2rem; // 網格間距
-  padding: 1.5rem; // 內部邊距
-  max-width: 1200px; // 最大寬度
-  margin: 0 auto; // 容器置中
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); // 桌機固定三欄
+  gap: 2rem;
+  padding: 1.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
-/* 響應式佈局：平板及桌面 (min-width: 768px) */
-@media (min-width: 768px) {
-  .flats-container {
-    // 平板和桌面上顯示兩欄，實現「兩個上兩個下」的排版
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-/* 單個平面卡片的樣式 */
+/* 卡片 */
 .flat-card {
-  background-color: #FCFAF2; // 白色背景
-  border-radius: 12px; // 圓角
-  overflow: hidden; // 隱藏溢出的內容
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08); // 柔和的陰影
-  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out; // 過渡動畫
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  display: flex;
+  flex-direction: column;
 
   &:hover {
-    transform: translateY(-5px); // 鼠標懸停時上浮
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12); // 更深的陰影
+    transform: translateY(-6px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
   }
 }
 
-/* 圖片容器樣式 */
+/* 圖片 */
 .flat-image-wrapper {
-  width: 100%; // 圖片寬度佔滿容器
-  height: 200px; // 固定圖片高度
-  overflow: hidden; // 隱藏溢出的圖片部分
-  display: flex; // 啟用 flex 佈局以置中圖片
-  align-items: center; // 垂直置中
-  justify-content: center; // 水平置中
-  border-bottom: 1px solid #eee; // 底部細線
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+  position: relative;
+  flex-shrink: 0;
 }
 
-/* 圖片樣式 */
 .flat-image {
-  width: 100%; // 圖片寬度佔滿容器
-  height: 100%; // 圖片高度佔滿容器
-  object-fit: cover; // 裁切圖片以填滿空間並保持比例
-  display: block; // 移除圖片底部的空白
-  border-radius: 12px 12px 0 0; // 圖片上方圓角
-}
-
-/* 平面資訊區塊樣式 */
-.flat-info {
-  padding: 1rem 1.2rem; // 內部邊距
-}
-
-/* 平面名稱樣式 */
-.flat-name {
-  font-size: 1.3rem; // 字體大小
-  font-weight: 600; // 粗體
-  color: #222; // 深色文字
-  margin-bottom: 0.5rem; // 底部間距
-}
-
-/* 平面描述樣式 */
-.flat-description {
-  font-size: 0.95rem; // 字體大小
-  color: #666; // 較淺的文字顏色
-  line-height: 1.5; // 行高
-  margin-bottom: 1rem; // 底部間距
-  height: 4.5em; // 固定高度，防止描述過長影響佈局
-  overflow: hidden; // 隱藏溢出的文字
-  text-overflow: ellipsis; // 顯示省略號
-  display: -webkit-box; // 適用於 Webkit 瀏覽器
-  -webkit-line-clamp: 3; // 限制最多顯示 3 行
-  -webkit-box-orient: vertical; // 垂直排版
-}
-
-/* 詳細資訊容器 */
-.flat-details {
-  display: flex; // 啟用 Flexbox
-  justify-content: space-between; // 項目之間留白
-  align-items: center; // 垂直置中
-  margin-top: 1rem; // 頂部間距
-  font-size: 1rem; // 字體大小
-  color: #444; // 文字顏色
-}
-
-/* 詳細資訊單項樣式 */
-.detail-item {
-  display: flex; // 啟用 Flexbox
-  align-items: center; // 垂直置中
-  gap: 0.4rem; // 圖標和文字間距
-}
-
-/* 圖標樣式 */
-.icon {
-  font-size: 1.1rem; // 圖標大小
-}
-
-/* 查看詳情按鈕樣式 */
-.view-details-button {
-  display: block; // 塊級元素
-  width: fit-content; // 寬度自適應內容
-  margin: 1.5rem auto 0; // 置中並設置上下邊距
-  padding: 0.7rem 1.5rem; // 內部邊距
-  background-color: #ff5a5f; // Airbnb 主色調 (紅色)
-  color: white; // 白色文字
-  text-decoration: none; // 無下劃線
-  border-radius: 8px; // 圓角
-  font-weight: 600; // 粗體
-  transition: background-color 0.2s ease-in-out; // 過渡動畫
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
 
   &:hover {
-    background-color: #e04e53; // 懸停時顏色變深
+    transform: scale(1.08);
+  }
+}
+
+/* 資訊 */
+.flat-info {
+  padding: 1rem 1.2rem;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.flat-name {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #222;
+  margin-bottom: 0.4rem;
+}
+
+.flat-description {
+  font-size: 0.95rem;
+  color: #555;
+  margin-bottom: 0.8rem;
+  line-height: 1.4;
+  flex-grow: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* 詳細資訊 */
+.flat-details {
+  display: flex;
+  justify-content: space-between;
+  font-size: 1rem;
+  color: #444;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.detail-item {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.icon {
+  font-size: 1.1rem;
+}
+
+/* 💔 移除收藏按鈕 */
+.remove-fav {
+  background: #ff5a5f;
+  color: #fff;
+  border: none;
+  padding: 0.5rem 1.2rem;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  align-self: flex-start;
+
+  &:hover {
+    background: #e04e53;
+  }
+}
+
+/* 📱 響應式調整 */
+@media (max-width: 1024px) {
+  .flats-container {
+    grid-template-columns: repeat(2, 1fr); // 平板顯示 2 欄
+  }
+}
+
+@media (max-width: 600px) {
+  .flats-container {
+    grid-template-columns: 1fr; // 手機顯示單欄
+  }
+
+  .flat-image-wrapper {
+    height: 150px;
+  }
+
+  .flat-name {
+    font-size: 1.1rem;
+  }
+
+  .flat-description {
+    font-size: 0.85rem;
+  }
+
+  .flat-details {
+    font-size: 0.85rem;
+  }
+
+  .remove-fav {
+    padding: 0.4rem 0.9rem;
+    font-size: 0.85rem;
   }
 }
