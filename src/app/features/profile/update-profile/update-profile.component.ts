@@ -13,9 +13,9 @@ export class UpdateProfileComponent {
   profileImage: string | ArrayBuffer | null = null;
 
   profileFields = [
-    { key: 'fullName', label: 'Full Name', value: 'John Doe' },
-    { key: 'phone', label: 'Phone', value: '+1 234 567 890' },
-    { key: 'email', label: 'Email', value: 'john@example.com' },
+    { key: 'fullName', label: 'Full Name', value: 'Ben Chang' },
+    { key: 'phoneNumber', label: 'Phone Number', value: '+1 234 567 890' },
+    { key: 'email', label: 'Email', value: 'bnb0857@gmail.com' },
     { key: 'password', label: 'Password', value: '********' }
   ];
 
