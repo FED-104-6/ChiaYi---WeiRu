@@ -1,93 +1,99 @@
-/* Container */
-.profile-container {
-    width: 100%;
-    padding: 40px;
-    text-align: center;
-    font-family: Arial, sans-serif;
-    color: #333;
-    background-color: #FCFAF2;
-  }
-  
-  /* Profile Image */
-  .profile-image {
-    position: relative;
-    display: inline-block;
-  }
-  
-  .avatar {
-    width: 120px;
-    height: 120px;
-    background-color: #000;
-    border-radius: 50%;
+  /* Main Content (右側 Profile) */
+  .main-content {
+    margin: 0 auto; /* 避開左側 sidebar */
+    padding: 50px;
+    min-height: 100vh;
+    width: 80%;
+    max-width: 1200px;
+    box-sizing: border-box;
     display: flex;
+    flex-direction: column;
+    gap: 20px;
     justify-content: center;
-    align-items: center;
+    align-items: center; /* 內容水平置中 */
+    background-color: #FCFAF2;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
   }
   
-  .avatar-letter {
-    color: #fff;
-    font-size: 60px;
-    font-weight: bold;
-  }
-  
-  .add-button {
-    position: absolute;
-    bottom: -10px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: #fff;
-    border: none;
-    border-radius: 20px;
-    padding: 6px 14px;
-    font-size: 14px;
-    font-weight: 500;
+  /* Profile Container */
+  .profile-container {
     display: flex;
-    align-items: center;
-    gap: 6px;
-    cursor: pointer;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    flex-direction: column;
+    justify-content: center;           /* 垂直置中內容 */
+    align-items: center;               /* 水平置中內容 */
+    width: 100%;
+    max-width: 800px;
+    padding: 20px;
+    box-sizing: border-box;
   }
-  
-  .add-button .camera-icon::before {
-    content: "📷";
-    font-size: 16px;
+
+.welcome {
+  display: grid;
+  place-items: center;
+  gap: 12px;
+  padding: 24px 16px;
+}
+
+/* 圓形大頭貼 */
+.avatar {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  overflow: hidden;
+  position: relative;
+  display: grid;
+  place-items: center;
+  background: #f3f4f6;            /* 無頭貼時的底色 */
+  border: 2px solid #e5e7eb;       /* 微邊框 */
+  box-shadow: 0 4px 18px rgba(0,0,0,0.08);
+}
+
+.avatar.has-photo {
+  background: transparent;
+  border-color: transparent;
+}
+
+.avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* 無照片時顯示的姓名縮寫 */
+.initials {
+  font-weight: 700;
+  font-size: 36px;
+  line-height: 1;
+  color: #666;
+}
+
+/* 文字樣式 */
+.hello {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 700;
+  color: #BC9F77; 
+}
+
+.subtitle {
+  margin: 0;
+  font-size: 14px;
+  color: #666;
+}
+
+/* 簡單的響應式微調 */
+@media (min-width: 640px) {
+  .hello { font-size: 24px; }
+  .subtitle { font-size: 15px; }
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    width: 0;                 /* 隱藏左側 sidebar */
   }
-  
-  /* Profile Title & Desc */
-  .profile-title {
-    font-size: 22px;
-    font-weight: bold;
-    margin-top: 16px;
+  .main-content {
+    margin-left: 0;           /* 全寬顯示 */
+    width: 100%;
+    padding: 10px;
   }
-  
-  .profile-desc {
-    font-size: 14px;
-    color: #666;
-    margin: 8px auto 20px;
-    max-width: 320px;
-    line-height: 1.5;
-  }
-  
-  .profile-desc a {
-    color: #222;
-    text-decoration: underline;
-  }
-  
-  /* Profile Sections */
-  .profile-section {
-    display: flex;
-    align-items: center;
-    padding: 12px 0;
-    border-top: 1px solid #e5e5e5;
-    font-size: 16px;
-  }
-  
-  .profile-section:first-child {
-    border-top: none;
-  }
-  
-  .profile-section .icon {
-    font-size: 20px;
-    margin-right: 12px;
-  }
-  
+}

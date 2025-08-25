@@ -84,7 +84,7 @@ export class AuthService {
       // 根據角色導向不同頁面
       switch (userRole) {
         case 'admin':
-          this.router.navigate(['/all-users']);
+          this.router.navigate(['/profile']);
           break;
         case 'host':
           this.router.navigate(['/update-profile']);

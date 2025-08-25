@@ -27,11 +27,11 @@ export class HomeComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // 初始化時判斷角色
+    /* 初始化時判斷角色
     const role: UserRole = this.authService.currentUserRole();
     if (role === 'admin') {
       this.router.navigate(['/profile']);
-    }
+    }*/
   }
 
   setLanguage(lang: 'en' | 'zh'): void {

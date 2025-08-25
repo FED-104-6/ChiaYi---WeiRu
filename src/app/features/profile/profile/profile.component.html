@@ -1,25 +1,19 @@
-<div class="profile-container">
-    <!-- Profile Image -->
-    <div class="profile-image">
-      <div class="avatar">
-        <span class="avatar-letter">W</span>
+<!-- Main Content -->
+<div class="main-content">
+
+  <!-- Profile Container -->
+  <div class="profile-container">
+
+    <div class="welcome">
+      <div class="avatar" [class.has-photo]="photo">
+        <img *ngIf="photo; else initialsTpl" [src]="photo" alt="userphoto" />
+        <ng-template #initialsTpl>
+          <span class="initials">{{ initials }}</span>
+        </ng-template>
       </div>
-      <button class="add-button">
-        <i class="camera-icon"></i> Add
-      </button>
+
+      <h2 class="hello">Hello, {{ name }}</h2>
+      <p class="subtitle">Welcome to the BNB management system</p>
     </div>
-  
-    <!-- Profile Title -->
-    <h2 class="profile-title">My profile</h2>
-    <p class="profile-desc">
-      Hosts and guests can see your profile, and it may appear across Airbnb to help us build trust in our
-      community. <a href="#">Learn more</a>
-    </p>
-  
-    <!-- Profile Sections -->
-    <div class="profile-section" *ngFor="let item of profileSections">
-      <div class="icon">{{ item.icon }}</div>
-      <div class="text">{{ item.text }}</div>
-    </div>
-</div>
-  
+  </div>
+</div>  

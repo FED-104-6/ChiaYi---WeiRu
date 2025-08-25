@@ -1,7 +1,7 @@
 <!-- 登入後 Sidebar + Header -->
 <aside *ngIf="isLoggedIn" class="sidebar">
   <div class="sidebar-header">
-    <a class="logo" (click)="navigateTo('/home')">BNB</a>
+    <a class="logo" (click)="navigateHome()">BNB</a>
     <p>Management System</p>
     <div class="lang-switch">
       <button [class.active]="language === 'en'" (click)="setLanguage('en')">ENGLISH</button>
