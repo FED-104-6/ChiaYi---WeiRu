@@ -1,20 +1,20 @@
-/* 外層容器，避開 sidebar */
+/* ================= Layout ================= */
 .user-management-container {
-  margin-left: 20%; /* 避開左側 sidebar */
-  width: 80%;
+  margin: 0 auto; /* 避開左側 sidebar */
+  padding: 50px;
   min-height: 100vh;
+  width: 80%;
+  max-width: 1200px;
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  align-items: stretch; /* 讓子元素拉滿同寬 */
   gap: 20px;
+  align-items: center; /* 內容水平置中 */
   background-color: #FCFAF2;
-  padding: 50px;
-  box-sizing: border-box;
   font-family: 'Helvetica Neue', Arial, sans-serif;
-  max-width: 1200px; /* 可視需求限制最大寬度 */
 }
 
-/* 篩選器列，與表格等寬 */
+/* 篩選器 */
 .filters {
   width: 100%;
   display: flex;
@@ -34,12 +34,6 @@
   gap: 8px;
 }
 
-.filter-item label {
-  font-size: 14px;
-  color: #333;
-  white-space: nowrap;
-}
-
 .filters input[type="date"],
 .filters select {
   height: 36px;
@@ -48,16 +42,6 @@
   border-radius: 4px;
   outline: none;
   font-size: 14px;
-}
-
-.filters select {
-  cursor: pointer;
-  background-color: #fff;
-}
-
-.tilde {
-  opacity: 0.6;
-  user-select: none;
 }
 
 .search-btn {
@@ -80,7 +64,7 @@
   cursor: not-allowed;
 }
 
-/* 表格外層，等寬 */
+/* 表格 */
 .table-wrapper {
   width: 100%;
   overflow-x: auto;
@@ -90,45 +74,30 @@
   box-sizing: border-box;
 }
 
-/* 表格 */
 .users-table {
   width: 100%;
   border-collapse: collapse;
-  min-width: 720px; /* 防止過小 */
+  min-width: 720px;
+}
+
+.users-table th,
+.users-table td {
+  padding: 12px;
+  font-size: 14px;
+  border-bottom: 1px solid #f2f2f2;
 }
 
 .users-table thead th {
   text-align: left;
   font-weight: 600;
-  font-size: 14px;
   color: #666;
   background: #fafafa;
-  border-bottom: 1px solid #eee;
-  padding: 12px;
-}
-
-.users-table tbody td {
-  border-bottom: 1px solid #f2f2f2;
-  padding: 12px;
-  font-size: 14px;
-  color: #333;
 }
 
 .users-table tbody tr:hover {
   background: #f9f9f9;
 }
 
-/* 下拉選單樣式 */
-.users-table select {
-  padding: 6px 8px;
-  border-radius: 4px;
-  border: 1px solid #ddd;
-  font-size: 14px;
-  background-color: #fff;
-  cursor: pointer;
-}
-
-/* 序號置中 */
 .text-center {
   text-align: center;
 }
@@ -143,9 +112,8 @@
   border-radius: 4px;
 }
 
-/* 分頁（等寬） */
+/* 分頁 */
 .pagination {
-  width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -154,19 +122,7 @@
   box-sizing: border-box;
 }
 
-.page-info {
-  color: #666;
-  font-size: 14px;
-}
-
-.page-controls {
-  display: flex;
-  gap: 6px;
-  flex-wrap: wrap;
-}
-
-.page-btn,
-.page-number {
+.page-btn {
   min-width: 30px;
   height: 30px;
   padding: 0 5px;
@@ -178,34 +134,103 @@
   transition: all 0.2s;
 }
 
-.page-number.active {
-  border-color: #BC9F77;
-  background: #BC9F77;
-  color: #fff;
-}
-
-.page-btn:hover:not(:disabled),
-.page-number:hover:not(.active) {
-  border-color: #00AA90;
-  color: #00AA90;
-}
-
 .page-btn:disabled {
   opacity: 0.5;
   cursor: not-allowed;
+}
+
+.page-btn:hover:not(:disabled) {
+  border-color: #BC9F77;
+  color: #BC9F77;
+}
+
+/* ================= Modal ================= */
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999; /* 確保浮在最上層 */
+}
+
+.modal {
+  background: #fff;
+  padding: 20px;
+  border-radius: 6px;
+  width: 360px;
+  max-width: 90%;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  position: relative;
+}
+
+.modal label {
+  display: flex;
+  flex-direction: column;
+  font-size: 14px;
+}
+
+.modal input,
+.modal select {
+  padding: 6px 10px;
+  font-size: 14px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  margin-top: 4px;
+  outline: none;
+}
+
+.modal-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.modal-buttons button {
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  border: none;
+  font-weight: 500;
+}
+
+.save-btn {
+  background-color: #00AA90;
+  color: #fff;
+}
+
+.delete-btn {
+  background-color: #e74c3c;
+  color: #fff;
+}
+
+.cancel-btn {
+  background-color: #ccc;
 }
 
 /* 手機優化 */
 @media (max-width: 640px) {
   .filters {
     gap: 8px;
+    flex-direction: column;
+    align-items: stretch;
   }
+
   .filter-item label {
     display: none;
   }
+
   .users-table {
     min-width: 600px;
   }
+
   .search-btn {
     width: 100%;
   }

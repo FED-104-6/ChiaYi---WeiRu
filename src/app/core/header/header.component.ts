@@ -1,4 +1,4 @@
-import { Component, AfterViewInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, NavigationEnd } from '@angular/router';
 import { AuthService } from '../../features/auth/auth.service';
@@ -12,12 +12,43 @@ import { RouterModule } from '@angular/router';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
-export class HeaderComponent implements AfterViewInit {
+export class HeaderComponent implements OnInit {
   language: 'en' | 'zh' = 'en';
   isSidebarOpen = false;
-  isDarkText = false; // true → 黑字，false → 白字
+  isDarkText = false;
+  showHeader = true;
+
+  // 想隱藏 header 的路由清單
+  private hiddenHeaderRoutes: string[] = [
+    '/all-users',
+    '/login',
+    '/register'
+  ];
 
   constructor(public authService: AuthService, private router: Router) {}
+
+  ngOnInit() {
+    // 監聽路由變化
+    this.router.events
+      .pipe(filter(event => event instanceof NavigationEnd))
+      .subscribe((event: NavigationEnd) => {
+        const route = (event as NavigationEnd).urlAfterRedirects;
+  
+        // 套用顏色
+        this.applyRouteColor(route);
+  
+        // 根據角色決定 header 是否顯示
+        const role = this.authService.currentUserRole(); // admin / host / guest
+        this.showHeader = !(role === 'admin' || role === 'host');
+      });
+  
+    // 初始化一次
+    const role = this.authService.currentUserRole();
+    this.showHeader = !(role === 'admin' || role === 'host');
+  
+    const currentRoute = this.router.url;
+    this.applyRouteColor(currentRoute);
+  }  
 
   setLanguage(lang: 'en' | 'zh') {
     this.language = lang;
@@ -29,33 +60,19 @@ export class HeaderComponent implements AfterViewInit {
 
   logout() {
     this.authService.logout();
-    this.toggleSidebar(); // 關閉選單
+    this.toggleSidebar();
   }
 
-  ngAfterViewInit() {
-    // 監聽路由變化
-    this.router.events
-      .pipe(filter(event => event instanceof NavigationEnd))
-      .subscribe((event: NavigationEnd) => {
-        const route = event.urlAfterRedirects;
-        this.applyRouteColor(route);
-      });
-
-    // 初始化時套用一次顏色
-    this.applyRouteColor(this.router.url);
-  }
-
-  // 根據 route 設定 header 顏色
   private applyRouteColor(route: string) {
     switch(route) {
       case '/home':
-        this.isDarkText = false; // 深色背景 → 白字
+        this.isDarkText = false;
         break;
       case '/profile':
-        this.isDarkText = true; // 淺色背景 → 黑字
+        this.isDarkText = true;
         break;
       default:
-        this.isDarkText = true; // 其他頁面淺色背景 → 黑字
+        this.isDarkText = true;
     }
   }
 }

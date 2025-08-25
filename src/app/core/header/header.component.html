@@ -1,11 +1,14 @@
-<header class="home-header" [class.dark-text]="isDarkText">
-
+<!-- 整個 header 與內容一起控制顯示 -->
+<header *ngIf="showHeader" class="home-header" [class.dark-text]="isDarkText">
   <div class="header-right">
     <div class="lang-switch">
       <button [class.active]="language === 'en'" (click)="setLanguage('en')">ENGLISH</button>
       <button [class.active]="language === 'zh'" (click)="setLanguage('zh')">CHINESE</button>
     </div>
-    </div>
+
+    <!-- 如果有其他右側選單或按鈕，也放這裡 -->
+  </div>
 </header>
+
 <!-- 背景遮罩 -->
 <div class="overlay" *ngIf="isSidebarOpen" (click)="toggleSidebar()"></div>

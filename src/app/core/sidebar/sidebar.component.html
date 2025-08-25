@@ -1,7 +1,7 @@
 <!-- 登入後 Sidebar + Header -->
 <aside *ngIf="isLoggedIn" class="sidebar">
   <div class="sidebar-header">
-    <a class="logo" (click)="navigateToLogin()">BNB</a>
+    <a class="logo" (click)="navigateTo('/home')">BNB</a>
     <p>Management System</p>
     <div class="lang-switch">
       <button [class.active]="language === 'en'" (click)="setLanguage('en')">ENGLISH</button>
@@ -10,14 +10,25 @@
   </div>
 
   <nav>
-   
-    <a href="#" (click)="checkAuth('/all-users'); $event.preventDefault()">All Users</a>
-    <a href="#" (click)="checkAuth('/update-profile'); $event.preventDefault()">Update profile</a>
+    <!-- ✅ 只有非 host 才顯示 -->
+    <a *ngIf="userRole !== 'host'" href="#" (click)="checkAuth('/all-users'); $event.preventDefault()">
+      All Users
+    </a>
 
-    <!-- My Flats 主選單 -->
+    <!-- Profile 主選單 -->
+
+    <a href="#" (click)="toggleProfileMenu(); $event.preventDefault()">Profile</a>
+
+    <!-- 下拉子選單 -->
+    <div *ngIf="profileMenuOpen" class="submenu">
+      <a href="#" (click)="navigateTo('/update-profile'); $event.preventDefault()">Update Profile</a>
+    </div>
+
+    <!-- Flats 主選單 -->
     <a href="#" (click)="toggleFlatsMenu(); $event.preventDefault()">
       Flats
     </a>
+
     <!-- 下拉子選單 -->
     <div *ngIf="flatsMenuOpen" class="submenu">
       <a href="#" (click)="navigateTo('/new-flat'); $event.preventDefault()">New Flat</a>

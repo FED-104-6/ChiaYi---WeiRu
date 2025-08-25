@@ -2,31 +2,27 @@
   <!-- 篩選器 -->
   <div class="filters">
     <div class="filter-item">
-      <label for="startDate">Registration time (start):</label>
-      <input type="date" id="startDate" [(ngModel)]="filters.startDate">
+      <label>Registration start:</label>
+      <input type="date" [(ngModel)]="filters.startDate" />
     </div>
-
     <div class="tilde">~</div>
-
     <div class="filter-item">
-      <label for="endDate">Registration time (end):</label>
-      <input type="date" id="endDate" [(ngModel)]="filters.endDate">
+      <label>Registration end:</label>
+      <input type="date" [(ngModel)]="filters.endDate" />
     </div>
-
     <div class="filter-item">
-      <label for="roleFilter">Role:</label>
-      <select id="roleFilter" [(ngModel)]="filters.role">
-        <option value="tenant">Tenant</option>
-        <option value="landlord">Landlord</option>
-        <option value="admin">Admin</option>
+      <label>Role:</label>
+      <select [(ngModel)]="filters.role">
+        <option value="all">All</option>
+        <option value="host">Host</option>
+        <option value="guest">Guest</option>
         <option value="both">Both</option>
       </select>
     </div>
-
     <button class="search-btn" (click)="applyFilters()">Search</button>
   </div>
 
-  <!-- 表格 -->
+  <!-- 使用者表格 -->
   <div class="table-wrapper" *ngIf="paginatedUsers.length; else emptyState">
     <table class="users-table">
       <thead>
@@ -34,49 +30,65 @@
           <th style="width: 64px;">No.</th>
           <th>Name</th>
           <th>Email</th>
-          <th>Registration Time</th>
+          <th>Registered</th>
           <th>Role</th>
+          <th>Action</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let u of paginatedUsers; let i = index">
-          <td class="text-center">{{ i + 1 + (currentPage-1)*10 }}</td>
+          <td class="text-center">{{ i + 1 + (currentPage-1)*pageSize }}</td>
           <td>{{ u.name }}</td>
           <td>{{ u.email }}</td>
-          <td>{{ formatDate(u.registeredAt) }}</td>
+          <td>{{ u.registeredAt | date:'yyyy-MM-dd' }}</td>
+          <td>{{ u.role }}</td>
           <td>
-            <select [(ngModel)]="u.role" (change)="updateUserRole(u)">
-              <option value="tenant">Tenant</option>
-              <option value="landlord">Landlord</option>
-              <option value="admin">Admin</option>
-            </select>
+            <button (click)="openModal(u)">Edit</button>
           </td>
         </tr>
       </tbody>
     </table>
   </div>
 
+  <!-- 空狀態 -->
   <ng-template #emptyState>
-    <div class="empty">
-      There are no users matching the current conditions.
-    </div>
+    <div class="empty">No users match the current filters.</div>
   </ng-template>
 
-  <!-- 分頁控制 -->
-  <div class="pagination" *ngIf="totalPages > 0">
-    <div class="page-info">Page {{ currentPage }} / {{ totalPages }}</div>
-    <div class="page-controls">
-      <button class="page-btn" [disabled]="currentPage === 1" (click)="prevPage()">‹</button>
+  <!-- 分頁 -->
+  <div class="pagination">
+    <button class="page-btn" (click)="prevPage()" [disabled]="currentPage===1">‹</button>
+    <span class="page-info">{{currentPage}} / {{totalPages}}</span>
+    <button class="page-btn" (click)="nextPage()" [disabled]="currentPage===totalPages">›</button>
+  </div>
+</div>
 
-      <button
-        *ngFor="let p of pageNumbers"
-        class="page-number"
-        [class.active]="p === currentPage"
-        (click)="setPage(p)">
-        {{ p }}
-      </button>
+<!-- Modal -->
+<div class="modal-backdrop" *ngIf="isModalOpen" (click)="closeModal()">
+  <div class="modal" (click)="$event.stopPropagation()">
+    <h3>Edit User: {{ selectedUser?.name }}</h3>
 
-      <button class="page-btn" [disabled]="currentPage === totalPages" (click)="nextPage()">›</button>
+    <label>
+      Name:
+      <span style="font-size: 16px; font-weight: bold;">{{ selectedUser!.name }}</span>
+    </label>
+
+    <label>
+      Role:
+      <select [(ngModel)]="selectedUser!.role">
+        <option value="host">Host</option>
+        <option value="guest">Guest</option>
+        <option value="both">Both</option>
+      </select>
+    </label>
+
+    <p><strong>Email:</strong> {{ selectedUser?.email }}</p>
+    <p><strong>Registered At:</strong> {{ selectedUser?.registeredAt | date:'yyyy-MM-dd' }}</p>
+
+    <div class="modal-buttons">
+      <button (click)="saveUser()" class="save-btn">Save</button>
+      <button (click)="deleteUser(selectedUser!)" class="delete-btn">Delete</button>
+      <button (click)="closeModal()" class="cancel-btn">Cancel</button>
     </div>
   </div>
 </div>

@@ -18,13 +18,13 @@ export class SidebarComponent implements AfterViewInit {
   isLoggedIn = false;
 
   flatsMenuOpen = false;
-  profileMenuOpen = false;
+  profileMenuOpen = false;  
+
+  userRole: 'admin' | 'host' | 'guest' | null = null;
 
   constructor(public authService: AuthService, private router: Router) {
-    // 監聽登入狀態
-    this.authService.isLoggedIn$.subscribe(status => {
-      this.isLoggedIn = status;
-    });
+    this.authService.isLoggedIn$.subscribe(status => this.isLoggedIn = status);
+    this.authService.userRole$.subscribe(role => this.userRole = role);
   }
 
   /** 語言切換 */
@@ -44,13 +44,6 @@ export class SidebarComponent implements AfterViewInit {
     this.router.navigate(['/login']);
   }
 
-  /** 點 Logo 回首頁 */
-  async navigateToLogin() {
-    await this.authService.logout();
-    this.closeMenus();
-    this.router.navigate(['/login']);
-  }
-
   /** 導頁（需檢查登入） */
   checkAuth(route: string) {
     this.authService.isLoggedIn$.pipe(take(1)).subscribe(isLoggedIn => {
@@ -64,11 +57,17 @@ export class SidebarComponent implements AfterViewInit {
     });
   }
 
+  /** Profile 子選單切換 */
+  toggleProfileMenu() {
+    this.profileMenuOpen = !this.profileMenuOpen;
+    if (this.profileMenuOpen) this.flatsMenuOpen = false; // 互斥開關
+  }
+  
   /** Flats 子選單切換 */
   toggleFlatsMenu() {
     this.flatsMenuOpen = !this.flatsMenuOpen;
     if (this.flatsMenuOpen) this.profileMenuOpen = false;
-  }
+  }  
 
   /** 直接導頁 */
   navigateTo(route: string) {
@@ -80,6 +79,7 @@ export class SidebarComponent implements AfterViewInit {
   private closeMenus() {
     this.isSidebarOpen = false;
     this.flatsMenuOpen = false;
+    this.profileMenuOpen = false;
   }
 
   /** 監聽路由變化 */

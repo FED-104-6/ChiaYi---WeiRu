@@ -1,72 +1,235 @@
-.home-container {
-    display: flex;
+/* ================= Layout ================= */
+.layout {
+  display: flex;
+  min-height: 100vh;
+  background-size: cover;       
+  background-position: center;  
+  background-repeat: no-repeat; 
+}
+
+/* Sidebar */
+app-sidebar {
+  width: 20%;
+  min-width: 200px;
+  background-color: #333;
+  color: #fff;
+  flex-shrink: 0;
+}
+
+/* Main content */
+.main-content {
+  flex: 1;
+  box-sizing: border-box;
+  background-color: #FCFAF2;
+}
+
+/* ================= Modal ================= */
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.modal {
+  background: #fff;
+  padding: 20px;
+  border-radius: 6px;
+  width: 360px;
+  max-width: 90%;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  position: relative;
+}
+
+.modal label {
+  display: flex;
+  flex-direction: column;
+  font-size: 14px;
+}
+
+.modal input,
+.modal select {
+  padding: 6px 10px;
+  font-size: 14px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  margin-top: 4px;
+  outline: none;
+}
+
+.modal-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.modal-buttons button {
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  border: none;
+  font-weight: 500;
+}
+
+.modal-buttons .delete-btn {
+  background-color: #e74c3c;
+  color: #fff;
+}
+
+.modal-buttons .cancel-btn {
+  background-color: #ccc;
+}
+
+/* ================= Table ================= */
+.user-management-container {
+  width: 100%;
+  background-color: #FCFAF2;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 16px;
+  align-items: center;
+}
+
+.filter-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.filters input[type="date"],
+.filters select {
+  padding: 6px 10px;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+  outline: none;
+  font-size: 14px;
+}
+
+.search-btn {
+  padding: 6px 14px;
+  background-color: #00AA90;
+  color: #fff;
+  border: 1px solid #00AA90;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.search-btn:hover {
+  background-color: #008F7A;
+}
+
+.table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 4px;
+}
+
+.users-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 720px;
+}
+
+.users-table th,
+.users-table td {
+  padding: 12px;
+  font-size: 14px;
+  border-bottom: 1px solid #f2f2f2;
+}
+
+.users-table thead th {
+  text-align: left;
+  font-weight: 600;
+  color: #666;
+  background: #fafafa;
+}
+
+.users-table tbody tr:hover {
+  background-color: #f9f9f9;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.empty {
+  padding: 24px;
+  text-align: center;
+  color: #666;
+  background: #fff;
+  border: 1px dashed #ddd;
+  border-radius: 4px;
+}
+
+/* ================= Pagination ================= */
+.pagination {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.page-info {
+  font-size: 14px;
+  color: #666;
+}
+
+.page-btn {
+  padding: 4px 10px;
+  border: 1px solid #eee;
+  border-radius: 4px;
+  background: #fff;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.2s;
+}
+
+.page-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.page-btn:hover:not(:disabled) {
+  border-color: #00AA90;
+  color: #00AA90;
+}
+
+/* ================ 手機響應 ================= */
+@media (max-width: 640px) {
+  .main-content {
+    padding: 10px;
+  }
+
+  .filters {
     flex-direction: column;
-    height: 100vh;
+    align-items: stretch;
   }
-  
-  /* 上半部大圖 */
-  .hero-image {
-    flex: 2;
+
+  .filters input[type="date"],
+  .filters select,
+  .search-btn {
     width: 100%;
   }
-  
-  .hero-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+
+  .users-table {
+    min-width: 600px;
   }
-  
-  /* 下半部 Logo + 按鈕 */
-  .home-footer {
-    flex: 1;
-    display: flex;
-    justify-content: space-between; /* 左右分開 */
-    align-items: center;
-    padding: 20px 40px;
-    background-color: #f5f5f5;
-  }
-  
-  /* 左邊 Logo */
-  .logo-container .logo {
-    font-size: 28px;
-    font-weight: bold;
-    color: #333;
-  }
-  
-  /* 右邊按鈕容器 */
-  .button-container {
-    display: flex;
-    flex-direction: column; /* 垂直排列 */
-    gap: 15px;
-    align-items: flex-end; /* 靠右對齊 */
-  }
-  
-  /* 按鈕通用樣式 */
-  .btn-login, .btn-register {
-    padding: 10px 20px;
-    border-radius: 4px;
-    font-weight: 500;
-    text-decoration: none;
-    color: #fff;
-    width: 180px;
-    text-align: center;
-  }
-  
-  /* Login 按鈕 */
-  .btn-login {
-    background-color: #007bff;
-  }
-  
-  .btn-login:hover {
-    background-color: #0056b3;
-  }
-  
-  /* Register 按鈕 */
-  .btn-register {
-    background-color: #28a745;
-  }
-  
-  .btn-register:hover {
-    background-color: #1e7e34;
-  }
-  
+}
