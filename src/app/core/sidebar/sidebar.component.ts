@@ -5,13 +5,13 @@ import { AuthService } from '../../features/auth/auth.service';
 import { filter, take } from 'rxjs/operators';
 
 @Component({
-  selector: 'app-header',
+  selector: 'app-sidebar',
   standalone: true,
   imports: [CommonModule, RouterModule],
-  templateUrl: './header.component.html',
-  styleUrls: ['./header.component.css']
+  templateUrl: './sidebar.component.html',
+  styleUrls: ['./sidebar.component.css']
 })
-export class HeaderComponent implements AfterViewInit {
+export class SidebarComponent implements AfterViewInit {
   language: 'en' | 'zh' = 'en';
   isSidebarOpen = false;
   isDarkText = false;
@@ -64,12 +64,6 @@ export class HeaderComponent implements AfterViewInit {
     });
   }
 
-  /** Profile 子選單切換 */
-  toggleProfileMenu() {
-    this.profileMenuOpen = !this.profileMenuOpen;
-    if (this.profileMenuOpen) this.flatsMenuOpen = false;
-  }
-
   /** Flats 子選單切換 */
   toggleFlatsMenu() {
     this.flatsMenuOpen = !this.flatsMenuOpen;
@@ -86,7 +80,6 @@ export class HeaderComponent implements AfterViewInit {
   private closeMenus() {
     this.isSidebarOpen = false;
     this.flatsMenuOpen = false;
-    this.profileMenuOpen = false;
   }
 
   /** 監聽路由變化 */
@@ -100,7 +93,7 @@ export class HeaderComponent implements AfterViewInit {
     this.applyRouteColor(this.router.url);
   }
 
-  /** 根據路由切換 Header 文字顏色 */
+  /** 根據路由切換 Sidebar 文字顏色 */
   private applyRouteColor(route: string) {
     const darkTextRoutes = ['/profile', '/update-profile', '/all-users', '/new-flat', '/view-flat'];
     this.isDarkText = darkTextRoutes.includes(route);

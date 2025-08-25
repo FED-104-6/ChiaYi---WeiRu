@@ -55,7 +55,13 @@ export class LoginComponent implements OnInit, OnDestroy {
       // 3️⃣ 根據角色導向
       if (role === 'admin') {
         this.router.navigate(['/all-users']); // 管理員頁面
-      } else {
+      } 
+      
+      else if (role === 'host') {
+        this.router.navigate(['/update-profile']); // 房東頁面
+      }
+
+      else {
         this.router.navigate(['/home']);     // 普通使用者
       }
     } catch (error: any) {

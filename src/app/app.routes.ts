@@ -17,6 +17,10 @@ export const routes: Routes = [
   { 
     path: 'all-users', 
     loadComponent: () => import('./features/profile/all-users/all-users.component').then(m => m.AllUsersComponent) 
+  },
+  { 
+    path: 'update-profile', 
+    loadComponent: () => import('./features/profile/update-profile/update-profile.component').then(m => m.UpdateProfileComponent) 
   }
 ];
 

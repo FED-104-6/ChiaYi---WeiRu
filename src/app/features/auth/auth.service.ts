@@ -73,32 +73,43 @@ export class AuthService {
   }
 
   /** 登入會員 */
-  async login(email: string, password: string): Promise<void> {
-    try {
-      // 1️⃣ Firebase Auth 登入
-      const userCredential = await signInWithEmailAndPassword(this.auth, email, password);
-      const uid = userCredential.user.uid;
+async login(email: string, password: string): Promise<UserRole> {
+  try {
+    // 1️⃣ Firebase Auth 登入
+    const userCredential = await signInWithEmailAndPassword(this.auth, email, password);
+    const uid = userCredential.user.uid;
 
-      // 2️⃣ 從 Firestore 取得使用者資料
-      const userDoc = await getDoc(doc(this.firestore, `users/${uid}`));
-      const userData = userDoc.data() as { role?: UserRole } | undefined;
-      const userRole: UserRole = userData?.role || null;
+    // 2️⃣ 從 Firestore 取得使用者資料
+    const userDoc = await getDoc(doc(this.firestore, `users/${uid}`));
+    const userData = userDoc.data() as { role?: UserRole } | undefined;
+    const userRole: UserRole = userData?.role || 'guest'; // 預設 guest
 
-      // 3️⃣ 更新登入狀態
-      this.loggedIn.next(true);
-      this.role.next(userRole);
+    // 3️⃣ 更新登入狀態
+    this.loggedIn.next(true);
+    this.role.next(userRole);
 
-      // 4️⃣ 根據角色導向不同頁面
-      if (userRole === 'admin') {
-        this.router.navigate(['/all-users']); // 管理員頁面
-      } else {
-        this.router.navigate(['/home']);     // 普通使用者
-      }
-    } catch (error: any) {
-      console.error('Login failed:', error);
-      throw error;
+    // 4️⃣ 根據角色導向不同頁面
+    switch (userRole) {
+      case 'admin':
+        this.router.navigate(['/all-users']);
+        break;
+      case 'host':
+        this.router.navigate(['/update-profile']);
+        break;
+      default:
+        this.router.navigate(['/home']);
+        break;
     }
+
+    // 5️⃣ 回傳角色給呼叫端（可選）
+    return userRole;
+
+  } catch (error: any) {
+    console.error('Login failed:', error);
+    throw error;
   }
+}
+
 
   /** 登出會員 */
   async logout(): Promise<void> {

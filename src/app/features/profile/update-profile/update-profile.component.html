@@ -1,0 +1,48 @@
+<div class="main-content">
+
+  <!-- Profile Header -->
+  <div class="profile-header">
+    <div class="avatar-section">
+      <img [src]="profileImage || 'assets/default-avatar.png'" alt="" class="avatar-img">
+      <input type="file" (change)="onImageChange($event)" hidden #fileInput>
+      <button class="edit-avatar-btn" (click)="fileInput.click()">Change Photo</button>
+    </div>
+
+    <p class="profile-subtitle">Update personal information and view</p>
+  </div>
+
+  <!-- Profile Fields -->
+  <div class="profile-info">
+    <div class="info-item" *ngFor="let field of profileFields">
+      <div class="info-row">
+        <div class="info-left">
+          <h3>{{ field.label }}</h3>
+          <p>{{ field.value }}</p>
+        </div>
+        <button class="edit-btn" (click)="editField(field.key)">Edit</button>
+      </div>
+
+      <!-- 編輯欄位直接出現在該 info-item 下方 -->
+      <div class="edit-section" *ngIf="editingField === field.key">
+        <div class="edit-row">
+          <input 
+            [type]="editingField === 'password' && !showPassword ? 'password' : 'text'" 
+            [(ngModel)]="editValue" 
+            placeholder="Enter new {{ getFieldLabel(field.key) }}">
+          
+          <!-- Save / Cancel 按鈕保持在 edit-row -->
+          <button class="save-btn" (click)="saveEdit()">Save</button>
+          <button class="cancel-btn" (click)="cancelEdit()">Cancel</button>
+        </div>
+      
+        <!-- Show/Hide 按鈕單獨一行 -->
+        <div *ngIf="editingField === 'password'" class="toggle-password-container">
+          <button type="button" class="toggle-password-btn" (click)="togglePassword()">
+            {{ showPassword ? 'Hide' : 'Show' }}
+          </button>
+        </div>
+      </div>
+                
+    </div>
+  </div>
+</div>

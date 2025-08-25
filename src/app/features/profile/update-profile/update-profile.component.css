@@ -1,0 +1,160 @@
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: #FCFAF2;
+}  
+
+.main-content {
+  margin-left: 20%;                 
+  width: 80%;                       
+  min-height: 100vh;
+  display: flex;
+  justify-content: flex-start;       
+  align-items: center;               
+  flex-direction: column;
+  background-color: #FCFAF2;
+  padding: 50px;
+  box-sizing: border-box;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+}
+
+.profile-header {
+  display: flex;
+  align-items: center;
+  flex-direction: column; 
+  gap: 12px;
+  margin-bottom: 30px;
+}
+
+.avatar-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-shrink: 0;        
+}
+
+.avatar-img {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  background-color: #ccc;
+}
+
+.edit-avatar-btn {
+  margin-top: 10px;        
+  padding: 6px 12px;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 5px;
+  border: 1px solid #BC9F77;
+  background-color: #BC9F77;
+  color: #fff;
+}
+
+.profile-subtitle {
+  font-size: 16px;
+  color: #666;
+  text-align: center; 
+  margin-top: 10px;    
+}
+
+.profile-info {
+  width: 100%;
+  max-width: 700px; 
+}
+
+.info-item {
+  display: flex;                  
+  flex-direction: column;         
+  border-bottom: 1px solid #ddd;
+  padding: 12px 0;
+}
+
+.info-row {
+  display: flex;
+  justify-content: space-between; 
+  align-items: center;
+}
+
+.info-left h3 {
+  margin: 0;
+  font-weight: bold;
+}
+
+.info-left p {
+  margin: 2px 0 0 0;
+  color: #999;
+}
+
+.edit-btn {
+  align-self: flex-end;            
+  padding: 4px 10px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  cursor: pointer;
+  border-radius: 4px;
+  margin-top: 6px;
+}
+
+/* ✅ 一般欄位維持一行 */
+.edit-section {
+  width: 100%;
+  margin-top: 12px;
+}
+
+.edit-row {
+  display: flex;
+  align-items: center;   /* 讓 input 與按鈕垂直置中 */
+  gap: 8px;
+  width: 100%;
+}
+
+.edit-row input {
+  flex: 1; /* 讓 input 撐滿剩餘空間 */
+  padding: 6px;
+}
+
+.toggle-password-container {
+  margin-top: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.toggle-password-btn {
+  width: 60px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+  padding: 4px 8px;
+  text-align: left;
+  text-align: center;
+}
+
+.password-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.save-btn, .cancel-btn {
+  flex-shrink: 0; /* 按鈕固定大小，不被壓縮 */
+  padding: 5px 10px;
+}
+
+.save-btn {
+  background-color: #00AA90;
+  color: #fff;
+  border: 1px solid #00AA90;
+  border-radius: 4px;
+}
+
+.cancel-btn {
+  background-color: #ccc;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
