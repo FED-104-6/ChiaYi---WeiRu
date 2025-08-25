@@ -1,0 +1,141 @@
+/* Login Page Header (上方) */
+   .login-header {
+    position: fixed;
+    top: 10%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+    background: transparent;
+  }
+  
+  .login-header .lang-switch {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .login-header .lang-switch button {
+    background: transparent;
+    border: none;
+    color: #fff;
+    font-size: 14px;
+    cursor: pointer;
+    opacity: 0.5;
+    transition: opacity 0.2s, font-weight 0.2s;
+  }
+  
+  .login-header .lang-switch button.active {
+    opacity: 1;
+    font-weight: bold;
+  }
+  
+  /* Sidebar + Header 左側 (登入後) */
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 20%;              /* 左側固定寬度 */
+    min-width: 200px;        /* 最小寬度 */
+    height: 100vh;
+    background-color: #333;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    box-sizing: border-box;
+    overflow-y: auto;        /* 可滾動 */
+    transition: width 0.3s;
+  }
+  
+  .sidebar-header {
+    display: flex;
+    flex-direction: column;  /* 垂直排列 */
+    align-items: flex-start; /* 左對齊 */
+    gap: 10px;               /* logo 與語言切換按鈕間距 */
+    width: 100%;             /* 確保寬度填滿 sidebar */
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .logo {
+    font-size: 28px;
+    font-weight: bold;
+    color: #fff;
+    text-decoration: none;
+    letter-spacing: 2px;
+    margin: 0;                /* 去掉預設 margin */
+    cursor: pointer;
+    transition: color 0.2s;
+  }
+  
+  .sidebar-header .lang-switch {
+    display: flex;
+    gap: 10px;                /* 按鈕間距 */
+    margin: 0;                /* 去掉 margin */
+    padding: 0;               /* 去掉 padding */
+  }
+  
+  .sidebar-header .lang-switch button {
+    background: transparent;
+    border: none;
+    color: #fff;
+    font-size: 12px;
+    cursor: pointer;
+    opacity: 0.5;
+    margin-top: 10px;                /* 去掉按鈕 margin */
+    padding: 0;
+    transition: opacity 0.2s, font-weight 0.2s;
+  }
+  
+  .sidebar-header .lang-switch button.active {
+    opacity: 1;
+    font-weight: bold;
+  }  
+  
+  .sidebar nav {
+    display: flex;
+    flex-direction: column;
+    margin-top: 50px;
+  }
+  
+  .sidebar nav > a {
+    display: block;
+    padding: 15px 0;
+    font-size: 20px;
+    color: #fff;
+    text-decoration: none;
+    cursor: pointer;
+    transition: color 0.2s;
+  }
+  
+  .sidebar nav a:hover {
+    color: #00AA90;
+  }
+
+
+/*  My Flats Menu */
+.submenu {
+  display: flex;
+  flex-direction: column;
+  margin-left: 15px;       /* 縮排 */
+  margin-top: 5px;
+  border-left: 1px solid rgba(255, 255, 255, 0.2);
+  padding-left: 10px;
+}
+
+.submenu a {
+  font-size: 18px;
+  padding: 10px 0;
+  color: #fff;
+  cursor: pointer;
+  transition: color 0.2s;
+  text-decoration: none; 
+}
+
+.submenu a:hover {
+  color: #00AA90;
+}
+  

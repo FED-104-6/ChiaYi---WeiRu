@@ -14,10 +14,10 @@ import { AuthService } from '../../../features/auth/auth.service';
 export class RegisterComponent implements OnInit {
   showLogin: boolean = false; 
   fullname: string = '';
+  phonenumber: string = '';
   email: string = '';
   password: string = '';
   country: string = '';
-  phonenumber: string = '';
   errorMessage: string = '';
 
   language: 'en' | 'zh' = 'en';
@@ -45,11 +45,11 @@ export class RegisterComponent implements OnInit {
     try {
       // 呼叫 Firebase AuthService 註冊
       await this.authService.register(
-        this.fullname,
-        this.email,
-        this.password,
-        this.country,
-        this.phonenumber
+        this.fullname,  
+        this.email,    
+        this.password,  
+        this.country,   
+        this.phonenumber 
       );
   
       // 註冊成功 → 導向首頁

@@ -1,4 +1,3 @@
-/* 浮層背景 */
 .register-overlay {
   position: fixed;
   top: 0;
@@ -41,20 +40,46 @@
   font-family: 'Helvetica Neue', Arial, sans-serif;
 }
 
-.logo {
-  font-size: 28px;
-  font-weight: bold;
-  letter-spacing: 2px;
-  color: #fff;
-  text-decoration: none;
-  letter-spacing: 2px;
-  font-family: 'Helvetica Neue', Arial, sans-serif;
+/* 調整 header 內容順序：MENU → LOGO → 語言切換 */
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 20px;
 }
 
 .header-right {
   display: flex;
-  gap: 20px;
   align-items: center;
+  gap: 15px;
+}
+
+/* LOGO */
+.logo {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 28px;
+  font-weight: bold;
+  color: #fff;
+  text-decoration: none;
+  letter-spacing: 2px;
+  z-index: 5; /* 確保在 Menu 和語言切換之上 */
+}
+
+/* MENU 按鈕 */
+.menu-btn {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 20px;
+  color: #fff;
+  cursor: pointer;
+}
+
+/* 語言切換 */
+.lang-switch {
+  display: flex;
+  gap: 10px;
 }
 
 .lang-switch button {
@@ -63,7 +88,8 @@
   color: #fff;
   font-size: 14px;
   cursor: pointer;
-  opacity: 0.5;
+  opacity: 0.6;
+  transition: opacity 0.3s, font-weight 0.3s;
 }
 
 .lang-switch button.active {
@@ -71,24 +97,16 @@
   font-weight: bold;
 }
 
-.menu-btn {
-  background: none;
-  border: none;
-  font-size: 20px;
-  color: #fff;
-  cursor: pointer;
-}
-
-/* 登入卡片 */
+/* ===== 登入卡片 ===== */
 .register-card {
   position: relative;
   z-index: 2; /* 保證在遮罩上方 */
   background-color: #fff;
   padding: 40px;
   border-radius: 10px;
-  width: 600px;
+  width: 90%;
+  max-width: 600px;
   box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-  /*text-align: center;*/
 
   /* 向上滑入動畫 */
   transform: translateY(50px);
@@ -96,7 +114,14 @@
   animation: slideUp 0.5s forwards;
 }
 
-/* Form 樣式 */
+/* 標題 */
+.register-card h2 {
+  text-align: center;
+  color: #BC9F77;
+  margin-bottom: 20px;
+}
+
+/* 表單樣式 */
 .register-card form {
   display: flex;
   flex-direction: column;
@@ -107,26 +132,36 @@
   padding: 15px;
   border-radius: 5px;
   border: 1px solid #ccc;
+  font-size: 16px;
 }
 
-.register-card button {
-  margin-top:15px;
+.register-card button[type="submit"] {
+  margin-top: 15px;
   padding: 15px;
   border-radius: 5px;
   border: none;
   background-color: #BC9F77;
   color: #fff;
-  font-size: 20px;
+  font-size: 18px;
   font-weight: bold;
   cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
 }
 
-.register-card button:hover {
+.register-card button[type="submit"]:hover {
   background-color: #e3c190;
   color: #a98f6a;
 }
 
-/* 動畫 */
+/* 錯誤訊息 */
+.error {
+  color: red;
+  font-size: 14px;
+  text-align: center;
+  margin-top: 10px;
+}
+
+/* ===== 動畫 ===== */
 @keyframes slideUp {
   to {
     transform: translateY(0);

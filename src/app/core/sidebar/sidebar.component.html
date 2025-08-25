@@ -1,0 +1,46 @@
+<!-- Login page header -->
+<div *ngIf="!isLoggedIn" class="login-header">
+  <div class="lang-switch">
+    <button [class.active]="language === 'en'" (click)="setLanguage('en')">ENGLISH</button>
+    <button [class.active]="language === 'zh'" (click)="setLanguage('zh')">CHINESE</button>
+  </div>
+</div>
+
+<!-- 登入後 Sidebar + Header -->
+<aside *ngIf="isLoggedIn" class="sidebar">
+  <div class="sidebar-header">
+    <a class="logo" (click)="navigateToLogin()">BNB</a>
+    <div class="lang-switch">
+      <button [class.active]="language === 'en'" (click)="setLanguage('en')">ENGLISH</button>
+      <button [class.active]="language === 'zh'" (click)="setLanguage('zh')">CHINESE</button>
+    </div>
+  </div>
+
+  <nav>
+   <!-- My Profile 主選單 -->
+    <a href="#" (click)="toggleProfileMenu(); $event.preventDefault()">
+      Profile
+    </a>
+    <!-- 下拉子選單 -->
+    <div *ngIf="profileMenuOpen" class="submenu">
+      <a href="#" (click)="navigateTo('/update-profile'); $event.preventDefault()">Update Profile</a>
+      <a href="#" (click)="navigateTo('/all-users'); $event.preventDefault()">Users</a>
+    </div>
+
+    <!-- My Flats 主選單 -->
+    <a href="#" (click)="toggleFlatsMenu(); $event.preventDefault()">
+      Flats
+    </a>
+    <!-- 下拉子選單 -->
+    <div *ngIf="flatsMenuOpen" class="submenu">
+      <a href="#" (click)="navigateTo('/new-flat'); $event.preventDefault()">New Flat</a>
+      <a href="#" (click)="navigateTo('/view-flat'); $event.preventDefault()">View Flat</a>
+      <a href="#" (click)="navigateTo('/edit-flat'); $event.preventDefault()">Edit Flat</a>
+      <a href="#" (click)="navigateTo('/my-flat'); $event.preventDefault()">My Flat</a>
+    </div>
+
+    <a href="#" (click)="checkAuth('/favourites'); $event.preventDefault()">Favourites</a>
+    <a href="#" (click)="checkAuth('/messages'); $event.preventDefault()">Messages</a>
+    <a href="#" (click)="logout(); $event.preventDefault()">Logout</a>
+  </nav>
+</aside>

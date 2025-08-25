@@ -1,8 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Router } from '@angular/router';
 import { HeaderComponent } from '../../core/header/header.component';
-import { AuthService } from '../../features/auth/auth.service';
+import { AuthService, UserRole } from '../../features/auth/auth.service';
 
 @Component({
   selector: 'app-home',
@@ -15,19 +15,30 @@ import { AuthService } from '../../features/auth/auth.service';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit {
   language: 'en' | 'zh' = 'en';
   currentSlide = 5;
   totalSlides = 5;
   isPaused = false;
 
-  constructor(public authService: AuthService) {}
+  constructor(
+    public authService: AuthService,
+    private router: Router
+  ) {}
 
-  setLanguage(lang: 'en' | 'zh') {
+  ngOnInit(): void {
+    // 初始化時判斷角色
+    const role: UserRole = this.authService.currentUserRole();
+    if (role === 'admin') {
+      this.router.navigate(['/profile']);
+    }
+  }
+
+  setLanguage(lang: 'en' | 'zh'): void {
     this.language = lang;
   }
 
-  logout() {
+  logout(): void {
     this.authService.logout();
   }
 }

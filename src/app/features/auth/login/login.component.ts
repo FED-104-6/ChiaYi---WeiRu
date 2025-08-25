@@ -2,8 +2,8 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { AuthService } from '../../../features/auth/auth.service';
-import { Subscription } from 'rxjs';
+import { AuthService, UserRole } from '../../../features/auth/auth.service';
+import { Subscription, lastValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -19,8 +19,8 @@ export class LoginComponent implements OnInit, OnDestroy {
   errorMessage: string = '';
   language: 'en' | 'zh' = 'en';
 
-  isLoggedIn: boolean = false; // ← 新增
-  private sub!: Subscription;   // ← 用來訂閱 AuthService 狀態
+  isLoggedIn: boolean = false;
+  private sub!: Subscription;
 
   constructor(private authService: AuthService, private router: Router) {}
 
@@ -46,8 +46,18 @@ export class LoginComponent implements OnInit, OnDestroy {
   async onLogin(): Promise<void> {
     this.errorMessage = '';
     try {
+      // 1️⃣ 登入
       await this.authService.login(this.email, this.password);
-      // 導向首頁已在 AuthService 內處理
+
+      // 2️⃣ 取得角色
+      const role: UserRole = await lastValueFrom(this.authService.userRole$);
+
+      // 3️⃣ 根據角色導向
+      if (role === 'admin') {
+        this.router.navigate(['/all-users']); // 管理員頁面
+      } else {
+        this.router.navigate(['/home']);     // 普通使用者
+      }
     } catch (error: any) {
       console.error('Login error:', error);
       this.errorMessage = error.message || 'Login failed, please try again later';

@@ -1,0 +1,212 @@
+/* 外層容器，避開 sidebar */
+.user-management-container {
+  margin-left: 20%; /* 避開左側 sidebar */
+  width: 80%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch; /* 讓子元素拉滿同寬 */
+  gap: 20px;
+  background-color: #FCFAF2;
+  padding: 50px;
+  box-sizing: border-box;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  max-width: 1200px; /* 可視需求限制最大寬度 */
+}
+
+/* 篩選器列，與表格等寬 */
+.filters {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.filter-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.filter-item label {
+  font-size: 14px;
+  color: #333;
+  white-space: nowrap;
+}
+
+.filters input[type="date"],
+.filters select {
+  height: 36px;
+  padding: 0 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  outline: none;
+  font-size: 14px;
+}
+
+.filters select {
+  cursor: pointer;
+  background-color: #fff;
+}
+
+.tilde {
+  opacity: 0.6;
+  user-select: none;
+}
+
+.search-btn {
+  height: 36px;
+  padding: 0 14px;
+  background-color: #00AA90;
+  color: #fff;
+  border: 1px solid #00AA90;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.search-btn:hover {
+  background-color: #008F7A;
+}
+
+.search-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* 表格外層，等寬 */
+.table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+/* 表格 */
+.users-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 720px; /* 防止過小 */
+}
+
+.users-table thead th {
+  text-align: left;
+  font-weight: 600;
+  font-size: 14px;
+  color: #666;
+  background: #fafafa;
+  border-bottom: 1px solid #eee;
+  padding: 12px;
+}
+
+.users-table tbody td {
+  border-bottom: 1px solid #f2f2f2;
+  padding: 12px;
+  font-size: 14px;
+  color: #333;
+}
+
+.users-table tbody tr:hover {
+  background: #f9f9f9;
+}
+
+/* 下拉選單樣式 */
+.users-table select {
+  padding: 6px 8px;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+  font-size: 14px;
+  background-color: #fff;
+  cursor: pointer;
+}
+
+/* 序號置中 */
+.text-center {
+  text-align: center;
+}
+
+/* 空狀態 */
+.empty {
+  padding: 24px;
+  text-align: center;
+  color: #666;
+  background: #fff;
+  border: 1px dashed #ddd;
+  border-radius: 4px;
+}
+
+/* 分頁（等寬） */
+.pagination {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 8px 0;
+  box-sizing: border-box;
+}
+
+.page-info {
+  color: #666;
+  font-size: 14px;
+}
+
+.page-controls {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.page-btn,
+.page-number {
+  min-width: 30px;
+  height: 30px;
+  padding: 0 5px;
+  border: 1px solid #eee;
+  background: #fff;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.2s;
+}
+
+.page-number.active {
+  border-color: #BC9F77;
+  background: #BC9F77;
+  color: #fff;
+}
+
+.page-btn:hover:not(:disabled),
+.page-number:hover:not(.active) {
+  border-color: #00AA90;
+  color: #00AA90;
+}
+
+.page-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* 手機優化 */
+@media (max-width: 640px) {
+  .filters {
+    gap: 8px;
+  }
+  .filter-item label {
+    display: none;
+  }
+  .users-table {
+    min-width: 600px;
+  }
+  .search-btn {
+    width: 100%;
+  }
+}

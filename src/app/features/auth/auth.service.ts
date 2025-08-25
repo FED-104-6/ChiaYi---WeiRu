@@ -1,17 +1,23 @@
 // src/app/features/auth/auth.service.ts
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, updateProfile } from '@angular/fire/auth';
+import {
+  Auth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signOut,
+  updateProfile
+} from '@angular/fire/auth';
 import { Firestore, doc, setDoc, getDoc } from '@angular/fire/firestore';
 import { BehaviorSubject, Observable } from 'rxjs';
 
-export type UserRole = 'tenant' | 'landlord' | null;
+export type UserRole = 'admin' | 'host' | 'guest' | null;
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  // 登入狀態
+  // 登入狀態與角色
   private loggedIn = new BehaviorSubject<boolean>(false);
   private role = new BehaviorSubject<UserRole>(null);
 
@@ -24,6 +30,11 @@ export class AuthService {
     private router: Router
   ) {}
 
+  /** 取得當前使用者角色 */
+  currentUserRole(): UserRole {
+    return this.role.getValue();
+  }
+
   /** 註冊會員 */
   async register(
     fullname: string,
@@ -33,7 +44,7 @@ export class AuthService {
     phonenumber: string
   ): Promise<void> {
     try {
-      // 1️⃣ 在 Firebase Auth 建立帳號
+      // 1️⃣ Firebase Auth 建立帳號
       const userCredential = await createUserWithEmailAndPassword(this.auth, email, password);
 
       // 2️⃣ 更新 displayName
@@ -46,12 +57,12 @@ export class AuthService {
         email,
         country,
         phonenumber,
-        role: 'tenant', // 預設角色
+        role: 'guest', // 預設角色
       });
 
       // 4️⃣ 更新登入狀態
       this.loggedIn.next(true);
-      this.role.next('tenant');
+      this.role.next('guest');
 
       // 5️⃣ 導向首頁
       this.router.navigate(['/home']);
@@ -64,7 +75,7 @@ export class AuthService {
   /** 登入會員 */
   async login(email: string, password: string): Promise<void> {
     try {
-      // 1️⃣ 使用 Firebase Auth 登入
+      // 1️⃣ Firebase Auth 登入
       const userCredential = await signInWithEmailAndPassword(this.auth, email, password);
       const uid = userCredential.user.uid;
 
@@ -73,13 +84,16 @@ export class AuthService {
       const userData = userDoc.data() as { role?: UserRole } | undefined;
       const userRole: UserRole = userData?.role || null;
 
-
       // 3️⃣ 更新登入狀態
       this.loggedIn.next(true);
       this.role.next(userRole);
 
-      // 4️⃣ 導向首頁
-      this.router.navigate(['/home']);
+      // 4️⃣ 根據角色導向不同頁面
+      if (userRole === 'admin') {
+        this.router.navigate(['/all-users']); // 管理員頁面
+      } else {
+        this.router.navigate(['/home']);     // 普通使用者
+      }
     } catch (error: any) {
       console.error('Login failed:', error);
       throw error;

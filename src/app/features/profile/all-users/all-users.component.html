@@ -1,0 +1,82 @@
+<div class="user-management-container">
+  <!-- 篩選器 -->
+  <div class="filters">
+    <div class="filter-item">
+      <label for="startDate">Registration time (start):</label>
+      <input type="date" id="startDate" [(ngModel)]="filters.startDate">
+    </div>
+
+    <div class="tilde">~</div>
+
+    <div class="filter-item">
+      <label for="endDate">Registration time (end):</label>
+      <input type="date" id="endDate" [(ngModel)]="filters.endDate">
+    </div>
+
+    <div class="filter-item">
+      <label for="roleFilter">Role:</label>
+      <select id="roleFilter" [(ngModel)]="filters.role">
+        <option value="tenant">Tenant</option>
+        <option value="landlord">Landlord</option>
+        <option value="admin">Admin</option>
+        <option value="both">Both</option>
+      </select>
+    </div>
+
+    <button class="search-btn" (click)="applyFilters()">Search</button>
+  </div>
+
+  <!-- 表格 -->
+  <div class="table-wrapper" *ngIf="paginatedUsers.length; else emptyState">
+    <table class="users-table">
+      <thead>
+        <tr>
+          <th style="width: 64px;">No.</th>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Registration Time</th>
+          <th>Role</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let u of paginatedUsers; let i = index">
+          <td class="text-center">{{ i + 1 + (currentPage-1)*10 }}</td>
+          <td>{{ u.name }}</td>
+          <td>{{ u.email }}</td>
+          <td>{{ formatDate(u.registeredAt) }}</td>
+          <td>
+            <select [(ngModel)]="u.role" (change)="updateUserRole(u)">
+              <option value="tenant">Tenant</option>
+              <option value="landlord">Landlord</option>
+              <option value="admin">Admin</option>
+            </select>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <ng-template #emptyState>
+    <div class="empty">
+      There are no users matching the current conditions.
+    </div>
+  </ng-template>
+
+  <!-- 分頁控制 -->
+  <div class="pagination" *ngIf="totalPages > 0">
+    <div class="page-info">Page {{ currentPage }} / {{ totalPages }}</div>
+    <div class="page-controls">
+      <button class="page-btn" [disabled]="currentPage === 1" (click)="prevPage()">‹</button>
+
+      <button
+        *ngFor="let p of pageNumbers"
+        class="page-number"
+        [class.active]="p === currentPage"
+        (click)="setPage(p)">
+        {{ p }}
+      </button>
+
+      <button class="page-btn" [disabled]="currentPage === totalPages" (click)="nextPage()">›</button>
+    </div>
+  </div>
+</div>

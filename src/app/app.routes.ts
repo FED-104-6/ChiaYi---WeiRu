@@ -15,8 +15,8 @@ export const routes: Routes = [
     loadComponent: () => import('./features/auth/register/register.component').then(m => m.RegisterComponent)
   },
   { 
-    path: 'profile', 
-    loadComponent: () => import('./features/profile/profile/profile.component').then(m => m.ProfileComponent) // ✅ 新增
+    path: 'all-users', 
+    loadComponent: () => import('./features/profile/all-users/all-users.component').then(m => m.AllUsersComponent) 
   }
 ];
 
