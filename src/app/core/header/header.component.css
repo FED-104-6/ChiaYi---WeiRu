@@ -1,8 +1,19 @@
+/* ================== Home Container ================== */
+.home-container {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  color: #fff;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+}
+
+/* ================== Header ================== */
 .home-header {
-  position: absolute;
-  top: 30px;
-  left: 60px;
-  right: 60px;
+  position: absolute; /* 改成 absolute，覆蓋在背景圖上 */
+  top: 0;
+  left: 0;
+  right: 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -10,6 +21,8 @@
   color: white; /* 預設文字白色 */
   transition: color 0.3s; /* 文字顏色過渡效果 */
   font-family: 'Helvetica Neue', Arial, sans-serif;
+  padding: 30px 60px; /* header 內邊距仍保留 */
+  background: transparent; /* 背景透明，直接顯示圖面 */
 }
 
 /* route 或滾動變黑文字 */
@@ -34,21 +47,21 @@
   align-items: center;
 }
 
-/* 語言切換按鈕 */
+/* ================== 語言切換按鈕 ================== */
 .lang-switch {
-  position: fixed;        /* 固定在螢幕上 */
-  top: 10%;
-  left: 50%;
-  transform: translate(-50%, 50%); /* 水平+垂直置中 */
+  position: absolute;    /* 絕對定位 */
+  top: 100px;            /* 調整 header 下方距離 */
+  left: 50%;             /* 水平置中 */
+  transform: translateX(-50%);
   display: flex;
   gap: 12px;
-  z-index: 1000;          /* 確保在最上層 */
+  z-index: 15;           /* 確保在 header 上方 */
 }
 
 .lang-switch button {
   background: transparent;
   border: none;
-  color: inherit;
+  color: #fff;
   font-size: 16px;
   cursor: pointer;
   opacity: 0.5;
@@ -60,8 +73,7 @@
   font-weight: bold;
 }
 
-
-/* MENU 按鈕 */
+/* ================== MENU 按鈕 ================== */
 .menu-btn {
   background: none;
   border: none;
@@ -70,7 +82,56 @@
   cursor: pointer;
 }
 
-/* 側邊選單 */
+/* ================== 背景圖 ================== */
+.home-image {
+  width: 100%;
+  height: 100%;
+  position: absolute; /* 絕對定位鋪滿容器 */
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+
+.home-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* 圖面完全覆蓋 */
+}
+
+/* ================== 中央內容 ================== */
+.home-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  z-index: 2; /* 蓋在背景圖上 */
+}
+
+.main-logo {
+  font-size: 80px;
+  font-weight: bold;
+  margin: 0;
+}
+
+.subtext {
+  font-size: 16px;
+  margin-top: 30px;
+}
+
+/* ================== Footer ================== */
+.home-footer {
+  position: absolute;
+  bottom: 20px;
+  left: 200px;
+  right: 200px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 3;
+}
+
+/* ================== Sidebar ================== */
 .sidebar {
   position: fixed;
   top: 0;
@@ -101,7 +162,7 @@
   color: #00AA90;
 }
 
-/* 關閉按鈕 */
+/* ================== 關閉按鈕 ================== */
 .close-btn {
   background: none;
   border: none;
@@ -112,7 +173,7 @@
   margin-bottom: 30px;
 }
 
-/* 遮罩 */
+/* ================== 遮罩 ================== */
 .overlay {
   position: fixed;
   top: 0;
