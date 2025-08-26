@@ -1,15 +1,16 @@
+/* ================== Home Container ================== */
 .home-container {
   position: relative;
   width: 100%;
   height: 100vh;
-  overflow: hidden;
+  overflow: visible;
   color: #fff;
   font-family: 'Helvetica Neue', Arial, sans-serif;
 }
 
-/* Header */
+/* ================== Header ================== */
 .home-header {
-  position: absolute;
+  position: absolute; /* header 覆蓋在背景上 */
   top: 30px;
   left: 60px;
   right: 60px;
@@ -31,20 +32,6 @@
   align-items: center;
 }
 
-.lang-switch button {
-  background: transparent;
-  border: none;
-  color: #fff;
-  font-size: 14px;
-  cursor: pointer;
-  opacity: 0.5;
-}
-
-.lang-switch button.active {
-  opacity: 1;
-  font-weight: bold;
-}
-
 .menu-btn {
   background: none;
   border: none;
@@ -53,10 +40,14 @@
   cursor: pointer;
 }
 
-/* Background */
+/* ================== Background ================== */
 .home-image {
-  height: 100%;
+  height: 95%;
   width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
 }
 
 .home-image img {
@@ -65,7 +56,7 @@
   object-fit: cover;
 }
 
-/* Center Content */
+/* ================== Center Content ================== */
 .home-content {
   position: absolute;
   top: 40%;
@@ -86,7 +77,7 @@
   margin-top: 30px;
 }
 
-/* Footer */
+/* ================== Footer ================== */
 .home-footer {
   position: absolute;
   bottom: 20px;
@@ -98,10 +89,10 @@
   z-index: 3;
 }
 
-/* Search */
+/* ================== Search ================== */
 .search-bar {
   position: absolute;
-  bottom: 100px; /* 距離 Footer 按鈕 */
+  bottom: 100px;
   left: 60px;
   right: 60px;
   display: flex;
@@ -136,10 +127,10 @@
   font-size: 14px;
   min-width: 100px;
   color: #666;
-  height: 36px;          
-  line-height: 36px; 
-  box-sizing: border-box;    
-  appearance: none;     
+  height: 36px;
+  line-height: 36px;
+  box-sizing: border-box;
+  appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
 }
@@ -157,20 +148,24 @@
 }
 
 .search-btn:hover {
-  background-color: wheat;
+  background-color: #999;
 }
 
-
+/* ================== CTA Buttons ================== */
 .cta-buttons {
+  position: absolute;
+  bottom: -5px; /* 距離底部的距離 */
+  left: 60px;
+  right: 60px;
   display: flex;
-  width: 100%;       
-  gap: 0; 
+  gap: 0;
+  z-index: 50;
 }
 
 .btn-login, .btn-register, .btn-logout {
   font-size: 20px;
-  flex: 1;            
-  padding: 20px 0; 
+  flex: 1;
+  padding: 20px 0;
   text-decoration: none;
   color: #fff;
   text-align: center;
@@ -179,7 +174,7 @@
 .btn-login {
   font-weight: 800;
   background-color: #00AA90;
-  border-top-right-radius: 5px; 
+  border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
 }
 
@@ -200,13 +195,12 @@
 }
 
 .btn-logout {
-  
   text-decoration: none;
   font-size: 24px;
   text-align: center;
   color: #fff;
-  background-color: #666;  
-  border: none;                
+  background-color: #666;
+  border: none;
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
   cursor: pointer;
@@ -216,5 +210,3 @@
   background-color: #888;
   color: #fff;
 }
-
-
