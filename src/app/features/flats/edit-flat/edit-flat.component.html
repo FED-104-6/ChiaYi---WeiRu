@@ -1,0 +1,32 @@
+<div class="edit-flat-container">
+  <div class="edit-flat-card">
+    <h3 class="card-title">
+      <span class="title-icon">🛏️</span>
+      <span class="title-text">Edit Your Flat Information</span>
+    </h3>
+
+    <p class="card-subtitle">Please update the fields below to reflect the latest details.</p>
+
+    <div class="form-group">
+      <label for="flatName">Name</label>
+      <input id="flatName" type="text" [(ngModel)]="flat.name" placeholder="Flat Name">
+    </div>
+
+    <div class="form-group">
+      <label for="flatPrice">Price</label>
+      <input id="flatPrice" type="number" [(ngModel)]="flat.price" placeholder="Price (e.g., 1500)">
+    </div>
+
+    <div class="form-group">
+      <label for="flatBeds">Number of Beds</label>
+      <input id="flatBeds" type="number" [(ngModel)]="flat.beds" placeholder="Number of beds (e.g., 2)">
+    </div>
+
+    <div class="form-group">
+      <label for="flatDescription">Description</label>
+      <textarea id="flatDescription" [(ngModel)]="flat.description" placeholder="Describe your flat in detail..."></textarea>
+    </div>
+
+    <button class="save-button" (click)="save()">Save Changes</button>
+  </div>
+</div>

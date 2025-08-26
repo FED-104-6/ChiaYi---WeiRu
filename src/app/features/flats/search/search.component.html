@@ -1,0 +1,26 @@
+<h2 class="abc">
+  <span class="title-icon">🔍</span>
+  <span class="title-text">Search Flat</span>
+</h2>
+
+<div class="flats-container">
+  <div *ngFor="let flat of flats" class="flat-card">
+    <h3>{{ flat.name }}</h3>
+    <img [src]="flat.image" alt="Image of {{ flat.name }}" class="flat-image">
+    <p class="flat-price">💰 ${{ flat.price }}</p>
+    <p>🛏️ {{ flat.beds }} Beds</p>
+    <p>{{ flat.description }}</p>
+    <button class="view-details-btn" (click)="openModal(flat)">View Details</button>
+  </div>
+</div>
+
+<div class="modal" *ngIf="selectedFlat">
+  <div class="modal-content">
+    <span class="close" (click)="closeModal()">&times;</span>
+    <h2>{{ selectedFlat.name }}</h2>
+    <img [src]="selectedFlat.modalImage" alt="{{ selectedFlat.name }}">
+    <p><strong>Price:</strong> ${{ selectedFlat.price }}</p>
+    <p><strong>Beds:</strong> {{ selectedFlat.beds }}</p>
+    <p>{{ selectedFlat.fullDescription }}</p>
+  </div>
+</div>

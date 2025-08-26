@@ -1,0 +1,164 @@
+/* ❤️ 收藏清單主題字體 */
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@700&display=swap');
+
+/* 標題 */
+.section-title {
+  color: #00CCAA;
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
+  text-align: center;
+  font-family: 'Caveat', cursive;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.6rem;
+
+  .title-icon {
+    font-size: 2rem;
+  }
+}
+
+/* 容器：桌機 3 欄，手機自動 1 欄 */
+.flats-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); // 桌機固定三欄
+  gap: 2rem;
+  padding: 1.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* 卡片 */
+.flat-card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  display: flex;
+  flex-direction: column;
+
+  &:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+  }
+}
+
+/* 圖片 */
+.flat-image-wrapper {
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.flat-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+
+  &:hover {
+    transform: scale(1.08);
+  }
+}
+
+/* 資訊 */
+.flat-info {
+  padding: 1rem 1.2rem;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.flat-name {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #222;
+  margin-bottom: 0.4rem;
+}
+
+.flat-description {
+  font-size: 0.95rem;
+  color: #555;
+  margin-bottom: 0.8rem;
+  line-height: 1.4;
+  flex-grow: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* 詳細資訊 */
+.flat-details {
+  display: flex;
+  justify-content: space-between;
+  font-size: 1rem;
+  color: #444;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.detail-item {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.icon {
+  font-size: 1.1rem;
+}
+
+/* 💔 移除收藏按鈕 */
+.remove-fav {
+  background: #ff5a5f;
+  color: #fff;
+  border: none;
+  padding: 0.5rem 1.2rem;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  align-self: flex-start;
+
+  &:hover {
+    background: #e04e53;
+  }
+}
+
+/* 📱 響應式調整 */
+@media (max-width: 1024px) {
+  .flats-container {
+    grid-template-columns: repeat(2, 1fr); // 平板顯示 2 欄
+  }
+}
+
+@media (max-width: 600px) {
+  .flats-container {
+    grid-template-columns: 1fr; // 手機顯示單欄
+  }
+
+  .flat-image-wrapper {
+    height: 150px;
+  }
+
+  .flat-name {
+    font-size: 1.1rem;
+  }
+
+  .flat-description {
+    font-size: 0.85rem;
+  }
+
+  .flat-details {
+    font-size: 0.85rem;
+  }
+
+  .remove-fav {
+    padding: 0.4rem 0.9rem;
+    font-size: 0.85rem;
+  }
+}

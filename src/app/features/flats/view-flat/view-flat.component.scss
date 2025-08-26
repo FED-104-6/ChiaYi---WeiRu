@@ -1,0 +1,75 @@
+/* Flat list wrapper + grid，置中整個版面 */
+.flat-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1.5rem;
+  padding: 2rem;
+
+  /* 上下左右置中 */
+  justify-content: center; /* 水平置中 */
+  align-content: center;   /* 垂直置中 */
+  min-height: 100vh;       /* 滿螢幕高度 */
+  background-color: #f7f7f7;
+  box-sizing: border-box;
+}
+
+/* 單張卡片 */
+.flat-card {
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  display: flex;
+  flex-direction: column;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+  }
+
+  .flat-image {
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+
+    img:hover {
+      transform: scale(1.05);
+    }
+  }
+
+  .flat-info {
+    padding: 1rem;
+
+    h3 {
+      margin: 0 0 0.5rem 0;
+      font-size: 1.25rem;
+      color: #222;
+    }
+
+    .flat-price {
+      font-weight: 600;
+      color: #ff385c; /* Airbnb signature pink */
+      margin-bottom: 0.25rem;
+    }
+
+    .flat-beds {
+      font-size: 0.95rem;
+      color: #555;
+      margin-bottom: 0.5rem;
+    }
+
+    .flat-description {
+      font-size: 0.9rem;
+      color: #717171;
+      line-height: 1.4;
+    }
+  }
+}

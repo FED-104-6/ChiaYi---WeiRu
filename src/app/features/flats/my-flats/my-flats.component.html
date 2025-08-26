@@ -1,0 +1,16 @@
+<h2 class="my-flats-title">
+  <span class="title-icon">🏡</span>
+  My Flats
+</h2>
+
+<div class="flats-container">
+  <div *ngFor="let flat of flats" class="flat-card">
+    <img [src]="flat.image" alt="Image of {{ flat.name }}" class="flat-image">
+    <div class="flat-details">
+      <h3>{{ flat.name }}</h3>
+      <p><strong>Price:</strong> ${{ flat.price }}</p>
+      <p><strong>Beds:</strong> {{ flat.beds }}</p>
+      <p>{{ flat.description }}</p>
+    </div>
+  </div>
+</div>

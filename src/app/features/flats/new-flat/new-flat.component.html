@@ -1,0 +1,12 @@
+<h2>
+  <span style="margin-right: 0.5rem;">🏠</span> Newest Flats
+</h2>
+<div class="added-flats-container">
+  <div *ngFor="let addedFlat of addedFlats" class="flat-card">
+    <h3>{{ addedFlat.name }}</h3>
+    <img [src]="addedFlat.image" alt="Image of {{ addedFlat.name }}" class="flat-image">
+    <p class="flat-price">💰 ${{ addedFlat.price }}</p>
+    <p>🛏️ {{ addedFlat.beds }} Beds</p>
+    <p>{{ addedFlat.description }}</p>
+  </div>
+</div>

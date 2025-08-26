@@ -1,0 +1,161 @@
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&display=swap');
+
+// 🎨 Variables
+$font-family: 'Caveat', cursive;
+$bg-color: #F9F9F9;
+$text-dark: #222222;
+$text-light: #555555;
+$label-color: #484848;
+$placeholder-color: #a0a0a0;
+$border-color: #d8d8d8;
+$primary: #00AA90;
+$primary-dark: #008772;
+$disabled: #cccccc;
+$shadow: 0 12px 36px rgba(0, 0, 0, 0.08);
+
+// 🖥 Global Styles
+html, body {
+  height: 100%;
+  margin: 0;
+  font-family: $font-family;
+  background-color: $bg-color;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+// 📦 Container
+.edit-flat-container {
+  width: 100%;
+  max-width: 500px;
+  padding: 2rem;
+  margin: auto;
+  box-sizing: border-box;
+  font-family: $font-family;
+}
+
+// 📝 Card
+.edit-flat-card {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 16px;
+  padding: 36px 32px;
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.12);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  font-family: $font-family;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 40px rgba(0,0,0,0.16);
+  }
+
+  // 標題和 icon 同一行
+  .card-title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    font-size: 2.4rem;
+    color: #1d6a96; // 標題文字顏色
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    line-height: 1.2;
+
+    .title-icon {
+      font-size: 2.2rem;
+      line-height: 1;
+      color: #1d6a96; // icon 同色
+    }
+
+    .title-text {
+      display: inline-block;
+      white-space: nowrap;
+    }
+  }
+
+  .card-subtitle {
+    font-size: 1.05rem;
+    color: $text-light;
+    text-align: center;
+    margin-bottom: 2.5rem;
+    font-style: italic;
+  }
+}
+
+// 🏷️ Form
+.form-group {
+  margin-bottom: 1.2rem;
+
+  label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: $label-color;
+    font-size: 0.95rem;
+  }
+
+  input,
+  textarea {
+    width: 100%;
+    padding: 14px 16px;
+    border: 1px solid $border-color;
+    border-radius: 12px;
+    box-sizing: border-box;
+    font-size: 1rem;
+    color: $text-dark;
+    font-family: $font-family;
+    background: #fff;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+
+    &::placeholder {
+      color: $placeholder-color;
+    }
+
+    &:focus {
+      border-color: $primary;
+      box-shadow: 0 0 0 4px rgba(0,170,144,0.15);
+      outline: none;
+    }
+  }
+
+  textarea {
+    min-height: 120px;
+    resize: vertical;
+  }
+}
+
+// 💾 Save Button
+.save-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 50px;
+  background: linear-gradient(135deg, $primary, #56B9B9);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.08);
+  color: white;
+  font-weight: 700;
+  font-size: 1.2rem;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  font-family: $font-family;
+  transition: background 0.3s ease, transform 0.1s ease, box-shadow 0.2s ease;
+
+  &:hover {
+    background: linear-gradient(135deg, $primary-dark, #00CCAA);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.12);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+
+  &:disabled {
+    background: $disabled;
+    cursor: not-allowed;
+    box-shadow: none;
+  }
+}
