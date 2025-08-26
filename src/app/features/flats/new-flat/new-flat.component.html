@@ -1,25 +1,12 @@
 <h2>
-  <span style="margin-right: 0.5rem;">🏠</span> Add New Flat
+  <span style="margin-right: 0.5rem;">🏠</span> Newest Flats
 </h2>
-
-<form (ngSubmit)="onSubmit()" #flatForm="ngForm">
-  <div class="form-group">
-    <input type="text" name="name" [(ngModel)]="flat.name" placeholder="Flat Name" required>
+<div class="added-flats-container">
+  <div *ngFor="let addedFlat of addedFlats" class="flat-card">
+    <h3>{{ addedFlat.name }}</h3>
+    <img [src]="addedFlat.image" alt="Image of {{ addedFlat.name }}" class="flat-image">
+    <p class="flat-price">💰 ${{ addedFlat.price }}</p>
+    <p>🛏️ {{ addedFlat.beds }} Beds</p>
+    <p>{{ addedFlat.description }}</p>
   </div>
-
-  <div class="form-group">
-    <input type="number" name="price" [(ngModel)]="flat.price" placeholder="Price" required>
-  </div>
-
-  <div class="form-group">
-    <input type="number" name="beds" [(ngModel)]="flat.beds" placeholder="Beds" required>
-  </div>
-
-  <div class="form-group">
-    <textarea name="description" [(ngModel)]="flat.description" placeholder="Description" required></textarea>
-  </div>
-
-  <button type="submit" [disabled]="!flat.name || flat.price <= 0 || flat.beds <= 0 || !flat.description">
-    Add Flat
-  </button>
-</form>
+</div>

@@ -1,31 +1,27 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+
+export interface Flat {
+  name: string;
+  price: number;
+  beds: number;
+  description: string;
+  image: string;
+}
 
 @Component({
   selector: 'app-new-flat',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule],
   templateUrl: './new-flat.component.html',
   styleUrls: ['./new-flat.component.scss']
 })
 export class NewFlatComponent {
-  flat = { name: '', price: 0, beds: 0, description: '' };
+  addedFlats: Flat[] = [
+    { name: 'Loft Oasis', price: 2500, beds: 1, description: 'Chic urban loft with high ceilings and a balcony.', image: 'assets/loft1.avif' },
+    { name: 'Riverside Retreat', price: 3200, beds: 3, description: 'Spacious flat with stunning river views and modern amenities.', image: 'assets/Riverside Retreat.avif' },
+    { name: 'Garden Studio', price: 1800, beds: 1, description: 'Cozy studio apartment with a private garden patio.', image: 'assets/garden .avif' },
+  ];
 
-  onSubmit(): void {
-    if (!this.flat.name || this.flat.price <= 0 || this.flat.beds <= 0 || !this.flat.description) {
-      alert('請填寫所有欄位，並確保價格和床位數大於 0。');
-      return;
-    }
-
-    setTimeout(() => {
-      console.log('New flat added:', this.flat);
-      alert('公寓已成功新增！');
-      this.resetForm();
-    }, 500);
-  }
-
-  private resetForm(): void {
-    this.flat = { name: '', price: 0, beds: 0, description: '' };
-  }
+  constructor() {}
 }
