@@ -1,0 +1,282 @@
+.messages-container {
+    margin: 0 auto; /* 避開左側 sidebar */
+    padding: 50px 20px;
+    min-height: 100vh;
+    width: 80%;
+    max-width: 1200px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: stretch; /* 讓子元素寬度跟 container 一致 */
+    background-color: #FCFAF2;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+  }
+  
+  /* 篩選器 */
+  .filter-section {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
+    padding: 10px;
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+  
+  /* Label 內部排版 */
+  .filter-section label {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-width: 120px;
+    font-size: 14px;
+  }
+  
+  /* ~ 分隔符 */
+  .filter-section span.separator {
+    flex: 0 0 auto; /* 固定寬度，保持 ~ */
+    margin-top: 22px; /* 對齊 input */
+  }
+  
+  /* Input / Select */
+  .filter-section input,
+  .filter-section select {
+    height: 36px;
+    padding: 0 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+    outline: none;
+    margin-top: 4px;
+  }
+  
+  /* 搜尋按鈕 */
+  .search-btn {
+    flex: 0 0 auto;
+    height: 36px;
+    padding: 0 14px;
+    background-color: #00AA90;
+    color: #fff;
+    border: 1px solid #00AA90;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .search-btn:hover {
+    background-color: #008F7A;
+  }
+  
+  .search-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  
+  /* 表格 */
+  .table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+  
+  .messages-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 720px;
+  }
+  
+  .messages-table th,
+  .messages-table td {
+    padding: 12px;
+    font-size: 14px;
+    border-bottom: 1px solid #f2f2f2;
+  }
+  
+  .messages-table thead th {
+    text-align: left;
+    font-weight: 600;
+    color: #666;
+    background: #fafafa;
+  }
+  
+  .messages-table tbody tr:hover {
+    background: #f9f9f9;
+  }
+  
+  /* 狀態標籤 */
+  .replied {
+    background-color: #d4edda;
+    color: #155724;
+    padding: 4px 8px;
+    border-radius: 4px;
+  }
+  
+  .unreplied {
+    background-color: #f8d7da;
+    color: #721c24;
+    padding: 4px 8px;
+    border-radius: 4px;
+  }
+  
+  /* 空狀態 */
+  .empty {
+    padding: 24px;
+    text-align: center;
+    color: #666;
+    background: #fff;
+    border: 1px dashed #ddd;
+    border-radius: 4px;
+  }
+  
+  /* 分頁 */
+  .pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 8px 0;
+    box-sizing: border-box;
+  }
+  
+  .pagination button {
+    min-width: 30px;
+    height: 30px;
+    padding: 0 5px;
+    border: 1px solid #eee;
+    background: #fff;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.2s;
+  }
+  
+  .pagination button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  
+  .pagination button:hover:not(:disabled) {
+    border-color: #BC9F77;
+    color: #BC9F77;
+  }
+  
+  /* 編輯按鈕 */
+  .edit-btn {
+    padding: 4px 8px;
+    border-radius: 4px;
+    border: none;
+    background-color: #00AA90;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .edit-btn:hover {
+    background-color: #008F7A;
+  }
+  
+  /* Modal */
+  .modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+  }
+  
+  .modal {
+    background: #fff;
+    padding: 20px;
+    border-radius: 6px;
+    width: 360px;
+    max-width: 90%;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .modal label {
+    display: flex;
+    flex-direction: column;
+    font-size: 14px;
+  }
+  
+  .modal input,
+  .modal select,
+  .modal textarea {
+    padding: 6px 10px;
+    font-size: 14px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-top: 4px;
+    outline: none;
+  }
+  
+  .modal textarea {
+    resize: vertical;
+  }
+  
+  .modal-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+  }
+  
+  .modal-buttons button {
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    border: none;
+    font-weight: 500;
+  }
+  
+  .save-btn {
+    background-color: #00AA90;
+    color: #fff;
+  }
+  
+  .delete-btn {
+    background-color: #e74c3c;
+    color: #fff;
+  }
+  
+  .cancel-btn {
+    background-color: #ccc;
+  }
+  
+  /* 手機優化 */
+  @media (max-width: 640px) {
+    .filter-section {
+      flex-direction: column;
+      align-items: stretch;
+    }
+  
+    .filter-section input,
+    .filter-section select,
+    .search-btn {
+      width: 100%; /* 完全跟 container 同寬 */
+      margin-left: 0;
+    }
+  
+    .filter-section span.separator {
+      margin-top: 0;
+    }
+  
+    .table-wrapper {
+      overflow-x: auto;
+    }
+  }
+  

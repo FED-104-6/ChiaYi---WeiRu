@@ -25,6 +25,10 @@ export const routes: Routes = [
   { 
     path: 'update-profile', 
     loadComponent: () => import('./features/profile/update-profile/update-profile.component').then(m => m.UpdateProfileComponent) 
+  },
+  { 
+    path: 'messages', 
+    loadComponent: () => import('./features/messages/admin-view-messages/admin-view-messages.component').then(m => m.AdminViewMessagesComponent) 
   }
 ];
 
