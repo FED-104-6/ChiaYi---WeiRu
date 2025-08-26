@@ -2,25 +2,25 @@
   <!-- 篩選器區塊 -->
   <div class="filter-section">
     <label>
-      留言時間起:
+      Leave a message from:
       <input type="date" [(ngModel)]="filter.startDate" />
     </label>
     <span>~</span>
     <label>
-      留言時間迄:
+      Leave a message until:
       <input type="date" [(ngModel)]="filter.endDate" />
     </label>
 
     <label>
-      狀態:
+      State:
       <select [(ngModel)]="filter.status">
-        <option value="">全部</option>
-        <option value="replied">已回覆</option>
-        <option value="unreplied">未回覆</option>
+        <option value="">All</option>
+        <option value="replied">Processed</option>
+        <option value="unreplied">Unprocessed</option>
       </select>
     </label>
 
-    <button class="search-btn" (click)="applyFilter()">搜尋</button>
+    <button class="search-btn" (click)="applyFilter()">Search</button>
   </div>
 
   <!-- 訊息列表 -->
@@ -28,26 +28,30 @@
     <table class="messages-table">
       <thead>
         <tr>
-          <th>用戶名</th>
-          <th>標題</th>
-          <th>問題內容</th>
-          <th>狀態</th>
-          <th>操作</th>
+          <th style="width: 64px;"></th>
+          <th>Users</th>
+          <th>Title</th>
+          <th>Question</th>
+          <th>Reply</th>
+          <th>State</th>
+          <th></th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let msg of pagedMessages; let i = index">
+          <td class="text-center">{{ i + 1 + (currentPage-1)*itemsPerPage }}</td>
           <td>{{ msg.username }}</td>
           <td>{{ msg.title }}</td>
           <td>{{ msg.content }}</td>
+          <td>{{ msg.reply }}</td>
           <td>
             <span [class.replied]="msg.status === 'replied'"
                   [class.unreplied]="msg.status === 'unreplied'">
-              {{ msg.status === 'replied' ? '已回覆' : '未回覆' }}
+              {{ msg.status === 'replied' ? 'Processed' : 'Unprocessed' }}
             </span>
           </td>
           <td>
-            <button class="edit-btn" (click)="openEditModal(msg, i)">回覆</button>
+            <button class="edit-btn" (click)="openEditModal(msg, i)">Reply</button>
           </td>
         </tr>
       </tbody>
@@ -64,30 +68,34 @@
   <!-- 回覆 Modal -->
   <div class="modal-backdrop" *ngIf="editingMessage">
     <div class="modal">
-      <h3>編輯留言</h3>
+      <h3>Reply to message</h3>
       <label>
-        用戶名:
-        <input [(ngModel)]="editingMessage.username" />
+        User:
+        <span>{{ editingMessage.username }}</span>
       </label>
+  
       <label>
-        標題:
-        <input [(ngModel)]="editingMessage.title" />
+        Question:
+        <p>{{ editingMessage.content }}</p>
       </label>
+  
       <label>
-        問題內容:
-        <textarea [(ngModel)]="editingMessage.content"></textarea>
+        Reply:
+        <textarea [(ngModel)]="editingMessage.reply"></textarea>
       </label>
+  
       <label>
-        狀態:
+        State:
         <select [(ngModel)]="editingMessage.status">
-          <option value="replied">已回覆</option>
-          <option value="unreplied">未回覆</option>
+          <option value="replied">Processed</option>
+          <option value="unreplied">Unprocessed</option>
         </select>
       </label>
-
+  
       <div class="modal-buttons">
-        <button class="save-btn" (click)="saveEdit()">保存</button>
-        <button class="cancel-btn" (click)="cancelEdit()">取消</button>
+        <button class="save-btn" (click)="saveEdit()">Save</button>
+        <button class="delete-btn" (click)="deleteMessage()">Delete</button>
+        <button class="cancel-btn" (click)="cancelEdit()">Cancel</button>
       </div>
     </div>
   </div>

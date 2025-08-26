@@ -1,4 +1,3 @@
-<!-- 登入後 Sidebar + Header -->
 <aside *ngIf="isLoggedIn" class="sidebar">
   <div class="sidebar-header">
     <a class="logo" (click)="navigateHome()">BNB</a>
@@ -10,33 +9,28 @@
   </div>
 
   <nav>
-    <!-- ✅ 只有非 host 才顯示 -->
-    <a *ngIf="userRole !== 'host'" href="#" (click)="checkAuth('/all-users'); $event.preventDefault()">
+    <!-- 只有 Admin 可以看到 All Users -->
+    <a *ngIf="userRole === 'admin'" href="#" (click)="checkAuth('/all-users'); $event.preventDefault()">
       All Users
     </a>
 
     <!-- Profile 主選單 -->
-
     <a href="#" (click)="toggleProfileMenu(); $event.preventDefault()">Profile</a>
-
-    <!-- 下拉子選單 -->
     <div *ngIf="profileMenuOpen" class="submenu">
       <a href="#" (click)="navigateTo('/update-profile'); $event.preventDefault()">Update Profile</a>
     </div>
 
     <!-- Flats 主選單 -->
-    <a href="#" (click)="toggleFlatsMenu(); $event.preventDefault()">
-      Flats
-    </a>
-
-    <!-- 下拉子選單 -->
+    <a href="#" (click)="toggleFlatsMenu(); $event.preventDefault()">Flats</a>
     <div *ngIf="flatsMenuOpen" class="submenu">
-      <a href="#" (click)="navigateTo('/new-flat'); $event.preventDefault()">New Flat</a>
-      <a href="#" (click)="navigateTo('/view-flat'); $event.preventDefault()">View Flat</a>
-      <a href="#" (click)="navigateTo('/edit-flat'); $event.preventDefault()">Edit Flat</a>
-      <a href="#" (click)="navigateTo('/my-flat'); $event.preventDefault()">My Flat</a>
+      <!-- Admin 只看到 View Flat -->
+      <a *ngIf="userRole === 'admin'" href="#" (click)="navigateTo('/view-flat'); $event.preventDefault()">View Flat</a>
+      <!-- Host 看到 Edit Flat + My Flat -->
+      <a *ngIf="userRole === 'host'" href="#" (click)="navigateTo('/edit-flat'); $event.preventDefault()">Edit Flat</a>
+      <a *ngIf="userRole === 'host'" href="#" (click)="navigateTo('/my-flat'); $event.preventDefault()">My Flat</a>
     </div>
 
+    <!-- Messages 與 Logout -->
     <a href="#" (click)="navigateTo('/messages'); $event.preventDefault()">Messages</a>
     <a href="#" (click)="logout(); $event.preventDefault()">Logout</a>
   </nav>

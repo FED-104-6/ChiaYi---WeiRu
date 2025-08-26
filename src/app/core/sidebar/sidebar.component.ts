@@ -68,7 +68,7 @@ export class SidebarComponent implements AfterViewInit {
   /** Profile 子選單切換 */
   toggleProfileMenu() {
     this.profileMenuOpen = !this.profileMenuOpen;
-    if (this.profileMenuOpen) this.flatsMenuOpen = false; // 互斥開關
+    if (this.profileMenuOpen) this.flatsMenuOpen = false;
   }
   
   /** Flats 子選單切換 */
