@@ -16,39 +16,17 @@ export class HeaderComponent implements OnInit {
   language: 'en' | 'zh' = 'en';
   isSidebarOpen = false;
   isDarkText = false;
-  showHeader = true;
-
-  // 想隱藏 header 的路由清單
-  private hiddenHeaderRoutes: string[] = [
-    '/all-users',
-    '/login',
-    '/register'
-  ];
+  role: string | null = null;
 
   constructor(public authService: AuthService, private router: Router) {}
 
   ngOnInit() {
-    // 監聽路由變化
+    this.updateRoleAndColor();
+
     this.router.events
       .pipe(filter(event => event instanceof NavigationEnd))
-      .subscribe((event: NavigationEnd) => {
-        const route = (event as NavigationEnd).urlAfterRedirects;
-  
-        // 套用顏色
-        this.applyRouteColor(route);
-  
-        // 根據角色決定 header 是否顯示
-        const role = this.authService.currentUserRole(); // admin / host / guest
-        this.showHeader = !(role === 'admin' || role === 'host');
-      });
-  
-    // 初始化一次
-    const role = this.authService.currentUserRole();
-    this.showHeader = !(role === 'admin' || role === 'host');
-  
-    const currentRoute = this.router.url;
-    this.applyRouteColor(currentRoute);
-  }  
+      .subscribe(() => this.updateRoleAndColor());
+  }
 
   setLanguage(lang: 'en' | 'zh') {
     this.language = lang;
@@ -60,19 +38,14 @@ export class HeaderComponent implements OnInit {
 
   logout() {
     this.authService.logout();
-    this.toggleSidebar();
+    this.isSidebarOpen = false;
+    this.router.navigate(['/login']);
   }
 
-  private applyRouteColor(route: string) {
-    switch(route) {
-      case '/home':
-        this.isDarkText = false;
-        break;
-      case '/profile':
-        this.isDarkText = true;
-        break;
-      default:
-        this.isDarkText = true;
-    }
+  private updateRoleAndColor() {
+    this.role = this.authService.currentUserRole();
+    const route = this.router.url;
+    const darkTextRoutes = ['/my-account', '/new-flat', '/view-flat', '/favorite', '/customer-view-messages'];
+    this.isDarkText = darkTextRoutes.includes(route);
   }
 }

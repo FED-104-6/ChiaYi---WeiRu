@@ -9,29 +9,31 @@
   </div>
 
   <nav>
-    <!-- 只有 Admin 可以看到 All Users -->
-    <a *ngIf="userRole === 'admin'" href="#" (click)="checkAuth('/all-users'); $event.preventDefault()">
+    <a [routerLink]="['/home']" (click)="closeMenus()">Home</a>
+
+    <a *ngIf="userRole === 'admin'" [routerLink]="['/all-users']" (click)="closeMenus()">
       All Users
     </a>
 
-    <!-- Profile 主選單 -->
-    <a href="#" (click)="toggleProfileMenu(); $event.preventDefault()">Profile</a>
+    <a (click)="toggleProfileMenu()">Profile</a>
     <div *ngIf="profileMenuOpen" class="submenu">
-      <a href="#" (click)="navigateTo('/update-profile'); $event.preventDefault()">Update Profile</a>
+      <a [routerLink]="['/update-profile']" (click)="closeMenus()">Update Profile</a>
     </div>
 
-    <!-- Flats 主選單 -->
-    <a href="#" (click)="toggleFlatsMenu(); $event.preventDefault()">Flats</a>
+    <a (click)="toggleFlatsMenu()">Flats</a>
     <div *ngIf="flatsMenuOpen" class="submenu">
-      <!-- Admin 只看到 View Flat -->
-      <a *ngIf="userRole === 'admin'" href="#" (click)="navigateTo('/view-flat'); $event.preventDefault()">View Flat</a>
-      <!-- Host 看到 Edit Flat + My Flat -->
-      <a *ngIf="userRole === 'host'" href="#" (click)="navigateTo('/edit-flat'); $event.preventDefault()">Edit Flat</a>
-      <a *ngIf="userRole === 'host'" href="#" (click)="navigateTo('/my-flat'); $event.preventDefault()">My Flat</a>
+      <a [routerLink]="['/flats/search']" (click)="closeMenus()">Search Flats</a>
+      <a [routerLink]="['/flats/new-flat']" (click)="closeMenus()">New Flat</a>
+      <a [routerLink]="['/flats/my-flats']" (click)="closeMenus()">My Flats</a>
+      <a *ngIf="userRole !== 'admin'" [routerLink]="['/flats/favourites']" (click)="closeMenus()">Favourites</a>
+      
+      <a *ngIf="userRole === 'admin'" [routerLink]="['/flats/view-flat']" (click)="closeMenus()">View Flat</a>
+      <a *ngIf="userRole === 'host'" [routerLink]="['/flats/edit-flat']" (click)="closeMenus()">Edit Flat</a>
     </div>
 
-    <!-- Messages 與 Logout -->
-    <a href="#" (click)="navigateTo('/messages'); $event.preventDefault()">Messages</a>
-    <a href="#" (click)="logout(); $event.preventDefault()">Logout</a>
+    <a *ngIf="userRole === 'admin'" [routerLink]="['/messages']" (click)="closeMenus()">Messages (Admin)</a>
+    <a *ngIf="userRole === 'host' || userRole === 'guest'" [routerLink]="['/my-messages']" (click)="closeMenus()">Messages</a>
+    
+    <a (click)="logout()">Logout</a>
   </nav>
 </aside>

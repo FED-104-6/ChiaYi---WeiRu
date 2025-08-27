@@ -1,14 +1,25 @@
-<!-- 整個 header 與內容一起控制顯示 -->
-<header *ngIf="showHeader" class="home-header" [class.dark-text]="isDarkText">
-  <div class="header-right">
-    <div class="lang-switch">
-      <button [class.active]="language === 'en'" (click)="setLanguage('en')">ENGLISH</button>
-      <button [class.active]="language === 'zh'" (click)="setLanguage('zh')">CHINESE</button>
-    </div>
+<header class="home-header" [class.dark-text]="isDarkText">
+  <div class="lang-switch">
+    <button [class.active]="language === 'en'" (click)="setLanguage('en')">ENGLISH</button>
+    <button [class.active]="language === 'zh'" (click)="setLanguage('zh')">CHINESE</button>
+  </div>
 
-    <!-- 如果有其他右側選單或按鈕，也放這裡 -->
+  <div class="header-right">
+    <button *ngIf="role === 'guest'" class="menu-btn" (click)="toggleSidebar()">☰</button>
   </div>
 </header>
 
-<!-- 背景遮罩 -->
+<div class="sidebar" [class.open]="isSidebarOpen">
+  <button class="close-btn" (click)="toggleSidebar()">×</button>
+  <nav>
+    <a routerLink="/home" (click)="toggleSidebar()">Home</a>
+    <a routerLink="/my-account" (click)="toggleSidebar()">My account</a>
+    <a routerLink="/new-flat" (click)="toggleSidebar()">New Flat</a>
+    <a routerLink="/view-flat" (click)="toggleSidebar()">View Flat</a>
+    <a routerLink="/favorite" (click)="toggleSidebar()">Favorite</a>
+    <a routerLink="/messages" (click)="toggleSidebar()">Messages</a>
+    <a (click)="logout()">Logout</a>
+  </nav>
+</div>
+
 <div class="overlay" *ngIf="isSidebarOpen" (click)="toggleSidebar()"></div>

@@ -1,8 +1,8 @@
-import { Component, AfterViewInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router, NavigationEnd, RouterModule } from '@angular/router';
-import { AuthService } from '../../features/auth/auth.service';
-import { filter, take } from 'rxjs/operators';
+import { RouterModule, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { AuthService, UserRole } from '../../features/auth/auth.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -11,108 +11,71 @@ import { filter, take } from 'rxjs/operators';
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.css']
 })
-export class SidebarComponent implements AfterViewInit {
-  language: 'en' | 'zh' = 'en';
-  isSidebarOpen = false;
-  isDarkText = false;
-  isLoggedIn = false;
+export class SidebarComponent implements OnInit, OnDestroy {
+  isLoggedIn: boolean = false;
+  userRole: UserRole | null = null;
+  language: string = 'en';
+  profileMenuOpen: boolean = false;
+  flatsMenuOpen: boolean = false;
+  private authSubscription: Subscription = new Subscription();
 
-  flatsMenuOpen = false;
-  profileMenuOpen = false;  
+  constructor(
+    public authService: AuthService,
+    private router: Router
+  ) {}
 
-  userRole: 'admin' | 'host' | 'guest' | null = null;
+  ngOnInit(): void {
+    // 🎯 Subscribe to both observables to get user status and role
+    this.authSubscription.add(
+      this.authService.isLoggedIn$.subscribe(isLoggedIn => {
+        this.isLoggedIn = isLoggedIn;
+      })
+    );
 
-  constructor(public authService: AuthService, private router: Router) {
-    // 監聽登入狀態
-    this.authService.isLoggedIn$.subscribe(status => this.isLoggedIn = status);
-    // 監聽使用者角色
-    this.authService.userRole$.subscribe(role => this.userRole = role);
+    this.authSubscription.add(
+      this.authService.userRole$.subscribe(role => {
+        this.userRole = role;
+      })
+    );
   }
 
-  /** 語言切換 */
-  setLanguage(lang: 'en' | 'zh') {
-    this.language = lang;
+  ngOnDestroy(): void {
+    this.authSubscription.unsubscribe();
   }
 
-  /** Sidebar 開關 */
-  toggleSidebar() {
-    this.isSidebarOpen = !this.isSidebarOpen;
-  }
-
-  /** 登出 */
-  async logout() {
-    await this.authService.logout();
-    this.closeMenus();
-    this.router.navigate(['/login']);
-  }
-
-  /** 導頁（需檢查登入） */
-  checkAuth(route: string) {
-    this.authService.isLoggedIn$.pipe(take(1)).subscribe(isLoggedIn => {
-      if (isLoggedIn) {
-        this.router.navigate([route]);
-      } else {
-        alert('Please register or log in first');
-        this.router.navigate(['/login']);
-      }
-      this.closeMenus();
-    });
-  }
-
-  /** 點擊 Logo 回首頁 */
-  navigateHome() {
-    this.closeMenus();
-    this.router.navigate(['/home']);
-  }
-
-  /** Profile 子選單切換 */
-  toggleProfileMenu() {
-    this.profileMenuOpen = !this.profileMenuOpen;
-    if (this.profileMenuOpen) this.flatsMenuOpen = false;
-  }
-  
-  /** Flats 子選單切換 */
-  toggleFlatsMenu() {
-    this.flatsMenuOpen = !this.flatsMenuOpen;
-    if (this.flatsMenuOpen) this.profileMenuOpen = false;
-  }  
-
-  /** 直接導頁 */
-  navigateTo(route: string) {
+  // 🎯 Added all missing methods from the template
+  navigateTo(route: string): void {
     this.router.navigate([route]);
-    this.closeMenus();
   }
 
-  /** 統一收合選單 */
-  private closeMenus() {
-    this.isSidebarOpen = false;
+  logout(): void {
+    this.authService.logout();
+  }
+
+  toggleProfileMenu(): void {
+    this.profileMenuOpen = !this.profileMenuOpen;
+    // 💡 Close other menus
     this.flatsMenuOpen = false;
+  }
+
+  toggleFlatsMenu(): void {
+    this.flatsMenuOpen = !this.flatsMenuOpen;
+    // 💡 Close other menus
     this.profileMenuOpen = false;
   }
 
-  /** 監聽路由變化，控制文字顏色 */
-  ngAfterViewInit() {
-    this.router.events
-      .pipe(filter(event => event instanceof NavigationEnd))
-      .subscribe((event: NavigationEnd) => {
-        this.applyRouteColor(event.urlAfterRedirects);
-      });
-
-    // 初始化文字顏色
-    this.applyRouteColor(this.router.url);
+  // 🎯 The method you were missing
+  closeMenus(): void {
+    this.profileMenuOpen = false;
+    this.flatsMenuOpen = false;
   }
 
-  /** 根據路由切換 Sidebar 文字顏色 */
-  private applyRouteColor(route: string) {
-    const darkTextRoutes = [
-      '/profile', 
-      '/update-profile', 
-      '/all-users', 
-      '/new-flat', 
-      '/view-flat', 
-      '/edit-flat', 
-      '/my-flat'
-    ];
-    this.isDarkText = darkTextRoutes.includes(route);
+  setLanguage(lang: string): void {
+    this.language = lang;
+    console.log(`Language set to: ${this.language}`);
+  }
+
+  navigateHome(): void {
+    this.router.navigate(['/home']);
   }
 }

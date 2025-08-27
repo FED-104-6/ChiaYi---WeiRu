@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
 
 export interface Flat {
   id: number;
@@ -14,7 +13,7 @@ export interface Flat {
 @Component({
   selector: 'app-favourites',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule],
   templateUrl: './favourites.component.html',
   styleUrls: ['./favourites.component.scss']
 })
