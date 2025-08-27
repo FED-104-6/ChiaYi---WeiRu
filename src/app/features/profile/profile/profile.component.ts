@@ -1,5 +1,6 @@
-import { Component, OnInit, ChangeDetectionStrategy, Input } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { AuthService, AuthUser } from '../../../features/auth/auth.service';
 
 @Component({
   selector: 'app-profile',
@@ -10,26 +11,35 @@ import { CommonModule } from '@angular/common';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProfileComponent implements OnInit {
-  /** 可用 @Input 傳入或由 localStorage 讀取 */
-  @Input() name: string = 'Name';
-  @Input() photo: string | null = null;
-
+  name: string = 'Name';
+  photo: string | null = null;
   initials = 'U';
 
+  constructor(private authService: AuthService) {}
+
   ngOnInit(): void {
-    // 嘗試從 localStorage 讀取登入者資料
-    try {
-      const raw = localStorage.getItem('auth_user');
-      if (raw) {
-        const user = JSON.parse(raw) as { displayName?: string; name?: string; photoURL?: string; avatarUrl?: string };
-        this.name = user.displayName || user.name || this.name;
-        this.photo = (user.photoURL || user.avatarUrl || this.photo) ?? null;
-      }
-    } catch {
-      // 解析錯誤就忽略，使用預設
+    // ✅ 直接從 AuthService 取得使用者資料
+    const user: AuthUser | null = this.authService.currentUser();
+    if (user) {
+      this.name = this.getNameByRole(user);
+      this.photo = user.photoURL || user.avatarUrl || null;
     }
 
     this.initials = this.computeInitials(this.name);
+  }
+
+  /** 根據角色決定顯示名稱 */
+  private getNameByRole(user: AuthUser): string {
+    switch (user.role) {
+      case 'host':
+        return user.displayName || '房東';
+      case 'guest':
+        return user.displayName || '房客';
+      case 'admin':
+        return user.displayName || '管理者';
+      default:
+        return user.displayName || 'User';
+    }
   }
 
   /** 產生縮寫：中文取第一字；英文取名字與姓氏首字母 */

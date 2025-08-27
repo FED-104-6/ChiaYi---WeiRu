@@ -27,8 +27,13 @@ export class AppComponent {
 
     // Header 顯示控制
     const hiddenHeaderRoutes = ['/login', '/register'];
-    this.showHeader$ = combineLatest([this.authService.isLoggedIn$, url$]).pipe(
-      map(([isLoggedIn, url]) => isLoggedIn && !hiddenHeaderRoutes.includes(url))
+    this.showHeader$ = combineLatest([this.authService.isLoggedIn$, this.authService.userRole$, url$]).pipe(
+      map(([isLoggedIn, role, url]) => {
+        // 如果是 admin 或 host 就不顯示 header
+        if (role === 'admin' || role === 'host') return false;
+        // 其他情況依舊根據登入狀態和路由判斷
+        return isLoggedIn && !hiddenHeaderRoutes.includes(url);
+      })
     );
 
     // Sidebar 顯示控制

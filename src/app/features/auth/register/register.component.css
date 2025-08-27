@@ -153,6 +153,40 @@
   color: #a98f6a;
 }
 
+/* 整個下拉容器 */
+.role-select {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 下拉選單 */
+.role-select select {
+  padding: 15px 12px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #fff;
+  color: #666;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.role-select select:focus {
+  border-color: #BC9F77;
+  box-shadow: 0 0 5px rgba(188, 159, 119, 0.5);
+}
+
+/* 選項文字 */
+.role-select select option {
+  color: #333;
+}
+
+/* 提示文字顏色 */
+.role-select select option[value=""] {
+  color: #999;
+}
+
 /* 錯誤訊息 */
 .error {
   color: red;

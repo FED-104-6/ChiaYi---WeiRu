@@ -5,8 +5,9 @@ import { routes } from './app/app.routes';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { provideAuth, getAuth } from '@angular/fire/auth';
 import { provideFirestore, getFirestore } from '@angular/fire/firestore';
+import { provideStorage, getStorage } from '@angular/fire/storage';  
 
-// 直接在這裡寫 Firebase 配置
+// Firebase 配置
 const firebaseConfig = {
   apiKey: "AIzaSyB0fRMrBtYgfnSFxjRgrIm8pBMZf7j5kF8",
   authDomain: "tasksproject-0931.firebaseapp.com",
@@ -14,13 +15,14 @@ const firebaseConfig = {
   storageBucket: "tasksproject-0931.appspot.com",
   messagingSenderId: "510122616352",
   appId: "1:510122616352:web:cc81009c464c3d738bfe45"
-  };
+};
 
 bootstrapApplication(AppComponent, {
   providers: [
     provideRouter(routes),
     provideFirebaseApp(() => initializeApp(firebaseConfig)),
     provideAuth(() => getAuth()),
-    provideFirestore(() => getFirestore())
+    provideFirestore(() => getFirestore()),
+    provideStorage(() => getStorage()),  // ✅ 這行提供 Storage
   ]
 });

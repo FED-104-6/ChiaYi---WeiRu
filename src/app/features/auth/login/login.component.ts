@@ -53,13 +53,9 @@ export class LoginComponent implements OnInit, OnDestroy {
       const role: UserRole = await lastValueFrom(this.authService.userRole$);
 
       // 3️⃣ 根據角色導向
-      if (role === 'admin') {
-        this.router.navigate(['/profile']); // 管理員頁面
+      if (role === 'admin' || role === 'host') {
+        this.router.navigate(['/profile']); // 管理員和房東頁面
       } 
-      
-      else if (role === 'host') {
-        this.router.navigate(['/update-profile']); // 房東頁面
-      }
 
       else {
         this.router.navigate(['/home']);     // 普通使用者

@@ -22,6 +22,17 @@
       <input type="email" [(ngModel)]="email" name="email" placeholder="Email" required>
       <input type="password" [(ngModel)]="password" name="password" placeholder="Password" required>
       <input type="text" [(ngModel)]="country" name="country" placeholder="Country / Region" required>
+      
+      <div class="role-select">
+        <select id="role" [(ngModel)]="role" name="role" required>
+          <option value="" disabled selected>
+            {{ language === 'en' ? 'Please select a role' : '請選擇註冊身份' }}
+          </option>
+          <option value="host">{{ language === 'en' ? 'Host' : '房東' }}</option>
+          <option value="guest">{{ language === 'en' ? 'Guest' : '房客' }}</option>
+        </select>
+      </div>      
+      
       <button type="submit">Submit</button>
     </form>
     <p *ngIf="errorMessage" class="error">{{ errorMessage }}</p>
