@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
-import { HeaderComponent } from '../../core/header/header.component';
 import { AuthService } from '../../features/auth/auth.service';
 import { NewFlatComponent } from '../flats/new-flat/new-flat.component';
 
@@ -11,7 +10,6 @@ import { NewFlatComponent } from '../flats/new-flat/new-flat.component';
   imports: [
     CommonModule,
     RouterModule,
-    HeaderComponent,
     NewFlatComponent
   ],
   templateUrl: './home.component.html',
