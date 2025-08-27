@@ -75,11 +75,15 @@
 
 /* ================== MENU 按鈕 ================== */
 .menu-btn {
+  position: absolute;     /* 絕對定位 */
+  top: 20px;              /* 距離頂部 */
+  right: 40px;            /* 距離右邊 */
   background: none;
   border: none;
-  font-size: 20px;
-  color: inherit; /* 跟隨 header 顏色 */
+  font-size: 30px;
+  color: inherit;         /* 跟隨 header 顏色 */
   cursor: pointer;
+  z-index: 15;            /* 確保在 header 上方 */
 }
 
 /* ================== 背景圖 ================== */

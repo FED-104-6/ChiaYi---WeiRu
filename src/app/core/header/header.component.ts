@@ -16,63 +16,53 @@ export class HeaderComponent implements OnInit {
   language: 'en' | 'zh' = 'en';
   isSidebarOpen = false;
   isDarkText = false;
-  showHeader = true;
-
-  // 想隱藏 header 的路由清單
-  private hiddenHeaderRoutes: string[] = [
-    '/all-users',
-    '/login',
-    '/register'
-  ];
+  role: string | null = null; // admin / host / guest / null
 
   constructor(public authService: AuthService, private router: Router) {}
 
   ngOnInit() {
-    // 監聽路由變化
+    this.updateRoleAndColor();
+
+    // 監聽路由變化，更新角色及文字顏色
     this.router.events
       .pipe(filter(event => event instanceof NavigationEnd))
-      .subscribe((event: NavigationEnd) => {
-        const route = (event as NavigationEnd).urlAfterRedirects;
-  
-        // 套用顏色
-        this.applyRouteColor(route);
-  
-        // 根據角色決定 header 是否顯示
-        const role = this.authService.currentUserRole(); // admin / host / guest
-        this.showHeader = !(role === 'admin' || role === 'host');
-      });
-  
-    // 初始化一次
-    const role = this.authService.currentUserRole();
-    this.showHeader = !(role === 'admin' || role === 'host');
-  
-    const currentRoute = this.router.url;
-    this.applyRouteColor(currentRoute);
-  }  
+      .subscribe(() => this.updateRoleAndColor());
+  }
 
+  // 語言切換
   setLanguage(lang: 'en' | 'zh') {
     this.language = lang;
   }
 
+  // 右側側邊選單開關
   toggleSidebar() {
     this.isSidebarOpen = !this.isSidebarOpen;
   }
 
+  // 登出
   logout() {
     this.authService.logout();
     this.toggleSidebar();
+    this.router.navigate(['/login']);
   }
 
+  // 更新角色及文字顏色
+  private updateRoleAndColor() {
+    this.role = this.authService.currentUserRole();
+    const route = this.router.url;
+
+    // Header 文字顏色
+    this.applyRouteColor(route);
+  }
+
+  // 根據路由改變文字顏色
   private applyRouteColor(route: string) {
-    switch(route) {
+    switch (route) {
       case '/home':
-        this.isDarkText = false;
-        break;
-      case '/profile':
-        this.isDarkText = true;
+        this.isDarkText = false; // 白字
         break;
       default:
-        this.isDarkText = true;
+        this.isDarkText = true; // 黑字
     }
   }
 }
