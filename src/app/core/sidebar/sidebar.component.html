@@ -25,13 +25,14 @@
       <a [routerLink]="['/flats/my-flats']" (click)="closeMenus()">My Flats</a>
       <a *ngIf="userRole !== 'admin'" [routerLink]="['/flats/favourites']" (click)="closeMenus()">Favourites</a>
       <a *ngIf="userRole === 'admin'" [routerLink]="['/flats/view-flat']" (click)="closeMenus()">View Flat</a>
-      <a *ngIf="userRole === 'host'" [routerLink]="['/flats/edit-flat']" (click)="closeMenus()">Edit Flat
-</a>
+      <a *ngIf="userRole === 'host'" [routerLink]="['/flats/edit-flat']" (click)="closeMenus()">Edit Flat</a>
+      
     </div>
 
     <!-- 使用 getter 控制 Messages 顯示 -->
     <a *ngIf="showAdminMessages" [routerLink]="['/messages']" (click)="closeMenus()">Messages (Admin)</a>
-    <a *ngIf="showMessages && userRole !== 'admin'" [routerLink]="['/my-messages']" (click)="closeMenus()">Messages</a>
+    <a *ngIf="userRole === 'host'" [routerLink]="['/host-messages']" (click)="closeMenus()">Messages</a>
+
     
     <a (click)="logout()">Logout</a>
   </nav>

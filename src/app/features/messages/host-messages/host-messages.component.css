@@ -1,0 +1,97 @@
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&display=swap');
+
+.message-page-container {
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  font-family: 'Caveat', cursive;
+}
+
+h2 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 30px;
+}
+
+.message-card {
+  background-color: #fff;
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 6px;
+  border: 1px solid #eee;
+  transition: background-color 0.2s;
+}
+
+.message-card:hover {
+  background-color: #fafafa;
+}
+
+.message-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.message-title {
+  margin: 0;
+  font-size: 18px;
+  color: #333;
+}
+
+.message-status {
+  font-size: 14px;
+  font-weight: bold;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
+.message-status.replied {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.message-status.unreplied {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+.message-content p {
+  margin: 5px 0;
+  line-height: 1.6;
+}
+
+button {
+  display: block;
+  margin-top: 10px;
+  padding: 10px;
+  background-color: #00AA90;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-family: 'Caveat', cursive;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #008F7A;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  padding: 12px 0;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 40px;
+  color: #888;
+  font-style: italic;
+  border: 1px dashed #ccc;
+  border-radius: 6px;
+}
