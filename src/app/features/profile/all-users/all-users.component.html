@@ -14,9 +14,9 @@
       <label>Role:</label>
       <select [(ngModel)]="filters.role">
         <option value="all">All</option>
+        <option value="admin">Admin</option>
         <option value="host">Host</option>
         <option value="guest">Guest</option>
-        <option value="both">Both</option>
       </select>
     </div>
     <button class="search-btn" (click)="applyFilters()">Search</button>
@@ -76,9 +76,9 @@
     <label>
       Role:
       <select [(ngModel)]="selectedUser!.role">
+        <option value="admin">Admin</option>
         <option value="host">Host</option>
         <option value="guest">Guest</option>
-        <option value="both">Both</option>
       </select>
     </label>
 

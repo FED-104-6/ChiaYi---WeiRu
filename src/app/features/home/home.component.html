@@ -52,13 +52,13 @@
   class="question-btn" 
   *ngIf="role === 'guest'" 
   (click)="toggleQuestionModal()">
-  💬
+  <svg xmlns="http://www.w3.org/2000/svg" height="30px" viewBox="0 0 24 24" width="30px" fill="#fff"><path d="M0 0h24v24H0z" fill="none"/><path d="M21.99 4c0-1.1-.89-2-1.99-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14l4 4-.01-18zM18 14H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z"/></svg>
 </button>
 
 <!-- 問題輸入 Modal -->
 <div *ngIf="showQuestionModal" class="modal">
   <div class="modal-content">
-    <h3>Ask a Question</h3>
+    <h3>Hello! This is the BNB booking platform. <br>We can answer any questions you may have.</h3>
     
     <!-- 問題標題 -->
     <input 

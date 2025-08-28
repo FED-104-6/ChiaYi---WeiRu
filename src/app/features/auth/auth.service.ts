@@ -7,8 +7,15 @@ import {
   signOut,
   updateProfile
 } from '@angular/fire/auth';
-import { Firestore, doc, setDoc, getDoc } from '@angular/fire/firestore';
-import { BehaviorSubject, Observable } from 'rxjs';
+import {
+  Firestore,
+  doc,
+  setDoc,
+  getDoc,
+  collection,
+  getDocs
+} from '@angular/fire/firestore';
+import { BehaviorSubject, Observable, from } from 'rxjs';
 import { getDownloadURL, ref, uploadBytes, Storage } from '@angular/fire/storage';
 
 export type UserRole = 'admin' | 'host' | 'guest' | null;
@@ -21,6 +28,7 @@ export interface AuthUser {
   photoURL?: string;
   avatarUrl?: string;
   phonenumber?: string; 
+  createdAt?: Date | string;
 }
 
 @Injectable({
@@ -203,5 +211,25 @@ export class AuthService {
     }
 
     return downloadURL;
+  }
+
+  // 🔥 新增：抓取所有註冊用戶
+  getAllUsers(): Observable<AuthUser[]> {
+    const usersRef = collection(this.firestore, 'users');
+    return from(
+      getDocs(usersRef).then(snapshot =>
+        snapshot.docs.map(docSnap => {
+          const data = docSnap.data() as any;
+          return {
+            uid: docSnap.id,
+            displayName: data.fullname || '',
+            email: data.email || '',
+            role: data.role || 'guest',
+            phonenumber: data.phonenumber || '',
+            createdAt: data.createdAt?.toDate ? data.createdAt.toDate() : data.createdAt
+          } as AuthUser;
+        })
+      )
+    );
   }
 }

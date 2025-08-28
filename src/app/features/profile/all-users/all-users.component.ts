@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { AuthService } from '../../../features/auth/auth.service'; // <-- 調整為你的實際路徑
 
-type Role = 'host' | 'guest' | 'both';
+type Role = 'admin' | 'host' | 'guest' ;
 export interface User {
   id: number;
   name: string;
@@ -34,15 +35,51 @@ export class AllUsersComponent implements OnInit {
   selectedUser: User | null = null;
   isModalOpen = false;
 
+  constructor(private authService: AuthService) {}
+
   ngOnInit(): void {
-    // 模擬 50 位使用者
-    this.allUsers = this.mockUsers(50);
-    this.filteredUsers = [...this.allUsers];
+    // 從 Firebase 抓所有註冊用戶，並映射成本元件的 User 型別
+    this.authService.getAllUsers().subscribe(rawUsers => {
+      // 先把 Firebase 欄位 -> 本地欄位
+      const mapped: User[] = rawUsers.map((u, i) => {
+        // 角色對應：後端可能有 'admin'|'host'|'guest'|null
+        // 你的 UI 僅有 'host'|'guest'|'both'，這裡把 'admin' 視為 'host'，null 視為 'guest'
+        const role: Role =
+          u.role === 'guest' ? 'guest'
+          : u.role === 'host' ? 'host'
+          : u.role === 'admin' ? 'admin'
+          : 'guest'; // 其他不認得的值，預設當作 guest
+
+        // createdAt 可能是 Date 或 Firestore Timestamp，這裡統一轉成 Date
+        const reg =
+          (u as any)?.createdAt?.toDate ? (u as any).createdAt.toDate()
+          : u.createdAt ? new Date(u.createdAt as any)
+          : new Date();
+
+        return {
+          id: i + 1, // 本地用流水號作為列表用的 id（不影響後端）
+          name: u.displayName || 'User',
+          email: u.email || '',
+          registeredAt: reg,
+          role
+        };
+      });
+
+      // 依註冊時間新到舊排序，並重排 id
+      const sorted = mapped.sort(
+        (a, b) => new Date(b.registeredAt).getTime() - new Date(a.registeredAt).getTime()
+      ).map((u, idx) => ({ ...u, id: idx + 1 }));
+
+      this.allUsers = sorted;
+      this.filteredUsers = [...this.allUsers];
+    });
   }
 
-  // 模擬使用者資料
+  // ===== 以下皆維持原本功能 =====
+
+  // 模擬使用者資料（已不使用，但保留程式架構）
   mockUsers(count: number): User[] {
-    const roles: Role[] = ['host', 'guest', 'both'];
+    const roles: Role[] = ['admin', 'host', 'guest'];
     const today = new Date();
     const arr: User[] = [];
     for (let i = 1; i <= count; i++) {
@@ -56,7 +93,6 @@ export class AllUsersComponent implements OnInit {
         role: roles[i % 3],
       });
     }
-    // 最新註冊的排在前面
     return arr.sort((a, b) => new Date(b.registeredAt).getTime() - new Date(a.registeredAt).getTime());
   }
 
