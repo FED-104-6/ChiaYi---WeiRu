@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { AuthService } from '../../../features/auth/auth.service';
+import { AuthService, UserRole } from '../../../features/auth/auth.service';
 
 @Component({
   selector: 'app-register',
@@ -18,6 +18,7 @@ export class RegisterComponent implements OnInit {
   email: string = '';
   password: string = '';
   country: string = '';
+  role: UserRole = 'guest'; // ← 新增 role 屬性，預設 guest
   errorMessage: string = '';
 
   language: 'en' | 'zh' = 'en';
@@ -32,7 +33,6 @@ export class RegisterComponent implements OnInit {
   constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit(): void {
-    
     setTimeout(() => {
       this.showLogin = true;
     }, 50);
@@ -41,17 +41,18 @@ export class RegisterComponent implements OnInit {
   // Registration method
   async onRegister(): Promise<void> {
     this.errorMessage = '';
-  
+
     try {
-      // 呼叫 Firebase AuthService 註冊
+      // 呼叫 Firebase AuthService 註冊，傳入 role
       await this.authService.register(
         this.fullname,  
         this.email,    
         this.password,  
         this.country,   
-        this.phonenumber 
+        this.phonenumber,
+        this.role // ← 現在 component 有定義 role
       );
-  
+
       // 註冊成功 → 導向首頁
       this.router.navigate(['/home']);
     } catch (error: any) {
@@ -59,5 +60,4 @@ export class RegisterComponent implements OnInit {
       this.errorMessage = error.message || 'Registration failed, please try again';
     }
   }
-  
 }
