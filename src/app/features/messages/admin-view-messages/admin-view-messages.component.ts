@@ -9,6 +9,7 @@ interface Message {
   username: string;
   title: string;
   content: string;
+  shortContent?: string;
   reply: string;
   status: 'replied' | 'unreplied';
   date: string;
@@ -45,18 +46,29 @@ export class AdminViewMessagesComponent implements OnInit {
   ngOnInit() {
     const colRef = collection(this.firestore, 'questions'); // ✅ guest 提問存 questions
     collectionData(colRef, { idField: 'id' }).subscribe((data: any[]) => {
-      this.messages = data.map(q => ({
-        id: q.id,
-        username: q.username || 'Guest',
-        title: q.title || '(No Title)',
-        content: q.content || '',
-        reply: q.reply || '',
-        status: q.reply ? 'replied' : 'unreplied',
-        date: q.date || new Date().toISOString().split('T')[0]
-      }));
+      this.messages = data.map(q => {
+        const content = q.content || ''; // ✅ 先定義 content
+        return {
+          id: q.id,
+          username: q.username || 'Guest',
+          title: q.title || '(No Title)',
+          content,                         // 原始完整內容
+          shortContent: this.getShortContent(content), // 縮短內容
+          reply: q.reply || '',
+          status: q.reply ? 'replied' : 'unreplied',
+          date: q.date || new Date().toISOString().split('T')[0]
+        };
+      });
       this.totalPages = Math.ceil(this.messages.length / this.itemsPerPage);
       this.setPagedMessages();
     });
+  }
+
+  /** 將 content 超過 10 個單字縮短 */
+  getShortContent(content: string): string {
+    const words = content.trim().split(/\s+/);
+    if (words.length <= 10) return content;
+    return words.slice(0, 10).join(' ') + '...';
   }
 
   /** 設定當前分頁資料 */
