@@ -9,7 +9,8 @@ import { ViewFlatComponent } from './features/flats/view-flat/view-flat.componen
 export const FLATS_ROUTES: Routes = [
   { path: '', redirectTo: 'search', pathMatch: 'full' },
   { path: 'new-flat', component: NewFlatComponent },
-  { path: 'edit-flat/:id', component: EditFlatComponent },
+  { path: 'edit-flat', component: EditFlatComponent }, // ✅ 新增不帶 id 的路由
+  { path: 'edit-flat/:id', component: EditFlatComponent }, // 原本的編輯特定 flat
   { path: 'favourites', component: FavouritesComponent },
   { path: 'my-flats', component: MyFlatsComponent },
   { path: 'search', component: SearchComponent },

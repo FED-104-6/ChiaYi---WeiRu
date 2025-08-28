@@ -47,7 +47,8 @@ export const routes: Routes = [
     loadComponent: () =>
       import('../app/features/messages/customer-view-messages/customer-view-messages.component').then(m => m.CustomerViewMessagesComponent)
   },
-
+ 
+  
   // Flats
   {
     path: 'flats',
