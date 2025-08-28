@@ -1,4 +1,4 @@
-<aside *ngIf="isLoggedIn" class="sidebar">
+<aside *ngIf="isLoggedIn && (userRole === 'admin' || userRole === 'host')" class="sidebar">
   <div class="sidebar-header">
     <a class="logo" (click)="navigateHome()">BNB</a>
     <p>Management System</p>
@@ -11,9 +11,7 @@
   <nav>
     <a [routerLink]="['/home']" (click)="closeMenus()">Home</a>
 
-    <a *ngIf="userRole === 'admin'" [routerLink]="['/all-users']" (click)="closeMenus()">
-      All Users
-    </a>
+    <a *ngIf="userRole === 'admin'" [routerLink]="['/all-users']" (click)="closeMenus()">All Users</a>
 
     <a (click)="toggleProfileMenu()">Profile</a>
     <div *ngIf="profileMenuOpen" class="submenu">
@@ -26,13 +24,13 @@
       <a [routerLink]="['/flats/new-flat']" (click)="closeMenus()">New Flat</a>
       <a [routerLink]="['/flats/my-flats']" (click)="closeMenus()">My Flats</a>
       <a *ngIf="userRole !== 'admin'" [routerLink]="['/flats/favourites']" (click)="closeMenus()">Favourites</a>
-      
       <a *ngIf="userRole === 'admin'" [routerLink]="['/flats/view-flat']" (click)="closeMenus()">View Flat</a>
       <a *ngIf="userRole === 'host'" [routerLink]="['/flats/edit-flat']" (click)="closeMenus()">Edit Flat</a>
     </div>
 
-    <a *ngIf="userRole === 'admin'" [routerLink]="['/messages']" (click)="closeMenus()">Messages (Admin)</a>
-    <a *ngIf="userRole === 'host' || userRole === 'guest'" [routerLink]="['/my-messages']" (click)="closeMenus()">Messages</a>
+    <!-- 使用 getter 控制 Messages 顯示 -->
+    <a *ngIf="showAdminMessages" [routerLink]="['/messages']" (click)="closeMenus()">Messages (Admin)</a>
+    <a *ngIf="showMessages && userRole !== 'admin'" [routerLink]="['/my-messages']" (click)="closeMenus()">Messages</a>
     
     <a (click)="logout()">Logout</a>
   </nav>

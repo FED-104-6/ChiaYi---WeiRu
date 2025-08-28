@@ -2,7 +2,10 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { AuthService, UserRole } from '../../features/auth/auth.service';
+import { AuthService } from '../../features/auth/auth.service';
+
+// 方法 A：擴充 UserRole 型別，包含 guest
+export type UserRole = 'admin' | 'host' | 'guest';
 
 @Component({
   selector: 'app-sidebar',
@@ -34,7 +37,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
 
     this.authSubscription.add(
       this.authService.userRole$.subscribe(role => {
-        this.userRole = role;
+        this.userRole = role as UserRole; // 方法 A：確保 role 型別正確
       })
     );
   }
@@ -43,9 +46,9 @@ export class SidebarComponent implements OnInit, OnDestroy {
     this.authSubscription.unsubscribe();
   }
 
-  // 🎯 Added all missing methods from the template
   navigateTo(route: string): void {
     this.router.navigate([route]);
+    this.closeMenus();
   }
 
   logout(): void {
@@ -54,17 +57,14 @@ export class SidebarComponent implements OnInit, OnDestroy {
 
   toggleProfileMenu(): void {
     this.profileMenuOpen = !this.profileMenuOpen;
-    // 💡 Close other menus
     this.flatsMenuOpen = false;
   }
 
   toggleFlatsMenu(): void {
     this.flatsMenuOpen = !this.flatsMenuOpen;
-    // 💡 Close other menus
     this.profileMenuOpen = false;
   }
 
-  // 🎯 The method you were missing
   closeMenus(): void {
     this.profileMenuOpen = false;
     this.flatsMenuOpen = false;
@@ -77,5 +77,14 @@ export class SidebarComponent implements OnInit, OnDestroy {
 
   navigateHome(): void {
     this.router.navigate(['/home']);
+  }
+
+  // 方法 C：新增 getter 控制 Messages 顯示，避免 TS2367
+  get showMessages(): boolean {
+    return this.userRole === 'host' || this.userRole === 'guest';
+  }
+
+  get showAdminMessages(): boolean {
+    return this.userRole === 'admin';
   }
 }

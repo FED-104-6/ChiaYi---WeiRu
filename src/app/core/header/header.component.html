@@ -13,11 +13,11 @@
   <button class="close-btn" (click)="toggleSidebar()">×</button>
   <nav>
     <a routerLink="/home" (click)="toggleSidebar()">Home</a>
-    <a routerLink="/my-account" (click)="toggleSidebar()">My account</a>
-    <a routerLink="/new-flat" (click)="toggleSidebar()">New Flat</a>
-    <a routerLink="/view-flat" (click)="toggleSidebar()">View Flat</a>
-    <a routerLink="/favorite" (click)="toggleSidebar()">Favorite</a>
-    <a routerLink="/messages" (click)="toggleSidebar()">Messages</a>
+    <a routerLink="/profile" (click)="toggleSidebar()">My Account</a>
+    <a routerLink="/flats/new-flat" (click)="toggleSidebar()">New Flat</a>
+    <a routerLink="/flats/search" (click)="toggleSidebar()">View Flat</a>
+    <a routerLink="/flats/favourites" (click)="toggleSidebar()">Favourite</a>
+    <a routerLink="/my-messages" (click)="toggleSidebar()">My Messages</a>
     <a (click)="logout()">Logout</a>
   </nav>
 </div>

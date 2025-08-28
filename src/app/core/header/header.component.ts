@@ -28,24 +28,31 @@ export class HeaderComponent implements OnInit {
       .subscribe(() => this.updateRoleAndColor());
   }
 
+  /** 語言切換 */
   setLanguage(lang: 'en' | 'zh') {
     this.language = lang;
   }
 
+  /** sidebar 開關 */
   toggleSidebar() {
     this.isSidebarOpen = !this.isSidebarOpen;
   }
 
+  /** 登出 */
   logout() {
     this.authService.logout();
     this.isSidebarOpen = false;
     this.router.navigate(['/login']);
   }
 
+  /** 根據路由更新 role 與文字顏色 */
   private updateRoleAndColor() {
     this.role = this.authService.currentUserRole();
     const route = this.router.url;
-    const darkTextRoutes = ['/my-account', '/new-flat', '/view-flat', '/favorite', '/customer-view-messages'];
-    this.isDarkText = darkTextRoutes.includes(route);
+
+    // dark text 路由判斷
+    this.isDarkText =
+      route.startsWith('/flats') ||
+      ['/my-account', '/my-messages'].includes(route);
   }
 }
