@@ -17,12 +17,15 @@ import { AuthService } from './features/auth/auth.service';
     HeaderComponent,
     SidebarComponent
   ],
-  templateUrl: './app.html',   // ✅ 建議用正確命名
-  styleUrls: ['./app.css']     // ✅ 建議用正確命名
+  templateUrl: './app.html',
+  styleUrls: ['./app.css']
 })
 export class AppComponent {
   showHeader$!: Observable<boolean>;
   showSidebar$!: Observable<boolean>;
+  guestBg$!: Observable<boolean>;
+
+  sidebarCollapsed = false; // 控制右側 sidebar 摺疊
 
   constructor(public authService: AuthService, private router: Router) {
     const url$ = this.router.events.pipe(
@@ -31,15 +34,29 @@ export class AppComponent {
       startWith(this.router.url)
     );
 
-    // Header 顯示控制
     const hiddenHeaderRoutes = ['/login', '/register'];
     this.showHeader$ = combineLatest([this.authService.isLoggedIn$, url$]).pipe(
       map(([isLoggedIn, url]) => isLoggedIn && !hiddenHeaderRoutes.includes(url))
     );
 
-    // Sidebar 顯示控制
     this.showSidebar$ = combineLatest([this.authService.isLoggedIn$, url$]).pipe(
       map(([isLoggedIn, url]) => isLoggedIn && url !== '/home')
     );
+
+    const guestRoutes = [
+      '/flats/new-flat',
+      '/flats/view-flat',
+      '/flats/favourites',
+      '/messages',
+      '/host-messages'
+    ];
+
+    this.guestBg$ = combineLatest([this.authService.userRole$, url$]).pipe(
+      map(([role, url]) => role === 'guest' && guestRoutes.some(r => url.startsWith(r)))
+    );
+  }
+
+  toggleSidebar() {
+    this.sidebarCollapsed = !this.sidebarCollapsed;
   }
 }

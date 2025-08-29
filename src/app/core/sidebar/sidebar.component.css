@@ -16,6 +16,10 @@
     transition: width 0.3s;
   }
   
+  .sidebar a.active {
+    background-color: #d8d8d8;
+    color: #000; /* 建議字體顏色改深色，避免和背景太接近 */
+  }
   .sidebar-header {
     display: flex;
     flex-direction: column;  /* 垂直排列 */
