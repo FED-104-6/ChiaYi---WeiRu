@@ -2,23 +2,18 @@
 .layout {
   display: flex;
   min-height: 100vh;
+  background-size: cover;       
+  background-position: center;  
+  background-repeat: no-repeat; 
 }
 
 /* Sidebar */
 app-sidebar {
-  width: 200px;
-  /* min-width: 200px; */
+  width: 20%;
+  min-width: 200px;
   background-color: #333;
   color: #fff;
   flex-shrink: 0;
-  order: 1;
-  transition: width 0.3s;
-}
-
-/* 右側 sidebar 收起 */
-app-sidebar.collapsed {
-  width: 0;
-  overflow: hidden;
 }
 
 /* Main content */
@@ -26,12 +21,6 @@ app-sidebar.collapsed {
   flex: 1;
   box-sizing: border-box;
   background-color: #FCFAF2;
-  transition: margin-right 0.3s;
-}
-
-/* sidebar 收起時 main-content 撐滿 */
-.main-content.full-width {
-  margin-right: 0;
 }
 
 /* ================= Modal ================= */
@@ -243,9 +232,4 @@ app-sidebar.collapsed {
   .users-table {
     min-width: 600px;
   }
-}
-
-/* Guest 專屬背景 */
-.guest-bg .main-content {
-  background-color: #F9F9F9 !important;
 }

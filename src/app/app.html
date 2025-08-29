@@ -1,17 +1,9 @@
 <app-header *ngIf="showHeader$ | async"></app-header>
 
-<div class="layout" [ngClass]="{ 'guest-bg': guestBg$ | async }">
-  <!-- 左側 main-content -->
-  <div class="main-content" [class.full-width]="sidebarCollapsed">
+<div class="layout">
+  <app-sidebar *ngIf="showSidebar$ | async"></app-sidebar>
+
+  <div class="main-content">
     <router-outlet></router-outlet>
   </div>
-
-  <!-- 右側 sidebar -->
-  <app-sidebar 
-    *ngIf="showSidebar$ | async" 
-    [class.collapsed]="sidebarCollapsed">
-  </app-sidebar>
 </div>
-
-<!-- 可以放在 header 或 sidebar 上 -->
-<button (click)="toggleSidebar()">Toggle Sidebar</button>
