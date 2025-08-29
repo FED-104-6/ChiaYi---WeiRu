@@ -59,8 +59,8 @@ export class HeaderComponent implements OnInit {
   private updateHeaderState() {
     let route = this.router.url;
 
-    // 移除 query string 與 hash
-    route = route.split('?')[0].split('#')[0];
+    // 如果是根路徑 /，當作 /home
+    if (route === '/') route = '/home';
 
     // 更新使用者角色
     this.role = this.authService.currentUserRole();

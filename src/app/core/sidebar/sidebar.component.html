@@ -23,15 +23,16 @@
     <!-- Flats 主選單 -->
     <a href="#" (click)="toggleFlatsMenu(); $event.preventDefault()">Flats</a>
     <div *ngIf="flatsMenuOpen" class="submenu">
-      <!-- Admin 只看到 View Flat -->
-      <a href="#" (click)="navigateTo('/admin-view-flat'); $event.preventDefault()">View Flat</a>
+      <!-- Admin 只看到 All Flats -->
+      <a *ngIf="userRole === 'admin'" href="#" (click)="navigateTo('/admin-view-flat'); $event.preventDefault()">All Flats</a>
       <!-- Host 看到 Edit Flat + My Flat -->
-      <a *ngIf="userRole === 'host'" href="#" (click)="navigateTo('/edit-flat'); $event.preventDefault()">Edit Flat</a>
-      <a *ngIf="userRole === 'host'" href="#" (click)="navigateTo('/my-flat'); $event.preventDefault()">My Flat</a>
+      <a *ngIf="userRole === 'host'" href="#" (click)="navigateTo('/flats/view-flat', [1]); $event.preventDefault()">View Flat</a>
+      <a *ngIf="userRole === 'host'" href="#" (click)="navigateTo('/flats/edit-flat', [1]); $event.preventDefault()">Edit Flat</a>
+      <a *ngIf="userRole === 'host'" href="#" (click)="navigateTo('/flats/my-flats'); $event.preventDefault()">My Flat</a>
     </div>
 
     <!-- Messages 與 Logout -->
-    <a href="#" (click)="navigateTo('/messages'); $event.preventDefault()">Messages</a>
+    <a href="#" (click)="navigateTo('/host-messages'); $event.preventDefault()">Messages</a>
     <a href="#" (click)="logout(); $event.preventDefault()">Logout</a>
   </nav>
 </aside>

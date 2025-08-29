@@ -18,14 +18,12 @@ export class SidebarComponent implements AfterViewInit {
   isLoggedIn = false;
 
   flatsMenuOpen = false;
-  profileMenuOpen = false;  
+  profileMenuOpen = false;
 
   userRole: 'admin' | 'host' | 'guest' | null = null;
 
   constructor(public authService: AuthService, private router: Router) {
-    // 監聽登入狀態
     this.authService.isLoggedIn$.subscribe(status => this.isLoggedIn = status);
-    // 監聽使用者角色
     this.authService.userRole$.subscribe(role => this.userRole = role);
   }
 
@@ -75,16 +73,20 @@ export class SidebarComponent implements AfterViewInit {
     this.profileMenuOpen = !this.profileMenuOpen;
     if (this.profileMenuOpen) this.flatsMenuOpen = false;
   }
-  
+
   /** Flats 子選單切換 */
   toggleFlatsMenu() {
     this.flatsMenuOpen = !this.flatsMenuOpen;
     if (this.flatsMenuOpen) this.profileMenuOpen = false;
-  }  
+  }
 
-  /** 直接導頁 */
-  navigateTo(route: string) {
-    this.router.navigate([route]);
+  /** 直接導頁，支援可選參數 */
+  navigateTo(route: string, params?: any[]) {
+    if (params && params.length) {
+      this.router.navigate([route, ...params]);
+    } else {
+      this.router.navigate([route]);
+    }
     this.closeMenus();
   }
 
@@ -107,17 +109,18 @@ export class SidebarComponent implements AfterViewInit {
     this.applyRouteColor(this.router.url);
   }
 
-  /** 根據路由切換 Sidebar 文字顏色 */
+  /** 根據路由切換 Sidebar 文字顏色，支援 startsWith */
   private applyRouteColor(route: string) {
     const darkTextRoutes = [
-      '/profile', 
-      '/update-profile', 
-      '/all-users', 
-      '/new-flat', 
-      '/view-flat', 
-      '/edit-flat', 
-      '/my-flat'
+      '/profile',
+      '/update-profile',
+      '/all-users',
+      '/admin-view-flat',
+      '/flats/new-flat',
+      '/flats/view-flat',
+      '/flats/edit-flat',
+      '/flats/my-flats'
     ];
-    this.isDarkText = darkTextRoutes.includes(route);
+    this.isDarkText = darkTextRoutes.some(r => route.startsWith(r));
   }
 }
