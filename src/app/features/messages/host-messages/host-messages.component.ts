@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
-interface Message {
+export interface Message {
+  id: number;
   username: string;
   title: string;
   content: string;
@@ -28,11 +29,11 @@ export class HostMessagesComponent implements OnInit {
   totalPages = 1;
 
   editingMessage: Message | null = null;
-  editingIndex: number = -1;
 
   ngOnInit() {
-    // 模擬 20 筆訊息資料
+    // 假資料，模擬從後端取得訊息
     this.messages = Array.from({ length: 20 }, (_, i) => ({
+      id: i + 1,
       username: `Guest ${i + 1}`,
       title: `Booking ${i + 1}`,
       content: `Question from guest ${i + 1}`,
@@ -40,12 +41,11 @@ export class HostMessagesComponent implements OnInit {
       status: i % 2 === 0 ? 'replied' : 'unreplied',
       timestamp: new Date(2025, 7, (i % 30) + 1)
     }));
-
     this.totalPages = Math.ceil(this.messages.length / this.itemsPerPage);
     this.setPagedMessages();
   }
 
-  setPagedMessages() {
+  setPagedMessages() { 
     const start = (this.currentPage - 1) * this.itemsPerPage;
     const end = start + this.itemsPerPage;
     this.pagedMessages = this.messages.slice(start, end);
@@ -56,8 +56,8 @@ export class HostMessagesComponent implements OnInit {
 
   applyFilter() {
     let filtered = [...this.messages];
-    if (this.filter.startDate) filtered = filtered.filter(msg => msg.timestamp >= new Date(this.filter.startDate));
-    if (this.filter.endDate) filtered = filtered.filter(msg => msg.timestamp <= new Date(this.filter.endDate));
+    if (this.filter.startDate) filtered = filtered.filter(msg => new Date(msg.timestamp) >= new Date(this.filter.startDate));
+    if (this.filter.endDate) filtered = filtered.filter(msg => new Date(msg.timestamp) <= new Date(this.filter.endDate));
     if (this.filter.status) filtered = filtered.filter(msg => msg.status === this.filter.status);
 
     this.totalPages = Math.ceil(filtered.length / this.itemsPerPage);
@@ -65,34 +65,31 @@ export class HostMessagesComponent implements OnInit {
     this.pagedMessages = filtered.slice(0, this.itemsPerPage);
   }
 
-  openEditModal(msg: Message, index: number) {
+  openReplyModal(msg: Message) {
     this.editingMessage = { ...msg };
-    this.editingIndex = index + (this.currentPage - 1) * this.itemsPerPage;
   }
 
-  saveEdit() {
-    if (this.editingMessage && this.editingIndex >= 0) {
-      const original = this.messages[this.editingIndex];
-      this.messages[this.editingIndex] = {
-        ...original,
-        reply: this.editingMessage.reply,
-        status: this.editingMessage.status
-      };
-      this.setPagedMessages();
-      this.editingMessage = null;
-      this.editingIndex = -1;
+  saveReply() {
+    if (this.editingMessage) {
+      const index = this.messages.findIndex(m => m.id === this.editingMessage!.id);
+      if (index >= 0) {
+        this.messages[index] = {
+          ...this.messages[index],
+          reply: this.editingMessage.reply,
+          status: this.editingMessage.reply ? 'replied' : 'unreplied'
+        };
+        this.setPagedMessages();
+        this.editingMessage = null;
+      }
     }
   }
 
-  cancelEdit() { this.editingMessage = null; this.editingIndex = -1; }
+  cancelReply() { this.editingMessage = null; }
 
-  deleteMessage() {
-    if (this.editingIndex >= 0) {
-      this.messages.splice(this.editingIndex, 1);
-      this.totalPages = Math.ceil(this.messages.length / this.itemsPerPage);
-      if (this.currentPage > this.totalPages) this.currentPage = this.totalPages;
-      this.setPagedMessages();
-      this.cancelEdit();
-    }
+  deleteMessage(msg: Message) {
+    this.messages = this.messages.filter(m => m.id !== msg.id);
+    this.totalPages = Math.ceil(this.messages.length / this.itemsPerPage);
+    if (this.currentPage > this.totalPages) this.currentPage = this.totalPages;
+    this.setPagedMessages();
   }
 }

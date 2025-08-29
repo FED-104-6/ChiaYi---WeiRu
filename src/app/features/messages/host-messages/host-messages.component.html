@@ -6,7 +6,7 @@
   </div>
 
   <div *ngIf="messages.length > 0">
-    <div *ngFor="let msg of pagedMessages; let i = index" class="message-card">
+    <div *ngFor="let msg of pagedMessages" class="message-card">
       <div class="message-header">
         <h4 class="message-title">{{ msg.title }}</h4>
         <span class="message-status" 
@@ -21,13 +21,29 @@
         <p *ngIf="msg.reply"><strong>Host Reply:</strong> {{ msg.reply }}</p>
         <p *ngIf="!msg.reply"><em>Waiting for host reply...</em></p>
       </div>
-      <button (click)="openEditModal(msg, i)">Reply</button>
+      <button (click)="openReplyModal(msg)">Reply</button>
+      <button (click)="deleteMessage(msg)" class="delete-btn">Delete</button>
     </div>
 
     <div class="pagination">
       <button (click)="prevPage()" [disabled]="currentPage === 1">&lt;</button>
       <span>{{ currentPage }} / {{ totalPages }}</span>
       <button (click)="nextPage()" [disabled]="currentPage === totalPages">&gt;</button>
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <div *ngIf="editingMessage" class="modal-backdrop">
+    <div class="modal">
+      <h3>Reply to {{ editingMessage.username }}</h3>
+      <label>
+        Your Reply:
+        <textarea [(ngModel)]="editingMessage.reply"></textarea>
+      </label>
+      <div class="modal-buttons">
+        <button (click)="saveReply()">Save</button>
+        <button class="cancel-btn" (click)="cancelReply()">Cancel</button>
+      </div>
     </div>
   </div>
 </div>
