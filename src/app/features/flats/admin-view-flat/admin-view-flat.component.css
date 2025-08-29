@@ -1,4 +1,4 @@
-.user-management-container {
+.flats-container {
   margin: 0 auto; /* 避開左側 sidebar */
   padding: 50px 20px;
   min-height: 100vh;
@@ -14,7 +14,7 @@
 }
 
 /* 篩選器 */
-.filters {
+.filter-section {
   width: 100%;
   display: flex;
   flex-wrap: wrap;
@@ -27,14 +27,15 @@
   box-sizing: border-box;
 }
 
-.filter-item {
+.filter-section label {
   display: flex;
-  align-items: center;
-  gap: 8px;
+  flex-direction: column;
+  font-size: 14px;
 }
 
-.filters input[type="date"],
-.filters select {
+.filter-section input[type="date"],
+.filter-section input[type="text"],
+.filter-section select {
   height: 36px;
   padding: 0 10px;
   border: 1px solid #ddd;
@@ -44,6 +45,7 @@
 }
 
 .search-btn {
+  flex: 0 0 auto;
   height: 36px;
   padding: 0 14px;
   background-color: #00AA90;
@@ -52,6 +54,7 @@
   border-radius: 4px;
   cursor: pointer;
   transition: background-color 0.3s;
+  align-self: flex-end;
 }
 
 .search-btn:hover {
@@ -73,27 +76,27 @@
   box-sizing: border-box;
 }
 
-.users-table {
+.flats-table {
   width: 100%;
   border-collapse: collapse;
   min-width: 720px;
 }
 
-.users-table th,
-.users-table td {
+.flats-table th,
+.flats-table td {
   padding: 12px;
   font-size: 14px;
   border-bottom: 1px solid #f2f2f2;
+  text-align: left;
 }
 
-.users-table thead th {
-  text-align: left;
+.flats-table thead th {
   font-weight: 600;
   color: #666;
   background: #fafafa;
 }
 
-.users-table tbody tr:hover {
+.flats-table tbody tr:hover {
   background: #f9f9f9;
 }
 
@@ -101,21 +104,26 @@
   text-align: center;
 }
 
-/* 空狀態 */
-.empty {
-  padding: 24px;
-  text-align: center;
-  color: #666;
-  background: #fff;
-  border: 1px dashed #ddd;
+/* 刪除按鈕 */
+.delete-btn {
+  padding: 6px 12px;
   border-radius: 4px;
+  cursor: pointer;
+  border: none;
+  background-color: #e74c3c;
+  color: #fff;
+  font-weight: 500;
+}
+
+.delete-btn:hover {
+  background-color: #ff4d4f;
 }
 
 /* 分頁 */
 .pagination {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   gap: 12px;
   padding: 8px 0;
   box-sizing: border-box;
@@ -143,90 +151,29 @@
   color: #BC9F77;
 }
 
-/* ================= Modal ================= */
-.modal-backdrop {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.4);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 9999; /* 確保浮在最上層 */
-}
-
-.modal {
+/* 空狀態 */
+.empty {
+  padding: 24px;
+  text-align: center;
+  color: #666;
   background: #fff;
-  padding: 20px;
-  border-radius: 6px;
-  width: 360px;
-  max-width: 90%;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  position: relative;
-}
-
-.modal label {
-  display: flex;
-  flex-direction: column;
-  font-size: 14px;
-}
-
-.modal input,
-.modal select {
-  padding: 6px 10px;
-  font-size: 14px;
-  border: 1px solid #ddd;
+  border: 1px dashed #ddd;
   border-radius: 4px;
-  margin-top: 4px;
-  outline: none;
-}
-
-.modal-buttons {
-  display: flex;
-  justify-content: flex-end;
-  gap: 8px;
-}
-
-.modal-buttons button {
-  padding: 6px 12px;
-  border-radius: 4px;
-  cursor: pointer;
-  border: none;
-  font-weight: 500;
-}
-
-.save-btn {
-  background-color: #00AA90;
-  color: #fff;
-}
-
-.delete-btn {
-  background-color: #e74c3c;
-  color: #fff;
-}
-
-.cancel-btn {
-  background-color: #ccc;
 }
 
 /* 手機優化 */
 @media (max-width: 640px) {
-  .filters {
+  .filter-section {
     gap: 8px;
     flex-direction: column;
     align-items: stretch;
   }
 
-  .filter-item label {
+  .filter-section label {
     display: none;
   }
 
-  .users-table {
+  .flats-table {
     min-width: 600px;
   }
 

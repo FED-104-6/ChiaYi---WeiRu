@@ -1,4 +1,4 @@
-<aside *ngIf="isLoggedIn" class="sidebar">
+<aside *ngIf="showSidebar" class="sidebar">
   <div class="sidebar-header">
     <a class="logo" (click)="navigateHome()">BNB</a>
     <p>Management System</p>
@@ -24,7 +24,7 @@
     <a href="#" (click)="toggleFlatsMenu(); $event.preventDefault()">Flats</a>
     <div *ngIf="flatsMenuOpen" class="submenu">
       <!-- Admin 只看到 View Flat -->
-      <a *ngIf="userRole === 'admin'" href="#" (click)="navigateTo('/view-flat'); $event.preventDefault()">View Flat</a>
+      <a href="#" (click)="navigateTo('/admin-view-flat'); $event.preventDefault()">View Flat</a>
       <!-- Host 看到 Edit Flat + My Flat -->
       <a *ngIf="userRole === 'host'" href="#" (click)="navigateTo('/edit-flat'); $event.preventDefault()">Edit Flat</a>
       <a *ngIf="userRole === 'host'" href="#" (click)="navigateTo('/my-flat'); $event.preventDefault()">My Flat</a>

@@ -1,6 +1,7 @@
 <app-header *ngIf="showHeader$ | async"></app-header>
 
 <div class="layout">
+  <!-- 以 showSidebar$ 控制 sidebar 顯示 -->
   <app-sidebar *ngIf="showSidebar$ | async"></app-sidebar>
 
   <div class="main-content">

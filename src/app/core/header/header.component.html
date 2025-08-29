@@ -1,7 +1,7 @@
 <header class="home-header" [class.dark-text]="isDarkText">
 
   <!-- 語言切換 -->
-  <div class="lang-switch">
+  <div class="lang-switch" *ngIf="showLangSwitch">
     <button [class.active]="language === 'en'" (click)="setLanguage('en')">ENGLISH</button>
     <button [class.active]="language === 'zh'" (click)="setLanguage('zh')">CHINESE</button>
   </div>
@@ -9,23 +9,23 @@
   <!-- 右側選單 / Menu Button -->
   <div class="header-right">
     <!-- 只在 guest 顯示 menu button -->
-    <button *ngIf="role === 'guest'" class="menu-btn" (click)="toggleSidebar()">☰</button>
+    <button *ngIf="role === 'guest'" class="menu-btn" (click)="toggleOverlayMenu()">☰</button>
   </div>
 </header>
 
-<!-- 右側側邊選單 -->
-<div class="sidebar" [class.open]="isSidebarOpen">
-  <button class="close-btn" (click)="toggleSidebar()">×</button>
+<!-- 右側 Overlay Menu -->
+<div class="overlaymenu" [class.open]="isOverlayMenuOpen">
+  <button class="close-btn" (click)="toggleOverlayMenu()">×</button>
   <nav>
-    <a routerLink="/" (click)="toggleSidebar()">Home</a>
-    <a routerLink="/my-account" (click)="toggleSidebar()">My account</a>
-    <a routerLink="/new-flat" (click)="toggleSidebar()">New Flat</a>
-    <a routerLink="/view-flat" (click)="toggleSidebar()">View Flat</a>
-    <a routerLink="/favorite" (click)="toggleSidebar()">Favorite</a>
-    <a routerLink="/messages" (click)="toggleSidebar()">Messages</a>
+    <a routerLink="/" (click)="toggleOverlayMenu()">Home</a>
+    <a routerLink="/my-account" (click)="toggleOverlayMenu()">My Account</a>
+    <a routerLink="/flats/new-flat" (click)="toggleOverlayMenu()">New Flat</a>
+    <a routerLink="/flats/view-flat/1" (click)="toggleOverlayMenu()">View Flat</a> <!-- 如果需要指定 id -->
+    <a routerLink="/flats/favourites" (click)="toggleOverlayMenu()">Favorite</a>
+    <a routerLink="/my-messages" (click)="toggleOverlayMenu()">My Messages</a>
     <a (click)="logout()">Logout</a>
   </nav>
 </div>
 
 <!-- 背景遮罩 -->
-<div class="overlay" *ngIf="isSidebarOpen" (click)="toggleSidebar()"></div>
+<div class="overlay" *ngIf="isOverlayMenuOpen" (click)="toggleOverlayMenu()"></div>

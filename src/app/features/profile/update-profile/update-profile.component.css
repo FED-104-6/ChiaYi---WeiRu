@@ -7,18 +7,18 @@ html, body {
 
 .main-content {
   margin: 0 auto; /* 避開左側 sidebar */
-    padding: 50px;
-    min-height: 100vh;
-    width: 80%;
-    max-width: 1200px;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    justify-content: center;
-    align-items: center; /* 內容水平置中 */
-    background-color: #FCFAF2;
-    font-family: 'Helvetica Neue', Arial, sans-serif;
+  padding: 50px;
+  min-height: 100vh;
+  width: 80%;
+  max-width: 1200px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  justify-content: center;
+  align-items: center; /* 內容水平置中 */
+  background-color: #FCFAF2;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
 }
 
 .profile-header {

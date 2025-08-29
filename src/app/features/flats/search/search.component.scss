@@ -15,10 +15,14 @@
   line-height: 1;
 }
 
+/* ---- Flats Grid ---- */
 .flats-container {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(280px, max-content)); /* 卡片固定寬度，格子自適應內容 */
   gap: 20px;
+  justify-content: center; /* 整個 grid 水平置中 */
+  padding: 0 10px; /* 可選：避免貼邊 */
+  font-family: 'Caveat', cursive;
 }
 
 .flat-card {
@@ -27,6 +31,10 @@
   padding: 1rem;
   box-shadow: 0 4px 6px rgba(0,0,0,0.1);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* 卡片內部水平置中 */
+  width: 280px;        /* 固定卡片寬度 */
 
   &:hover {
     transform: translateY(-5px);
@@ -39,15 +47,17 @@
   height: 180px;
   object-fit: cover;
   border-radius: 8px;
+  margin-bottom: 0.5rem;
 }
 
 .flat-price {
   font-weight: 700;
   color: #00CCAA;
+  font-family: 'Caveat', cursive;
 }
 
 .view-details-btn {
-  margin-top: 0.5rem;
+  margin-top: auto;
   background: #00CCAA;
   color: #fff;
   border: none;
@@ -62,7 +72,7 @@
   }
 }
 
-/* Modal */
+/* ---- Modal ---- */
 .modal {
   position: fixed;
   top: 0; left: 0;
@@ -72,6 +82,7 @@
   justify-content: center;
   align-items: center;
   z-index: 1000;
+  
 }
 
 .modal-content {
@@ -82,6 +93,9 @@
   width: 90%;
   position: relative;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .modal-content img {

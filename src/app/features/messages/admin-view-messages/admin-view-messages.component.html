@@ -32,6 +32,7 @@
           <th>Users</th>
           <th>Title</th>
           <th>Question</th>
+          <th>Reply</th>
           <th>State</th>
           <th></th>
         </tr>
@@ -41,7 +42,8 @@
           <td class="text-center">{{ i + 1 + (currentPage-1)*itemsPerPage }}</td>
           <td>{{ msg.username }}</td>
           <td>{{ msg.title }}</td>
-          <td>{{ msg.shortContent || msg.content }}</td>
+          <td>{{ msg.content }}</td>
+          <td>{{ msg.reply }}</td>
           <td>
             <span [class.replied]="msg.status === 'replied'"
                   [class.unreplied]="msg.status === 'unreplied'">

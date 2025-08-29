@@ -1,0 +1,63 @@
+<div class="flats-container">
+  <!-- 篩選器區塊 -->
+  <div class="filter-section">
+    <label>
+      From:
+      <input type="date" [(ngModel)]="filter.startDate" />
+    </label>
+    <span>~</span>
+    <label>
+      Until:
+      <input type="date" [(ngModel)]="filter.endDate" />
+    </label>
+
+    <label>
+      Country:
+      <input type="text" [(ngModel)]="filter.country" placeholder="Country" />
+    </label>
+
+    <label>
+      City:
+      <input type="text" [(ngModel)]="filter.city" placeholder="City" />
+    </label>
+
+    <button class="search-btn" (click)="applyFilter()">Search</button>
+  </div>
+
+  <!-- 房源列表 -->
+  <div class="table-wrapper">
+    <table class="flats-table">
+      <thead>
+        <tr>
+          <th style="width: 64px;"></th>
+          <th>Created At</th>
+          <th>Name</th>
+          <th>Title</th>
+          <th>Country</th>
+          <th>City</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let flat of pagedFlats; let i = index">
+          <td>{{ i + 1 + (currentPage - 1) * itemsPerPage }}</td>
+          <td>{{ flat.createdAt }}</td>
+          <td>{{ flat.hostName }}</td>
+          <td>{{ flat.title }}</td>
+          <td>{{ flat.country }}</td>
+          <td>{{ flat.city }}</td>
+          <td>
+            <button class="delete-btn" (click)="deleteFlat(flat)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 分頁控制 -->
+  <div class="pagination">
+    <button (click)="prevPage()" [disabled]="currentPage === 1">&lt;</button>
+    <span>{{ currentPage }} / {{ totalPages }}</span>
+    <button (click)="nextPage()" [disabled]="currentPage === totalPages">&gt;</button>
+  </div>
+</div>

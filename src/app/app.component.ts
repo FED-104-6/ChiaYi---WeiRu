@@ -5,7 +5,7 @@ import { filter, map, startWith } from 'rxjs/operators';
 import { combineLatest, Observable } from 'rxjs';
 import { HeaderComponent } from './core/header/header.component';
 import { SidebarComponent } from './core/sidebar/sidebar.component';
-import { AuthService } from './features/auth/auth.service';
+import { AuthService, UserRole } from './features/auth/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -29,16 +29,18 @@ export class AppComponent {
     const hiddenHeaderRoutes = ['/login', '/register'];
     this.showHeader$ = combineLatest([this.authService.isLoggedIn$, this.authService.userRole$, url$]).pipe(
       map(([isLoggedIn, role, url]) => {
-        // 如果是 admin 或 host 就不顯示 header
         if (role === 'admin' || role === 'host') return false;
-        // 其他情況依舊根據登入狀態和路由判斷
         return isLoggedIn && !hiddenHeaderRoutes.includes(url);
       })
     );
 
     // Sidebar 顯示控制
-    this.showSidebar$ = combineLatest([this.authService.isLoggedIn$, url$]).pipe(
-      map(([isLoggedIn, url]) => isLoggedIn && url !== '/home')
+    const hiddenSidebarRoutes = ['/home', '/login', '/register']; // 不顯示 sidebar 的頁面
+    this.showSidebar$ = combineLatest([this.authService.isLoggedIn$, this.authService.userRole$, url$]).pipe(
+      map(([isLoggedIn, role, url]) => {
+        // 只顯示 sidebar 當已登入且不是 guest，且不在隱藏頁面
+        return isLoggedIn && role !== 'guest' && !hiddenSidebarRoutes.includes(url);
+      })
     );
   }
 }

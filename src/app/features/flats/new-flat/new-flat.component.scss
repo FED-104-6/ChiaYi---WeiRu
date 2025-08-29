@@ -4,15 +4,18 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  min-height: 100vh; /* 確保這個元件也有足夠的高度來顯示 */
+  justify-content: flex-start;
   padding: 3rem;
-  box-sizing: border-box;
   background-color: #FCFAF2;
   font-family: 'Caveat', cursive;
+
+  /* 減少間隔，讓 New Flats 往上靠 */
+  margin-top: 30vh;  /* 之前是 50vh，改成 30vh */
+  z-index: 1; /* 低於固定元素 */
 }
 
-/* 標題 */
+
+
 h2 {
   text-align: center;
   color: #1B2A38;
@@ -23,7 +26,6 @@ h2 {
   align-items: center;
 }
 
-/* 顯示新增的房型清單的容器 */
 .added-flats-container {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -31,42 +33,42 @@ h2 {
   width: 100%;
   max-width: 1000px;
   padding: 1rem;
+  background-color: #FCFAF2; /* 明顯區隔 */
 }
 
-/* 房型卡片樣式 */
 .flat-card {
   background: #fff;
   border-radius: 12px;
   padding: 1rem;
   box-shadow: 0 4px 6px rgba(0,0,0,0.1);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
+
   &:hover {
     transform: translateY(-5px);
     box-shadow: 0 8px 20px rgba(0,0,0,0.12);
   }
+
   h3 {
     margin-top: 0.5rem;
     margin-bottom: 0.5rem;
     font-size: 1.5rem;
   }
+
   .flat-image {
     width: 100%;
     height: 180px;
     object-fit: cover;
     border-radius: 8px;
   }
+
   .flat-price {
     font-weight: 700;
     color: #00CCAA;
     margin-top: 0.5rem;
     margin-bottom: 0.25rem;
   }
+
   p {
     margin: 0.25rem 0;
   }
-}
-
-/* 全局確保 Caveat 字體 */
-:host * {
-  font-family: 'Caveat', cursive;
 }

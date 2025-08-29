@@ -135,8 +135,8 @@
   z-index: 3;
 }
 
-/* ================== Sidebar ================== */
-.sidebar {
+/* ================== Overlay Menu ================== */
+.overlaymenu {
   position: fixed;
   top: 0;
   right: -100%; /* 預設隱藏 */
@@ -149,11 +149,11 @@
   z-index: 100;
 }
 
-.sidebar.open {
+.overlaymenu.open {
   right: 0; /* 開啟時滑出 */
 }
 
-.sidebar nav a {
+.overlaymenu nav a {
   display: block;
   padding: 20px 50px;
   color: #fff;
@@ -162,7 +162,7 @@
   letter-spacing: 1px;
 }
 
-.sidebar nav a:hover {
+.overlaymenu nav a:hover {
   color: #00AA90;
 }
 
@@ -187,3 +187,4 @@
   background-color: rgba(0,0,0,0.5);
   z-index: 50;
 }
+

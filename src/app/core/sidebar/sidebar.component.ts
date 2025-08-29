@@ -29,6 +29,11 @@ export class SidebarComponent implements AfterViewInit {
     this.authService.userRole$.subscribe(role => this.userRole = role);
   }
 
+  /** 判斷是否顯示 Sidebar */
+  get showSidebar(): boolean {
+    return this.isLoggedIn && this.userRole != null && this.userRole !== 'guest';
+  }
+
   /** 語言切換 */
   setLanguage(lang: 'en' | 'zh') {
     this.language = lang;

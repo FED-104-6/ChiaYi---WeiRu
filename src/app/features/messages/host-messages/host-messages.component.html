@@ -1,0 +1,49 @@
+<div class="message-page-container">
+  <h2>Host Message Center📩</h2>
+
+  <div *ngIf="messages.length === 0" class="empty-state">
+    No messages from guests yet.
+  </div>
+
+  <div *ngIf="messages.length > 0">
+    <div *ngFor="let msg of pagedMessages" class="message-card">
+      <div class="message-header">
+        <h4 class="message-title">{{ msg.title }}</h4>
+        <span class="message-status" 
+              [class.replied]="msg.status === 'replied'"
+              [class.unreplied]="msg.status === 'unreplied'">
+          {{ msg.status === 'replied' ? 'Processed' : 'Unprocessed' }}
+        </span>
+      </div>
+      <div class="message-content">
+        <p><strong>Guest:</strong> {{ msg.username }}</p>
+        <p><strong>Question:</strong> {{ msg.content }}</p>
+        <p *ngIf="msg.reply"><strong>Host Reply:</strong> {{ msg.reply }}</p>
+        <p *ngIf="!msg.reply"><em>Waiting for host reply...</em></p>
+      </div>
+      <button (click)="openReplyModal(msg)">Reply</button>
+      <button (click)="deleteMessage(msg)" class="delete-btn">Delete</button>
+    </div>
+
+    <div class="pagination">
+      <button (click)="prevPage()" [disabled]="currentPage === 1">&lt;</button>
+      <span>{{ currentPage }} / {{ totalPages }}</span>
+      <button (click)="nextPage()" [disabled]="currentPage === totalPages">&gt;</button>
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <div *ngIf="editingMessage" class="modal-backdrop">
+    <div class="modal">
+      <h3>Reply to {{ editingMessage.username }}</h3>
+      <label>
+        Your Reply:
+        <textarea [(ngModel)]="editingMessage.reply"></textarea>
+      </label>
+      <div class="modal-buttons">
+        <button (click)="saveReply()">Save</button>
+        <button class="cancel-btn" (click)="cancelReply()">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
 
 export interface Flat {
   id: number;
@@ -16,7 +15,7 @@ export interface Flat {
 @Component({
   selector: 'app-search',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule],
   templateUrl: './search.component.html',
   styleUrls: ['./search.component.scss']
 })

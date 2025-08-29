@@ -28,6 +28,7 @@ export interface AuthUser {
   photoURL?: string;
   avatarUrl?: string;
   phonenumber?: string; 
+  country?: string;
   createdAt?: Date | string;
 }
 
@@ -36,7 +37,7 @@ export interface AuthUser {
 })
 export class AuthService {
   private loggedIn = new BehaviorSubject<boolean>(false);
-  private role = new BehaviorSubject<UserRole>(null);
+  private role = new BehaviorSubject<UserRole>('guest');
   private user = new BehaviorSubject<AuthUser | null>(null);
 
   isLoggedIn$: Observable<boolean> = this.loggedIn.asObservable();
@@ -58,6 +59,7 @@ export class AuthService {
     return this.user.getValue();
   }
 
+  /** ================== 註冊並寫入 Firestore ================== */
   async register(
     fullname: string,
     email: string,
@@ -67,26 +69,36 @@ export class AuthService {
     role: UserRole
   ): Promise<void> {
     try {
+      // 建立 Firebase Auth 帳號
       const userCredential = await createUserWithEmailAndPassword(this.auth, email, password);
-      await updateProfile(userCredential.user, { displayName: fullname });
+      const firebaseUser = userCredential.user;
 
-      const userRef = doc(this.firestore, `users/${userCredential.user.uid}`);
+      // 更新 displayName
+      await updateProfile(firebaseUser, { displayName: fullname });
+
+      // 在 Firestore 建立對應 users 文件
+      const userRef = doc(this.firestore, `users/${firebaseUser.uid}`);
       const userData: AuthUser = {
-        uid: userCredential.user.uid,
+        uid: firebaseUser.uid,
         displayName: fullname,
         email,
         role,
-        phonenumber
+        phonenumber,
+        country,
+        createdAt: new Date()
       };
       await setDoc(userRef, {
         fullname,
         email,
+        password: '********', // 不存明碼
         country,
         phonenumber,
         role,
-        createdAt: new Date()
+        createdAt: new Date(),
+        profileImage: '' // 預設空
       });
 
+      // 更新本地 state
       this.loggedIn.next(true);
       this.role.next(role);
       this.user.next(userData);
@@ -98,26 +110,25 @@ export class AuthService {
     }
   }
 
+  /** ================== 登入 ================== */
   async login(email: string, password: string): Promise<UserRole> {
     try {
       const userCredential = await signInWithEmailAndPassword(this.auth, email, password);
       const uid = userCredential.user.uid;
 
       const userDoc = await getDoc(doc(this.firestore, `users/${uid}`));
-      const userDataRaw = userDoc.data() as {
-        fullname?: string;
-        email?: string;
-        role?: UserRole;
-        phonenumber?: string;
-      } | undefined;
+      const data = userDoc.data() as any;
 
-      const userRole: UserRole = userDataRaw?.role || 'guest';
+      const userRole: UserRole = data?.role || 'guest';
       const userData: AuthUser = {
         uid,
-        displayName: userDataRaw?.fullname || userCredential.user.displayName || 'User',
-        email: userDataRaw?.email || email,
+        displayName: data?.fullname || userCredential.user.displayName || 'User',
+        email: data?.email || email,
         role: userRole,
-        phonenumber: userDataRaw?.phonenumber || ''
+        phonenumber: data?.phonenumber || '',
+        country: data?.country || '',
+        avatarUrl: data?.profileImage || '',
+        createdAt: data?.createdAt
       };
 
       this.loggedIn.next(true);
@@ -137,6 +148,7 @@ export class AuthService {
     }
   }
 
+  /** ================== 登出 ================== */
   async logout(): Promise<void> {
     try {
       await signOut(this.auth);
@@ -150,6 +162,7 @@ export class AuthService {
     }
   }
 
+  /** ================== 更新單一欄位 ================== */
   async updateProfileField(field: string, value: string): Promise<void> {
     try {
       const user = this.auth.currentUser;
@@ -158,6 +171,7 @@ export class AuthService {
       const userRef = doc(this.firestore, `users/${user.uid}`);
       const updateData: any = {};
 
+      // 對應 Firestore 欄位
       switch (field) {
         case 'fullName':
           updateData.fullname = value;
@@ -169,6 +183,9 @@ export class AuthService {
         case 'email':
           updateData.email = value;
           break;
+        case 'country':
+          updateData.country = value;
+          break;
         case 'password':
           console.warn('Password update not implemented yet.');
           break;
@@ -179,12 +196,14 @@ export class AuthService {
 
       await setDoc(userRef, updateData, { merge: true });
 
+      // 更新本地 user state
       const currentUser = this.user.getValue();
       if (currentUser) {
         const updatedUser = { ...currentUser };
         if (field === 'fullName') updatedUser.displayName = value;
         if (field === 'email') updatedUser.email = value;
         if (field === 'phoneNumber') updatedUser.phonenumber = value;
+        if (field === 'country') updatedUser.country = value;
         this.user.next(updatedUser);
       }
     } catch (error) {
@@ -193,6 +212,7 @@ export class AuthService {
     }
   }
 
+  /** ================== 上傳頭像 ================== */
   async uploadProfilePhoto(file: File): Promise<string> {
     const user = this.auth.currentUser;
     if (!user) throw new Error('No logged-in user');
@@ -203,7 +223,7 @@ export class AuthService {
     const downloadURL = await getDownloadURL(storageRef);
 
     const userRef = doc(this.firestore, `users/${user.uid}`);
-    await setDoc(userRef, { avatarUrl: downloadURL }, { merge: true });
+    await setDoc(userRef, { profileImage: downloadURL }, { merge: true });
 
     const currentUser = this.user.getValue();
     if (currentUser) {
@@ -213,7 +233,7 @@ export class AuthService {
     return downloadURL;
   }
 
-  // 🔥 新增：抓取所有註冊用戶
+  /** ================== Admin 取得所有用戶 ================== */
   getAllUsers(): Observable<AuthUser[]> {
     const usersRef = collection(this.firestore, 'users');
     return from(
@@ -226,6 +246,8 @@ export class AuthService {
             email: data.email || '',
             role: data.role || 'guest',
             phonenumber: data.phonenumber || '',
+            country: data.country || '',
+            avatarUrl: data.profileImage || '',
             createdAt: data.createdAt?.toDate ? data.createdAt.toDate() : data.createdAt
           } as AuthUser;
         })

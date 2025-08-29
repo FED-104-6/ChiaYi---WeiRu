@@ -1,19 +1,18 @@
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@700&display=swap');
 /* Flat list wrapper + grid，置中整個版面 */
 .flat-list {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(320px, max-content)); /* 卡片寬度固定 */
   gap: 1.5rem;
   padding: 2rem;
 
-  /* 上下左右置中 */
-  justify-content: center; /* 水平置中 */
-  align-content: center;   /* 垂直置中 */
-  min-height: 100vh;       /* 滿螢幕高度 */
+  justify-content: center; /* 水平置中整個 grid */
+  align-content: center;
+  min-height: 100vh;
   background-color: #f7f7f7;
   box-sizing: border-box;
 }
 
-/* 單張卡片 */
 .flat-card {
   background: #fff;
   border-radius: 12px;
@@ -22,54 +21,45 @@
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   display: flex;
   flex-direction: column;
+  align-items: center; /* 🎯 卡片內部水平置中 */
+  width: 320px;        /* 🎯 固定卡片寬度 */
 
   &:hover {
     transform: translateY(-4px);
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
   }
+}
 
-  .flat-image {
+/* 圖片容器 */
+.flat-card .flat-image {
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+  display: flex;
+  justify-content: center; /* 🎯 水平置中圖片 */
+  align-items: center;
+
+  img {
     width: 100%;
-    height: 200px;
-    overflow: hidden;
-
-    img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: transform 0.3s ease;
-    }
-
-    img:hover {
-      transform: scale(1.05);
-    }
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
   }
 
-  .flat-info {
-    padding: 1rem;
+  img:hover {
+    transform: scale(1.05);
+  }
+}
 
-    h3 {
-      margin: 0 0 0.5rem 0;
-      font-size: 1.25rem;
-      color: #222;
-    }
+/* 卡片文字資訊 */
+.flat-card .flat-info {
+  padding: 1rem;
+  text-align: center; /* 🎯 文字置中 */
 
-    .flat-price {
-      font-weight: 600;
-      color: #ff385c; /* Airbnb signature pink */
-      margin-bottom: 0.25rem;
-    }
-
-    .flat-beds {
-      font-size: 0.95rem;
-      color: #555;
-      margin-bottom: 0.5rem;
-    }
-
-    .flat-description {
-      font-size: 0.9rem;
-      color: #717171;
-      line-height: 1.4;
-    }
+  h3,
+  .flat-price,
+  .flat-beds,
+  .flat-description {
+    font-family: 'Caveat', cursive;
   }
 }
