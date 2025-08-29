@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../features/auth/auth.service';
 import { NewFlatComponent } from '../flats/new-flat/new-flat.component';
+import { ViewFlatComponent } from '../flats/view-flat/view-flat.component';
+import { FlatService } from '../../features/flats/flats.service';
 import { Firestore, collection, addDoc } from '@angular/fire/firestore';
 
 type Role = 'admin' | 'guest' | 'host';
@@ -15,7 +17,8 @@ type Role = 'admin' | 'guest' | 'host';
     CommonModule,
     RouterModule,
     FormsModule,
-    NewFlatComponent
+    NewFlatComponent,
+    ViewFlatComponent
   ],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
@@ -29,22 +32,28 @@ export class HomeComponent implements OnInit {
   questionTitle = '';
   questionContent = '';
 
-  /** 使用者角色 (可從 AuthService 取得) **/
+  /** 使用者角色 **/
   role: Role = 'guest';
+
+  /** 搜尋關鍵字 **/
+  searchKeyword = '';
+
+  /** 取得 view-flat 元素的引用 */
+  @ViewChild('viewFlatSection') viewFlatSection!: ElementRef;
 
   constructor(
     public authService: AuthService,
     private router: Router,
-    private firestore: Firestore
+    private firestore: Firestore,
+    private flatService: FlatService
   ) {}
 
   ngOnInit(): void {
-    // 從 AuthService 取得目前使用者
-    const user = this.authService.currentUser(); // 注意要加括號呼叫方法
+    const user = this.authService.currentUser();
     if (user && user.role) {
-      this.role = user.role as Role; // 直接轉型，支援 'admin'、'guest'、'host'
+      this.role = user.role as Role;
     }
-  }  
+  }
 
   /** 切換語言 **/
   setLanguage(lang: 'en' | 'zh'): void {
@@ -54,7 +63,7 @@ export class HomeComponent implements OnInit {
   /** 登出 **/
   logout(): void {
     this.authService.logout();
-    this.router.navigate(['/login']); // ✅ 登出後導回登入頁
+    this.router.navigate(['/login']);
   }
 
   /** 開關提問視窗 **/
@@ -73,7 +82,6 @@ export class HomeComponent implements OnInit {
     const username = user?.displayName || 'Guest';
 
     try {
-      // 儲存到 Firestore 的 questions collection
       await addDoc(collection(this.firestore, 'questions'), {
         username,
         title: this.questionTitle,
@@ -83,7 +91,6 @@ export class HomeComponent implements OnInit {
         date: new Date().toISOString().split('T')[0]
       });
 
-      // 重置表單並關閉 Modal
       this.questionTitle = '';
       this.questionContent = '';
       this.showQuestionModal = false;
@@ -91,5 +98,18 @@ export class HomeComponent implements OnInit {
       console.error('Failed to submit question:', error);
       alert('Failed to submit question. Please try again.');
     }
+  }
+
+  /** 搜尋 flats 並滾動到列表 */
+  onSearch(): void {
+    // 更新 flats 列表
+    this.flatService.updateFlats(this.searchKeyword);
+
+    // 延遲滾動，確保 ViewChild 可用
+    setTimeout(() => {
+      if (this.viewFlatSection) {
+        this.viewFlatSection.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }, 200); // 200ms 比較安全
   }
 }

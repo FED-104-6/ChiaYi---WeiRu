@@ -11,7 +11,7 @@ export const routes: Routes = [
   // Admin 專用
   { path: 'all-users', loadComponent: () => import('./features/profile/all-users/all-users.component').then(m => m.AllUsersComponent) },
   { path: 'admin-view-flat', loadComponent: () => import('./features/flats/admin-view-flat/admin-view-flat.component').then(m => m.AdminViewFlatComponent) },
-  { path: 'messages', loadComponent: () => import('./features/messages/admin-view-messages/admin-view-messages.component').then(m => m.AdminViewMessagesComponent) },
+  { path: 'admin-view-messages', loadComponent: () => import('./features/messages/admin-view-messages/admin-view-messages.component').then(m => m.AdminViewMessagesComponent) },
 
   // Admin & Host
   { path: 'profile', loadComponent: () => import('./features/profile/profile/profile.component').then(m => m.ProfileComponent) },

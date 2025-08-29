@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { Firestore, collection, getDocs, doc, updateDoc, deleteDoc } from '@angular/fire/firestore';
 
 interface Message {
+  id?: string; // Firestore document id
   username: string;
   title: string;
   content: string;
@@ -28,38 +30,37 @@ export class AdminViewMessagesComponent implements OnInit {
     status: ''
   };
 
-  // 分頁控制
   currentPage = 1;
   itemsPerPage = 10;
   totalPages = 1;
 
-  // 編輯 Modal 控制
   editingMessage: Message | null = null;
   editingIndex: number = -1;
 
-  ngOnInit() {
-    // 模擬假資料
-    this.messages = Array.from({ length: 25 }, (_, i) => ({
-      username: `User ${i + 1}`,
-      title: `Title ${i + 1}`,
-      content: `question ${i + 1}`,
-      reply: `reply ${i + 1}`,
-      status: i % 2 === 0 ? 'replied' : 'unreplied',
-      date: `2025-08-${(i % 30 + 1).toString().padStart(2, '0')}`
-    }));
+  constructor(private firestore: Firestore) {}
+
+  async ngOnInit() {
+    await this.loadMessages();
+  }
+
+  /** 從 Firestore 讀取資料 */
+  async loadMessages() {
+    const querySnapshot = await getDocs(collection(this.firestore, 'questions'));
+    this.messages = querySnapshot.docs.map(docSnap => {
+      const data = docSnap.data() as Omit<Message, 'id'>;
+      return { id: docSnap.id, ...data };
+    });
 
     this.totalPages = Math.ceil(this.messages.length / this.itemsPerPage);
     this.setPagedMessages();
   }
 
-  /** 設定當前分頁資料 */
   setPagedMessages() {
     const start = (this.currentPage - 1) * this.itemsPerPage;
     const end = start + this.itemsPerPage;
     this.pagedMessages = this.messages.slice(start, end);
   }
 
-  /** 下一頁 */
   nextPage() {
     if (this.currentPage < this.totalPages) {
       this.currentPage++;
@@ -67,7 +68,6 @@ export class AdminViewMessagesComponent implements OnInit {
     }
   }
 
-  /** 上一頁 */
   prevPage() {
     if (this.currentPage > 1) {
       this.currentPage--;
@@ -75,18 +75,15 @@ export class AdminViewMessagesComponent implements OnInit {
     }
   }
 
-  /** 套用篩選器 */
   applyFilter() {
     let filtered = [...this.messages];
 
     if (this.filter.startDate) {
       filtered = filtered.filter(msg => msg.date >= this.filter.startDate);
     }
-
     if (this.filter.endDate) {
       filtered = filtered.filter(msg => msg.date <= this.filter.endDate);
     }
-
     if (this.filter.status) {
       filtered = filtered.filter(msg => msg.status === this.filter.status);
     }
@@ -96,41 +93,43 @@ export class AdminViewMessagesComponent implements OnInit {
     this.pagedMessages = filtered.slice(0, this.itemsPerPage);
   }
 
-  /** 打開編輯 Modal */
   openEditModal(msg: Message, index: number) {
-    this.editingMessage = { ...msg }; // 深拷貝，避免直接修改原始資料
+    this.editingMessage = { ...msg };
     this.editingIndex = index + (this.currentPage - 1) * this.itemsPerPage;
   }
 
-  /** 保存編輯（只更新 reply 與 status） */
-  saveEdit() {
+  /** 保存編輯（更新 Firestore） */
+  async saveEdit() {
     if (this.editingMessage && this.editingIndex >= 0) {
-      const original = this.messages[this.editingIndex];
-      this.messages[this.editingIndex] = {
-        ...original,
+      const msg = this.messages[this.editingIndex];
+      if (!msg.id) return;
+
+      // 更新 Firestore
+      await updateDoc(doc(this.firestore, 'questions', msg.id), {
         reply: this.editingMessage.reply,
         status: this.editingMessage.status
-      };
+      });
+
+      // 更新本地資料
+      this.messages[this.editingIndex] = { ...msg, ...this.editingMessage };
       this.setPagedMessages();
-      this.editingMessage = null;
-      this.editingIndex = -1;
+      this.cancelEdit();
     }
   }
 
-  /** 取消編輯 */
   cancelEdit() {
     this.editingMessage = null;
     this.editingIndex = -1;
   }
 
-  /** 刪除訊息 */
-  deleteMessage() {
-    if (this.editingIndex >= 0) {
+  /** 刪除 Firestore 訊息 */
+  async deleteMessage() {
+    const msg = this.messages[this.editingIndex];
+    if (msg?.id) {
+      await deleteDoc(doc(this.firestore, 'questions', msg.id));
       this.messages.splice(this.editingIndex, 1);
       this.totalPages = Math.ceil(this.messages.length / this.itemsPerPage);
-      if (this.currentPage > this.totalPages) {
-        this.currentPage = this.totalPages;
-      }
+      if (this.currentPage > this.totalPages) this.currentPage = this.totalPages;
       this.setPagedMessages();
       this.cancelEdit();
     }

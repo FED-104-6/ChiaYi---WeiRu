@@ -10,10 +10,6 @@
   <!-- 搜尋欄 -->
   <div class="search-bar">
     <div class="search-field">
-      <label for="location">Location</label>
-      <input type="text" id="location" name="location" placeholder="Add location">
-    </div>
-    <div class="search-field">
       <label for="checkin">Check in</label>
       <input type="date" id="checkin" name="checkin">
     </div>
@@ -30,7 +26,15 @@
         <option value="4+">4+ guests</option>
       </select>
     </div>
-    <button class="search-btn">Search</button>
+    <div class="search-bed">
+      <label for="beds">Beds</label>
+      <select id="beds" name="beds">
+        <option value="1">1 bed</option>
+        <option value="2">2 beds</option>
+        <option value="3">3 beds</option>
+      </select>
+    </div>
+    <button class="search-btn" (click)="onSearch()">Search</button>
   </div>
 
   <!-- Footer -->
@@ -81,3 +85,8 @@
 </div>
 
 <app-new-flat></app-new-flat>
+
+<!-- 顯示 flats -->
+<div #viewFlatSection>
+  <app-view-flat></app-view-flat>
+</div>

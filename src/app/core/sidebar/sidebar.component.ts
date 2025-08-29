@@ -90,6 +90,26 @@ export class SidebarComponent implements AfterViewInit {
     this.closeMenus();
   }
 
+  /** Messages 按鈕導向，依角色跳轉 */
+  goToMessages() {
+    console.log('userRole:', this.userRole);
+    if (!this.userRole) return;
+  
+    switch (this.userRole) {
+      case 'admin':
+        this.router.navigate(['/admin-view-messages']);
+        break;
+      case 'host':
+        this.router.navigate(['/host-messages']);
+        break;
+      case 'guest':
+        this.router.navigate(['/guest-messages']);
+        break;
+    }
+    this.closeMenus();
+  }
+  
+
   /** 統一收合選單 */
   private closeMenus() {
     this.isSidebarOpen = false;

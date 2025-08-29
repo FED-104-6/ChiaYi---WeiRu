@@ -13,7 +13,12 @@ import {
   setDoc,
   getDoc,
   collection,
-  getDocs
+  getDocs,
+  query,
+  where,
+  addDoc,
+  updateDoc,
+  deleteDoc
 } from '@angular/fire/firestore';
 import { BehaviorSubject, Observable, from } from 'rxjs';
 import { getDownloadURL, ref, uploadBytes, Storage } from '@angular/fire/storage';
@@ -27,9 +32,20 @@ export interface AuthUser {
   role?: UserRole;
   photoURL?: string;
   avatarUrl?: string;
-  phonenumber?: string; 
+  phonenumber?: string;
   country?: string;
   createdAt?: Date | string;
+}
+
+export interface Message {
+  id?: string;
+  username: string;
+  title: string;
+  content: string;
+  reply: string | null;
+  status: 'replied' | 'unreplied';
+  date: string;
+  fromRole?: 'guest' | 'host' | 'admin';
 }
 
 @Injectable({
@@ -69,14 +85,11 @@ export class AuthService {
     role: UserRole
   ): Promise<void> {
     try {
-      // 建立 Firebase Auth 帳號
       const userCredential = await createUserWithEmailAndPassword(this.auth, email, password);
       const firebaseUser = userCredential.user;
 
-      // 更新 displayName
       await updateProfile(firebaseUser, { displayName: fullname });
 
-      // 在 Firestore 建立對應 users 文件
       const userRef = doc(this.firestore, `users/${firebaseUser.uid}`);
       const userData: AuthUser = {
         uid: firebaseUser.uid,
@@ -90,15 +103,14 @@ export class AuthService {
       await setDoc(userRef, {
         fullname,
         email,
-        password: '********', // 不存明碼
+        password: '********',
         country,
         phonenumber,
         role,
         createdAt: new Date(),
-        profileImage: '' // 預設空
+        profileImage: ''
       });
 
-      // 更新本地 state
       this.loggedIn.next(true);
       this.role.next(role);
       this.user.next(userData);
@@ -171,7 +183,6 @@ export class AuthService {
       const userRef = doc(this.firestore, `users/${user.uid}`);
       const updateData: any = {};
 
-      // 對應 Firestore 欄位
       switch (field) {
         case 'fullName':
           updateData.fullname = value;
@@ -196,7 +207,6 @@ export class AuthService {
 
       await setDoc(userRef, updateData, { merge: true });
 
-      // 更新本地 user state
       const currentUser = this.user.getValue();
       if (currentUser) {
         const updatedUser = { ...currentUser };
@@ -253,5 +263,53 @@ export class AuthService {
         })
       )
     );
+  }
+
+  /** ================== 新增 guest 留言（CustomerViewMessagesComponent） ================== */
+  async sendGuestMessage(title: string, content: string): Promise<Message> {
+    const currentUser = this.user.getValue();
+    if (!currentUser) throw new Error('No logged-in user');
+
+    const newMsg: Omit<Message, 'id'> = {
+      username: currentUser.displayName || currentUser.email || 'Guest',
+      title,
+      content,
+      reply: null,
+      status: 'unreplied',
+      date: new Date().toISOString(),
+      fromRole: 'guest' // 標記為 guest 留言
+    };
+
+    const docRef = await addDoc(collection(this.firestore, 'questions'), newMsg);
+    return { id: docRef.id, ...newMsg };
+  }
+
+  /** ================== Host 取得 CustomerViewMessagesComponent 的 guest 留言 ================== */
+  async getGuestMessagesFromCustomerView(): Promise<Message[]> {
+    const q = query(
+      collection(this.firestore, 'questions'),
+      where('fromRole', '==', 'guest')
+    );
+
+    const snapshot = await getDocs(q);
+    return snapshot.docs.map(docSnap => {
+      const data = docSnap.data() as Omit<Message, 'id'> & { fromRole: string };
+      return { id: docSnap.id, ...data };
+    }).sort((a, b) => a.date < b.date ? 1 : -1);
+  }
+
+  /** ================== Host 回覆留言 ================== */
+  async updateMessageReply(messageId: string, reply: string): Promise<void> {
+    const messageRef = doc(this.firestore, `questions/${messageId}`);
+    await updateDoc(messageRef, {
+      reply,
+      status: reply ? 'replied' : 'unreplied'
+    });
+  }
+
+  /** ================== Host 刪除留言 ================== */
+  async deleteMessage(messageId: string): Promise<void> {
+    const messageRef = doc(this.firestore, `questions/${messageId}`);
+    await deleteDoc(messageRef);
   }
 }

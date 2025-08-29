@@ -1,14 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-
-interface Message {
-  title: string;
-  content: string;
-  reply: string | null;
-  status: 'replied' | 'unreplied';
-  timestamp: Date;
-}
+import { AuthService, Message } from '../../auth/auth.service';
 
 @Component({
   selector: 'app-customer-view-messages',
@@ -19,50 +12,46 @@ interface Message {
 })
 export class CustomerViewMessagesComponent implements OnInit {
   myMessages: Message[] = [];
-  newMessage = {
-    title: '',
-    content: ''
-  };
+  newMessage = { title: '', content: '' };
 
-  ngOnInit() {
-    // Simulating fetching messages for the current user from a service
-    this.myMessages = [
-      {
-        title: 'About a booking',
-        content: 'I have a question about my booking for flat #123, please help.',
-        reply: 'We have received your message and are currently processing it. We will get back to you as soon as possible.',
-        status: 'replied',
-        timestamp: new Date()
-      },
-      {
-        title: 'Seeking help with login',
-        content: 'I can\'t log into my account, what should I do?',
-        reply: null,
-        status: 'unreplied',
-        timestamp: new Date()
-      }
-    ];
+  constructor(private authService: AuthService) {}
+
+  async ngOnInit() {
+    await this.loadMessages();
   }
 
-  /** Sends a new message to the admin */
-  sendMessage() {
-    if (this.newMessage.title && this.newMessage.content) {
-      // This is where you would call a service to send the new message to the backend
-      console.log('Sending message:', this.newMessage);
+  /** 從 Firebase 讀取該使用者的留言 */
+  async loadMessages() {
+    try {
+      this.myMessages = await this.authService.getGuestMessagesFromCustomerView();
+    } catch (error) {
+      console.error('Failed to load messages:', error);
+    }
+  }
 
-      // Simulating adding the new message to the list
-      const sentMessage: Message = {
-        title: this.newMessage.title,
-        content: this.newMessage.content,
-        reply: null,
-        status: 'unreplied', // New messages are initially marked as unreplied
-        timestamp: new Date()
-      };
-      this.myMessages.unshift(sentMessage); // Add to the top of the list
+  /** 發送新留言 */
+  async sendMessage() {
+    const title = this.newMessage.title.trim();
+    const content = this.newMessage.content.trim();
+    if (!title || !content) return;
 
-      // Reset the form
+    try {
+      // 使用 AuthService 的 sendGuestMessage 方法
+      await this.authService.sendGuestMessage(title, content);
+
+      // 重置表單
       this.newMessage.title = '';
       this.newMessage.content = '';
+
+      // 重新載入留言列表
+      await this.loadMessages();
+    } catch (error) {
+      console.error('Failed to send message:', error);
     }
+  }
+
+  /** 手動刷新留言列表（可選） */
+  async refreshMessages() {
+    await this.loadMessages();
   }
 }

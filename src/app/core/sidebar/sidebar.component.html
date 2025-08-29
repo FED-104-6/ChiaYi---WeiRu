@@ -1,4 +1,4 @@
-<aside *ngIf="showSidebar" class="sidebar">
+<aside class="sidebar">
   <div class="sidebar-header">
     <a class="logo" (click)="navigateHome()">BNB</a>
     <p>Management System</p>
@@ -32,7 +32,7 @@
     </div>
 
     <!-- Messages 與 Logout -->
-    <a href="#" (click)="navigateTo('/host-messages'); $event.preventDefault()">Messages</a>
+    <a href="#" *ngIf="userRole" (click)="goToMessages(); $event.preventDefault()">Messages</a>
     <a href="#" (click)="logout(); $event.preventDefault()">Logout</a>
   </nav>
 </aside>

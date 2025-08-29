@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 export interface Flat {
@@ -8,6 +8,8 @@ export interface Flat {
   beds: number;
   description: string;
   image: string;
+  modalImage: string; // 用於彈出視窗的圖片
+  fullDescription: string; // 更詳細的描述
 }
 
 @Component({
@@ -17,35 +19,47 @@ export interface Flat {
   templateUrl: './view-flat.component.html',
   styleUrls: ['./view-flat.component.scss']
 })
-export class ViewFlatComponent implements OnInit {
+export class ViewFlatComponent {
   flats: Flat[] = [
     { 
       id: 1, 
-      name: 'Cozy Apartment in Downtown', 
-      price: 1200, 
+      name: 'Flat A', 
+      price: 1000, 
       beds: 2, 
-      description: 'A modern and comfortable apartment located in the heart of the city, perfect for small families or couples.', 
-      image: 'assets/cozy.avif'
+      description: 'A cozy two-bedroom flat with a great view.', 
+      image: 'assets/room1.avif',
+      modalImage: 'assets/cozy2.webp',
+      fullDescription: 'This cozy two-bedroom flat is a perfect urban retreat. It features a spacious living area, modern kitchen, and stunning city views from the balcony. It is located in a quiet neighborhood but is just a short walk from cafes and public transport.',
     },
     { 
       id: 2, 
-      name: 'Spacious Flat with Balcony', 
-      price: 1800, 
+      name: 'Flat B', 
+      price: 1500, 
       beds: 3, 
-      description: 'Enjoy stunning views from the balcony of this spacious flat. Ideal for families who love open spaces.', 
-      image: 'assets/balcony.webp'
+      description: 'A spacious three-bedroom flat in the city center.', 
+      image: 'assets/room2.avif',
+      modalImage: 'assets/spacious2.webp',
+      fullDescription: 'Experience city living at its best in this spacious three-bedroom flat. The open-plan layout is ideal for entertaining, and the large windows fill the space with natural light. Includes access to a private gym and rooftop pool.',
     },
     { 
       id: 3, 
-      name: 'Minimalist Studio', 
-      price: 900, 
-      beds: 1, 
-      description: 'A stylish studio with minimalist design. Great for singles or business travelers looking for convenience.', 
-      image: 'assets/studio.avif'
+      name: 'Flat C', 
+      price: 2000, 
+      beds: 2, 
+      description: 'A modern and stylish two-bedroom flat with a large balcony.', 
+      image: 'assets/room3.avif',
+      modalImage: 'assets/modern2.avif',
+      fullDescription: 'A truly modern and stylish flat with premium finishes. The expansive balcony offers a perfect spot to relax and enjoy the sunset. The building has 24/7 security and is close to all major shopping and dining districts.',
     }
   ];
 
-  ngOnInit(): void {
-    // Display all flats (no route param needed)
+  selectedFlat: Flat | null = null;
+
+  openModal(flat: Flat) {
+    this.selectedFlat = flat;
+  }
+
+  closeModal() {
+    this.selectedFlat = null;
   }
 }
